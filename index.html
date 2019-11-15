@@ -1,0 +1,28 @@
+<html>
+
+<head>
+    <title>FSM</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+</head>
+
+<body>
+    Frequency to play(Hz): <input type="text" name="frequency" id="frequency" value="1000" /><br>
+    <script type="text/javascript" src="js/app.js">
+        $(document).ready(function () {
+            $(document).on("click", "#start-button", function (e) {
+                var channel0 = {
+                    "frequency": 1,
+                    "wave_type": "POSTIVE"
+                }
+                var channel1 = {
+                    "frequency": 2,
+                    "wave_type": "BOTH"
+                }
+                play(channel0, channel1, 10);
+            })
+        });
+    </script>
+    <button class=button id="start-button" title="Play">Play</button>
+</body>
+
+</html>
