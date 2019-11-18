@@ -2,12 +2,14 @@
 
 <head>
     <title>FSM</title>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.9/Tone.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </head>
 
 <body>
     Frequency to play(Hz) : <input type="text" name="frequency" id="frequency" value="1000" /><br>
-    <script type="text/javascript" src="js/app.js">
+    <script type="text/javascript">
         $(document).ready(function () {
             $(document).on("click", "#start-button", function (e) {
                 var channel0 = {

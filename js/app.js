@@ -4,8 +4,19 @@ var WaveType = {
     "BOTH": 0
 }
 
+function test(){
+    var synth = new Tone.Synth().toMaster();
+
+    //play a middle 'C' for the duration of an 8th note
+    synth.triggerAttackRelease("C4", "8n");
+    console.log("12345");
+    console.log(synth);
+
+}
+
 function play(channel0, channel1, seconds) {
     playPer(channel0, channel1, seconds);
+    test();
 }
 function playPer(channel0, channel1, seconds) {
     console.log("qqqqqqq");
