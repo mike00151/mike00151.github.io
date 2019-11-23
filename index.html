@@ -8,19 +8,51 @@
 </head>
 
 <body>
+    <table>
+        <tbody id="play-list">
+            <tr>
+                <th>頻率</th>
+                <th>波型</th>
+                <th>時間(秒)</th>
+                <th>
+                    <button class=button title="add" onclick="addFrequencySet()">新增</button>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+
+
+
     Frequency to play(Hz) : <input type="text" name="frequency" id="frequency" value="1000" /><br>
     <script type="text/javascript">
+        function addFrequencySet(){
+            var table = document.getElementById("play-list");
+            var row = table.insertRow(-1);
+            var frequency = row.insertCell(0);
+            var waveType = row.insertCell(1);
+            var timeInSeconds = row.insertCell(2);
+            var deletion = row.insertCell(3);
+            frequency.innerHTML = '頻率1 : <input type="text" name="frequency1"/><br>頻率2 : <input type="text" name="frequency2"/>';
+            waveType.innerHTML = '波型 <select onchange="return showMessage()"><option value="0">波型</option><option value="sine">sine</option><option value="square">square</option></select>';
+            timeInSeconds.innerHTML = '持續時間: <input type="text" name="timeInSeconds"/>';
+            deletion.innerHTML = '<button class=button title="delete" onclick="deleteFrequencySet(this)">刪除</button>';
+        }
+
+        function deleteFrequencySet(button){
+            var table = document.getElementById("play-list");
+            table.deleteRow(button.parentNode.parentNode.rowIndex);
+        }
+
+        $(document).ready(function () {
+            $(document).on("click", "#add-button", function (e) {
+                play(1, "square", 10);
+            })
+        });
+
+
         $(document).ready(function () {
             $(document).on("click", "#start-button", function (e) {
-                var channel0 = {
-                    "frequency": 1,
-                    "wave_type": "POSTIVE"
-                }
-                var channel1 = {
-                    "frequency": 2,
-                    "wave_type": "BOTH"
-                }
-                play(channel0, channel1, 10);
+                play(1, "square", 10);
             })
         });
     </script>
