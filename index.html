@@ -2,7 +2,7 @@
 
 <head>
     <title>FSM</title>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.4.9/Tone.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.8.25/Tone.js"></script>
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 </head>
@@ -16,6 +16,7 @@
                 <th>時間(秒)</th>
                 <th>
                     <button class=button title="add" onclick="addFrequencySet()">新增</button>
+                    <button class=button title="add" onclick="play()">執行</button>
                 </th>
             </tr>
         </tbody>
@@ -33,7 +34,7 @@
             var timeInSeconds = row.insertCell(2);
             var deletion = row.insertCell(3);
             frequency.innerHTML = '頻率1 : <input type="text" name="frequency1"/><br>頻率2 : <input type="text" name="frequency2"/>';
-            waveType.innerHTML = '波型 <select onchange="return showMessage()"><option value="0">波型</option><option value="sine">sine</option><option value="square">square</option></select>';
+            waveType.innerHTML = '波型 <select><option value="0">波型</option><option value="sine">sine</option><option value="square">square</option></select>';
             timeInSeconds.innerHTML = '持續時間: <input type="text" name="timeInSeconds"/>';
             deletion.innerHTML = '<button class=button title="delete" onclick="deleteFrequencySet(this)">刪除</button>';
         }
@@ -42,6 +43,18 @@
             var table = document.getElementById("play-list");
             table.deleteRow(button.parentNode.parentNode.rowIndex);
         }
+
+        function play(){
+            var table = document.getElementById("play-list");
+            for (var i = 1, row; row = table.rows[i]; i++) {
+                for(var k = 0, cell; cell = row.cells[k]; k++){
+                    for (var j = 0, value; value = cell.children[j]; j++){
+                        console.log(value);
+                    }
+                }
+            }
+        }
+
 
         $(document).ready(function () {
             $(document).on("click", "#add-button", function (e) {
