@@ -15,16 +15,13 @@
                 <th>波型</th>
                 <th>時間(秒)</th>
                 <th>
-                    <button class=button title="add" onclick="addFrequencySet()">新增</button>
-                    <button class=button title="add" onclick="play()">執行</button>
+                    <button title="add" onclick="addFrequencySet()">新增</button>
+                    <button title="play" onclick="play()">執行</button>
                 </th>
             </tr>
         </tbody>
     </table>
 
-
-
-    Frequency to play(Hz) : <input type="text" name="frequency" id="frequency" value="1000" /><br>
     <script type="text/javascript">
         function addFrequencySet(){
             var table = document.getElementById("play-list");
@@ -34,7 +31,7 @@
             var timeInSeconds = row.insertCell(2);
             var deletion = row.insertCell(3);
             frequency.innerHTML = '頻率1 : <input type="text" name="frequency1"/><br>頻率2 : <input type="text" name="frequency2"/>';
-            waveType.innerHTML = '波型 <select><option value="0">波型</option><option value="sine">sine</option><option value="square">square</option></select>';
+            waveType.innerHTML = '波型 <select name="wave"><option value="0">波型</option><option value="sine">sine</option><option value="square">square</option></select>';
             timeInSeconds.innerHTML = '持續時間: <input type="text" name="timeInSeconds"/>';
             deletion.innerHTML = '<button class=button title="delete" onclick="deleteFrequencySet(this)">刪除</button>';
         }
@@ -45,31 +42,24 @@
         }
 
         function play(){
-            var table = document.getElementById("play-list");
-            for (var i = 1, row; row = table.rows[i]; i++) {
-                for(var k = 0, cell; cell = row.cells[k]; k++){
-                    for (var j = 0, value; value = cell.children[j]; j++){
-                        console.log(value);
-                    }
+            document.querySelectorAll("#play-list tr").forEach((d, i, array)=>{
+
+                if (i == 0){
+                    return;
+                } 
+
+                var content = {
+                    'frequency1' : d.querySelector('*[name="frequency1"]').value,
+                    'frequency2' : d.querySelector('*[name="frequency2"]').value,
+                    'wave' : d.querySelector('*[name="wave"]').value,
+                    'timeInSeconds' : "+"+d.querySelector('*[name="timeInSeconds"]').value
                 }
-            }
+
+                console.log(content);
+                playPerSet(content);
+                })
         }
-
-
-        $(document).ready(function () {
-            $(document).on("click", "#add-button", function (e) {
-                play(1, "square", 10);
-            })
-        });
-
-
-        $(document).ready(function () {
-            $(document).on("click", "#start-button", function (e) {
-                play(1, "square", 10);
-            })
-        });
     </script>
-    <button class=button id="start-button" title="Play">Play</button>
 </body>
 
 </html>
