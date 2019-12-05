@@ -3,63 +3,85 @@
 <head>
     <title>FSM</title>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tone/13.8.25/Tone.js"></script>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap/js/popper.js"></script>
+    <script type="text/javascript" src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/select2/select2.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 
 <body>
-    <table>
-        <tbody id="play-list">
-            <tr>
-                <th>頻率</th>
-                <th>波型</th>
-                <th>時間(秒)</th>
-                <th>
-                    <button title="add" onclick="addFrequencySet()">新增</button>
-                    <button title="play" onclick="play()">執行</button>
-                </th>
-            </tr>
-        </tbody>
-    </table>
+    <div class="limiter">
+        <p id="playing"></p>
+        <table class="container-table100">
 
-    <script type="text/javascript">
-        function addFrequencySet(){
-            var table = document.getElementById("play-list");
-            var row = table.insertRow(-1);
-            var frequency = row.insertCell(0);
-            var waveType = row.insertCell(1);
-            var timeInSeconds = row.insertCell(2);
-            var deletion = row.insertCell(3);
-            frequency.innerHTML = '頻率1 : <input type="text" name="frequency1"/><br>頻率2 : <input type="text" name="frequency2"/>';
-            waveType.innerHTML = '波型 <select name="wave"><option value="0">波型</option><option value="sine">sine</option><option value="square">square</option></select>';
-            timeInSeconds.innerHTML = '持續時間: <input type="text" name="timeInSeconds"/>';
-            deletion.innerHTML = '<button class=button title="delete" onclick="deleteFrequencySet(this)">刪除</button>';
-        }
+            <tbody id="play-list" class="wrap-table100">
+                <tr class="row header">
+                    <th class="cell">頻率</th>
+                    <th class="cell">波型</th>
+                    <th class="cell">時間(秒)</th>
+                    <th class="cell">
+                        <button title="add" onclick="addFrequencySet()">新增</button>
+                        <button title="play" onclick="play()">執行</button>
+                    </th>
+                </tr>
+            </tbody>
 
-        function deleteFrequencySet(button){
-            var table = document.getElementById("play-list");
-            table.deleteRow(button.parentNode.parentNode.rowIndex);
-        }
+        </table>
 
-        function play(){
-            document.querySelectorAll("#play-list tr").forEach((d, i, array)=>{
+        <script type="text/javascript">
+            function addFrequencySet() {
+                var table = document.getElementById("play-list");
+                var row = table.insertRow(-1);
+                row.className = "row";
+                var frequency = row.insertCell(0);
+                frequency.className = "cell";
+                var waveType = row.insertCell(1);
+                waveType.className = "cell";
+                var timeInSeconds = row.insertCell(2);
+                timeInSeconds.className = "cell";
+                var deletion = row.insertCell(3);
+                deletion.className = "cell";
+                frequency.innerHTML = '頻率1 : <input type="text" name="frequency1"/><br>頻率2 : <input type="text" name="frequency2"/>';
+                waveType.innerHTML = '波型 <select name="wave"><option value="square">square</option><option value="sine">sine</option></select>';
+                timeInSeconds.innerHTML = '持續時間: <input type="text" name="timeInSeconds"/>';
+                deletion.innerHTML = '<button class=button title="delete" onclick="deleteFrequencySet(this)">刪除</button>';
+            }
 
-                if (i == 0){
-                    return;
-                } 
+            function deleteFrequencySet(button) {
+                var table = document.getElementById("play-list");
+                table.deleteRow(button.parentNode.parentNode.rowIndex);
+            }
 
-                var content = {
-                    'frequency1' : d.querySelector('*[name="frequency1"]').value,
-                    'frequency2' : d.querySelector('*[name="frequency2"]').value,
-                    'wave' : d.querySelector('*[name="wave"]').value,
-                    'timeInSeconds' : "+"+d.querySelector('*[name="timeInSeconds"]').value
-                }
+            function play() {
+                document.querySelectorAll("#play-list tr").forEach((d, i, array) => {
 
-                console.log(content);
-                playPerSet(content);
+                    if (i == 0) {
+                        return;
+                    }
+
+                    var content = {
+                        'frequency1': d.querySelector('*[name="frequency1"]').value,
+                        'frequency2': d.querySelector('*[name="frequency2"]').value,
+                        'wave': d.querySelector('*[name="wave"]').value,
+                        'timeInSeconds': d.querySelector('*[name="timeInSeconds"]').value
+                    }
+                    data = playPerSet(content);
                 })
-        }
-    </script>
+            }
+        </script>
+    </div>
 </body>
 
 </html>
