@@ -1,280 +1,198 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-<title>Frequency Generator</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-body { font-family: Arial, sans-serif; margin: 0; }
-.container { display: flex; flex-direction: column; align-items: center; padding: 20px; }
-h1 { text-align: center; }
-.generator, #sequence-controls { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; width: 90%; max-width: 600px; box-sizing: border-box; }
-.generator h2, #sequence-controls h2 { text-align: center; margin-top: 0; }
-.controls { margin-bottom: 10px; }
-label { display: block; margin-bottom: 5px; }
-input[type="number"], select { width: calc(100% - 22px); padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; box-sizing: border-box; }
-button, .remove-sequence { padding: 10px 15px; border: none; background-color: #007bff; color: white; cursor: pointer; }
-button.stop, .remove-sequence { background-color: #dc3545; }
-#sequence-list { margin-bottom: 10px; }
-.sequence-item { border: 1px solid #eee; padding: 10px; margin-bottom: 5px; background-color: #f9f9f9; display: flex; justify-content: space-between; align-items: center; }
-#download-link-container { margin-top: 10px; text-align: center; }
-
-/* RWD 設計：螢幕寬度小於 768px 時應用以下樣式 */
-@media (max-width: 768px) {
-    .generator, #sequence-controls { width: 100%; margin-left: 0; margin-right: 0; padding: 15px; }
-    h1 { font-size: 1.5em; }
-    .generator h2, #sequence-controls h2 { font-size: 1.2em; }
-    button, .remove-sequence { padding: 8px 12px; font-size: 0.9em; }
-}
-</style>
-    <script src="https://cdn.jsdelivr.net/npm/extendable-media-recorder-wav-encoder@7.0.78/dist/extendable-media-recorder-wav-encoder.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>頻率產生器</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .playlist-item {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        input[type="range"], input[type="number"], select {
+            margin: 5px 0;
+            width: 100%;
+        }
+        label {
+            font-size: 16px;
+        }
+    </style>
+    <script src="https://unpkg.com/audio-buffer-to-wav"></script>
 </head>
 <body>
-
-<div class="container">
-<h1>Frequency Generator</h1>
-
-<div class="generator">
-    <h2>Generator 1</h2>
+    <h1>頻率產生器</h1>
     <div class="controls">
-        <label for="waveform1">Waveform:</label>
-        <select id="waveform1">
-            <option value="sine">Sine</option>
-            <option value="square">Square</option>
-            <option value="triangle">Triangle</option>
+        <h2>頻率產生器 1</h2>
+        <label for="osc1-type">波形：</label>
+        <select id="osc1-type">
+            <option value="sine">正弦波</option>
+            <option value="square">方波</option>
+            <option value="triangle">三角波</option>
         </select>
+        <br>
+        <label for="osc1-freq-slider">頻率 (Hz)：</label>
+        <input type="range" id="osc1-freq-slider" min="0.5" max="5000" step="0.1" value="440">
+        <input type="number" id="osc1-freq-input" min="0.5" max="5000" step="0.1" value="440">
     </div>
     <div class="controls">
-        <label for="frequency1">Frequency (Hz, 0.5-5000):</label>
-        <input type="number" id="frequency1" min="0.5" max="5000" value="440">
-    </div>
-    <button onclick="playTone(1)">Play</button>
-    <button class="stop" onclick="stopTone(1)">Stop</button>
-</div>
-
-<div class="generator">
-    <h2>Generator 2</h2>
-    <div class="controls">
-        <label for="waveform2">Waveform:</label>
-        <select id="waveform2">
-            <option value="sine">Sine</option>
-            <option value="square">Square</option>
-            <option value="triangle">Triangle</option>
+        <h2>頻率產生器 2</h2>
+        <label for="osc2-type">波形：</label>
+        <select id="osc2-type">
+            <option value="sine">正弦波</option>
+            <option value="square">方波</option>
+            <option value="triangle">三角波</option>
         </select>
+        <br>
+        <label for="osc2-freq-slider">頻率 (Hz)：</label>
+        <input type="range" id="osc2-freq-slider" min="0.5" max="5000" step="0.1" value="440">
+        <input type="number" id="osc2-freq-input" min="0.5" max="5000" step="0.1" value="440">
     </div>
     <div class="controls">
-        <label for="frequency2">Frequency (Hz, 0.5-5000):</label>
-        <input type="number" id="frequency2" min="0.5" max="5000" value="880">
+        <label for="duration">播放時長 (秒)：</label>
+        <input type="number" id="duration" min="0.1" step="0.1" value="33">
+        <br>
+        <button id="add-to-playlist">添加到播放列表</button>
     </div>
-    <button onclick="playTone(2)">Play</button>
-    <button class="stop" onclick="stopTone(2)">Stop</button>
-</div>
-
-<div id="sequence-controls">
-    <h2>Sequence Playback Controls</h2>
-    <div id="sequence-list">
-        </div>
-    <button onclick="addSequenceItem()">Add Sequence Item</button>
-    <button onclick="playSequence()">Start Sequence Playback</button>
-    <button class="stop" onclick="stopSequence()">Stop Sequence Playback</button>
-    <div class="controls">
-        <label for="sequenceDuration">Duration per Item (seconds):</label>
-        <input type="number" id="sequenceDuration" value="33" min="1">
+    <div>
+        <h2>播放列表</h2>
+        <div id="playlist"></div>
     </div>
-    <button onclick="downloadSequence()">Download Sequence</button>
-    <div id="download-link-container"></div>
-</div>
-</div>
+    <div>
+        <button id="play">播放</button>
+        <button id="download">下載</button>
+    </div>
+    <script>
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        let playlist = [];
 
-<script>
-const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-const oscillators = {};
-let sequenceItems = [];
-let sequenceTimer;
-let currentSequenceIndex = 0;
-let mediaRecorder;
-let audioChunks = [];
-let mediaStreamDestination;
+        // 綁定頻率滑塊和輸入框
+        const osc1FreqSlider = document.getElementById('osc1-freq-slider');
+        const osc1FreqInput = document.getElementById('osc1-freq-input');
+        osc1FreqSlider.addEventListener('input', () => {
+            osc1FreqInput.value = osc1FreqSlider.value;
+        });
+        osc1FreqInput.addEventListener('input', () => {
+            osc1FreqSlider.value = osc1FreqInput.value;
+        });
 
+        const osc2FreqSlider = document.getElementById('osc2-freq-slider');
+        const osc2FreqInput = document.getElementById('osc2-freq-input');
+        osc2FreqSlider.addEventListener('input', () => {
+            osc2FreqInput.value = osc2FreqSlider.value;
+        });
+        osc2FreqInput.addEventListener('input', () => {
+            osc2FreqSlider.value = osc2FreqInput.value;
+        });
 
-function playTone(generatorNumber) {
-    stopTone(generatorNumber);
-
-    const waveformType = document.getElementById(`waveform${generatorNumber}`).value;
-    const frequency = parseFloat(document.getElementById(`frequency${generatorNumber}`).value);
-
-    if (isNaN(frequency) || frequency < 0.5 || frequency > 5000) {
-        alert("Frequency value must be between 0.5Hz and 5000Hz");
-        return;
-    }
-
-    const oscillator = audioContext.createOscillator();
-    oscillator.type = waveformType;
-    oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-    oscillator.connect(audioContext.destination);
-    oscillator.start();
-
-    oscillators[generatorNumber] = oscillator;
-}
-
-function stopTone(generatorNumber) {
-    if (oscillators[generatorNumber]) {
-        oscillators[generatorNumber].stop();
-        oscillators[generatorNumber].disconnect();
-        delete oscillators[generatorNumber];
-    }
-}
-
-function addSequenceItem() {
-    const newItem = {
-        waveform1: document.getElementById('waveform1').value,
-        frequency1: document.getElementById('frequency1').value,
-        waveform2: document.getElementById('waveform2').value,
-        frequency2: document.getElementById('frequency2').value
-    };
-    sequenceItems.push(newItem);
-    updateSequenceList();
-}
-
-function updateSequenceList() {
-    const sequenceListDiv = document.getElementById('sequence-list');
-    sequenceListDiv.innerHTML = '';
-
-    sequenceItems.forEach((item, index) => {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'sequence-item';
-        itemDiv.innerHTML = `
-            <span>${index + 1}. Generator 1: ${item.waveform1} ${item.frequency1}Hz, Generator 2: ${item.waveform2} ${item.frequency2}Hz</span>
-            <button class="remove-sequence" onclick="removeSequenceItem(${index})">Remove</button>
-        `;
-        sequenceListDiv.appendChild(itemDiv);
-    });
-}
-
-function removeSequenceItem(index) {
-    sequenceItems.splice(index, 1);
-    updateSequenceList();
-}
-
-async function playSequence() {
-    if (sequenceItems.length === 0) {
-        alert("Please add sequence items first.");
-        return;
-    }
-
-    currentSequenceIndex = 0;
-    audioChunks = [];
-    mediaStreamDestination = audioContext.createMediaStreamDestination();
-
-    // Initialize and start MediaRecorder here
-    const encoder = await ExtendableMediaRecorder.WavEncoder(); // Use ExtendableMediaRecorder directly
-    mediaRecorder = new MediaRecorder(mediaStreamDestination.stream, {
-        mimeType: 'audio/wav',
-        encoderName: encoder.name
-    });
-
-
-    mediaRecorder.ondataavailable = event => {
-        if (event.data.size > 0) {
-            audioChunks.push(event.data);
+        function addToPlaylist() {
+            const type1 = document.getElementById('osc1-type').value;
+            const freq1 = parseFloat(osc1FreqInput.value);
+            const type2 = document.getElementById('osc2-type').value;
+            const freq2 = parseFloat(osc2FreqInput.value);
+            const duration = parseFloat(document.getElementById('duration').value);
+            if (isNaN(freq1) || isNaN(freq2) || isNaN(duration) || freq1 < 0.5 || freq1 > 5000 || freq2 < 0.5 || freq2 > 5000 || duration <= 0) {
+                alert('輸入無效，請檢查頻率和時長');
+                return;
+            }
+            const item = { type1, freq1, type2, freq2, duration };
+            playlist.push(item);
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'playlist-item';
+            itemDiv.textContent = `頻率1: ${type1} ${freq1}Hz, 頻率2: ${type2} ${freq2}Hz, 時長: ${duration}秒`;
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = '刪除';
+            deleteBtn.onclick = () => {
+                const index = playlist.indexOf(item);
+                if (index > -1) {
+                    playlist.splice(index, 1);
+                }
+                itemDiv.remove();
+            };
+            itemDiv.appendChild(deleteBtn);
+            document.getElementById('playlist').appendChild(itemDiv);
         }
-    };
 
-    mediaRecorder.onstop = function() { // Changed to standard function for correct 'this' binding
-        downloadSequence();
-    };
+        function playPlaylist() {
+            if (playlist.length === 0) {
+                alert('播放列表為空');
+                return;
+            }
+            let currentTime = audioContext.currentTime;
+            playlist.forEach(item => {
+                const osc1 = audioContext.createOscillator();
+                osc1.type = item.type1;
+                osc1.frequency.setValueAtTime(item.freq1, currentTime);
+                osc1.connect(audioContext.destination);
+                osc1.start(currentTime);
+                osc1.stop(currentTime + item.duration);
 
-    mediaRecorder.start(); // Start recording before sequence playback
-    playNextSequenceItem();
+                const osc2 = audioContext.createOscillator();
+                osc2.type = item.type2;
+                osc2.frequency.setValueAtTime(item.freq2, currentTime);
+                osc2.connect(audioContext.destination);
+                osc2.start(currentTime);
+                osc2.stop(currentTime + item.duration);
 
-}
-
-
-function playNextSequenceItem() {
-    if (currentSequenceIndex < sequenceItems.length) {
-        const item = sequenceItems[currentSequenceIndex];
-        const duration = parseFloat(document.getElementById('sequenceDuration').value) * 1000;
-
-        playSequencePair(item);
-
-        sequenceTimer = setTimeout(() => {
-            stopSequencePair();
-            currentSequenceIndex++;
-            playNextSequenceItem();
-        }, duration);
-    } else {
-        stopSequence();
-        alert("Sequence playback completed.");
-        if (mediaRecorder && mediaRecorder.state === 'recording') {
-            mediaRecorder.stop();
+                currentTime += item.duration;
+            });
         }
-    }
-}
 
-function playSequencePair(item) {
-    stopTone(1);
-    const oscillator1 = audioContext.createOscillator();
-    oscillator1.type = item.waveform1;
-    oscillator1.frequency.setValueAtTime(parseFloat(item.frequency1), audioContext.currentTime);
-    oscillator1.connect(mediaStreamDestination);
+        function downloadPlaylist() {
+            if (playlist.length === 0) {
+                alert('播放列表為空');
+                return;
+            }
+            const totalDuration = playlist.reduce((sum, item) => sum + item.duration, 0);
+            const sampleRate = audioContext.sampleRate;
+            const offlineContext = new OfflineAudioContext(2, totalDuration * sampleRate, sampleRate);
+            let currentTime = 0;
+            playlist.forEach(item => {
+                const osc1 = offlineContext.createOscillator();
+                osc1.type = item.type1;
+                osc1.frequency.setValueAtTime(item.freq1, currentTime);
+                osc1.connect(offlineContext.destination);
+                osc1.start(currentTime);
+                osc1.stop(currentTime + item.duration);
 
-    stopTone(2);
-    const oscillator2 = audioContext.createOscillator();
-    oscillator2.type = item.waveform2;
-    oscillator2.frequency.setValueAtTime(parseFloat(item.frequency2), audioContext.currentTime);
-    oscillator2.connect(mediaStreamDestination);
+                const osc2 = offlineContext.createOscillator();
+                osc2.type = item.type2;
+                osc2.frequency.setValueAtTime(item.freq2, currentTime);
+                osc2.connect(offlineContext.destination);
+                osc2.start(currentTime);
+                osc2.stop(currentTime + item.duration);
 
-    oscillator1.start();
-    oscillators[1] = oscillator1;
-    oscillator2.start();
-    oscillators[2] = oscillator2;
-}
+                currentTime += item.duration;
+            });
+            const loading = document.createElement('div');
+            loading.textContent = '正在渲染音訊...';
+            document.body.appendChild(loading);
+            offlineContext.startRendering().then(renderedBuffer => {
+                const wav = audioBufferToWav(renderedBuffer);
+                const blob = new Blob([wav], { type: 'audio/wav' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'playlist.wav';
+                a.click();
+                URL.revokeObjectURL(url);
+                document.body.removeChild(loading);
+            });
+        }
 
-
-function stopSequencePair() {
-    stopTone(1);
-    stopTone(2);
-}
-
-
-function stopSequence() {
-    clearTimeout(sequenceTimer);
-    stopSequencePair();
-    currentSequenceIndex = 0;
-    if (mediaRecorder && mediaRecorder.state === 'recording') {
-        mediaRecorder.stop();
-    }
-}
-
-
-function downloadSequence() {
-    if (audioChunks.length === 0) return;
-
-    const blob = new Blob(audioChunks, { type: 'audio/wav' });
-    const url = URL.createObjectURL(blob);
-    const downloadLink = document.createElement('a');
-    downloadLink.href = url;
-    downloadLink.download = 'frequency_sequence.wav';
-    downloadLink.textContent = 'Download Sequence Audio File';
-
-    const downloadLinkContainer = document.getElementById('download-link-container');
-    downloadLinkContainer.innerHTML = '';
-    downloadLinkContainer.appendChild(downloadLink);
-
-    URL.revokeObjectURL(url);
-    audioChunks = [];
-}
-
-function downloadSequenceButton() {
-    if (sequenceItems.length === 0) {
-        alert("Please add sequence items first.");
-        return;
-    }
-    playSequence(); // Start sequence which will trigger recording and download after completion
-    alert("Sequence playback and recording started. Download link will appear after sequence completes.");
-}
-
-
-</script>
-
+        document.getElementById('add-to-playlist').addEventListener('click', addToPlaylist);
+        document.getElementById('play').addEventListener('click', playPlaylist);
+        document.getElementById('download').addEventListener('click', downloadPlaylist);
+    </script>
 </body>
 </html>
