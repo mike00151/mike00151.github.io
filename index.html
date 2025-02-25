@@ -2,24 +2,35 @@
 <html lang="en">
 <head>
 <title>Frequency Generator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
-body { font-family: Arial, sans-serif; }
-.generator { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; }
+body { font-family: Arial, sans-serif; margin: 0; }
+.container { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+h1 { text-align: center; }
+.generator, #sequence-controls { border: 1px solid #ccc; padding: 20px; margin-bottom: 20px; width: 90%; max-width: 600px; box-sizing: border-box; }
+.generator h2, #sequence-controls h2 { text-align: center; margin-top: 0; }
 .controls { margin-bottom: 10px; }
 label { display: block; margin-bottom: 5px; }
-input[type="number"], select { width: calc(100% - 22px); padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; }
-button { padding: 10px 15px; border: none; background-color: #007bff; color: white; cursor: pointer; }
-button.stop { background-color: #dc3545; }
-#sequence-controls { border: 1px solid #ccc; padding: 20px; }
+input[type="number"], select { width: calc(100% - 22px); padding: 8px; margin-bottom: 10px; border: 1px solid #ddd; box-sizing: border-box; }
+button, .remove-sequence { padding: 10px 15px; border: none; background-color: #007bff; color: white; cursor: pointer; }
+button.stop, .remove-sequence { background-color: #dc3545; }
 #sequence-list { margin-bottom: 10px; }
 .sequence-item { border: 1px solid #eee; padding: 10px; margin-bottom: 5px; background-color: #f9f9f9; display: flex; justify-content: space-between; align-items: center; }
-.remove-sequence { background-color: #dc3545; }
-#download-link-container { margin-top: 10px; }
+#download-link-container { margin-top: 10px; text-align: center; }
+
+/* RWD 設計：螢幕寬度小於 768px 時應用以下樣式 */
+@media (max-width: 768px) {
+    .generator, #sequence-controls { width: 100%; margin-left: 0; margin-right: 0; padding: 15px; }
+    h1 { font-size: 1.5em; }
+    .generator h2, #sequence-controls h2 { font-size: 1.2em; }
+    button, .remove-sequence { padding: 8px 12px; font-size: 0.9em; }
+}
 </style>
     <script src="https://cdn.jsdelivr.net/npm/extendable-media-recorder-wav-encoder@7.0.78/dist/extendable-media-recorder-wav-encoder.js"></script>
 </head>
 <body>
 
+<div class="container">
 <h1>Frequency Generator</h1>
 
 <div class="generator">
@@ -69,8 +80,9 @@ button.stop { background-color: #dc3545; }
         <label for="sequenceDuration">Duration per Item (seconds):</label>
         <input type="number" id="sequenceDuration" value="33" min="1">
     </div>
-    <button onclick="downloadSequenceButton()">Download Sequence</button>
+    <button onclick="downloadSequence()">Download Sequence</button>
     <div id="download-link-container"></div>
+</div>
 </div>
 
 <script>
@@ -85,7 +97,7 @@ let mediaStreamDestination;
 
 
 function playTone(generatorNumber) {
-    stopTone(generatorNumber); // Stop any currently playing sound
+    stopTone(generatorNumber);
 
     const waveformType = document.getElementById(`waveform${generatorNumber}`).value;
     const frequency = parseFloat(document.getElementById(`frequency${generatorNumber}`).value);
@@ -125,7 +137,7 @@ function addSequenceItem() {
 
 function updateSequenceList() {
     const sequenceListDiv = document.getElementById('sequence-list');
-    sequenceListDiv.innerHTML = ''; // Clear the list
+    sequenceListDiv.innerHTML = '';
 
     sequenceItems.forEach((item, index) => {
         const itemDiv = document.createElement('div');
@@ -150,11 +162,11 @@ async function playSequence() {
     }
 
     currentSequenceIndex = 0;
-    audioChunks = []; // Reset audio chunks for new recording
+    audioChunks = [];
     mediaStreamDestination = audioContext.createMediaStreamDestination();
 
-
-    const encoder = await connect();
+    // Initialize and start MediaRecorder here
+    const encoder = await ExtendableMediaRecorder.WavEncoder(); // Use ExtendableMediaRecorder directly
     mediaRecorder = new MediaRecorder(mediaStreamDestination.stream, {
         mimeType: 'audio/wav',
         encoderName: encoder.name
@@ -167,52 +179,52 @@ async function playSequence() {
         }
     };
 
-    mediaRecorder.onstop = () => {
+    mediaRecorder.onstop = function() { // Changed to standard function for correct 'this' binding
         downloadSequence();
     };
 
+    mediaRecorder.start(); // Start recording before sequence playback
     playNextSequenceItem();
-    mediaRecorder.start(); // Start recording here, before sequence starts
+
 }
 
 
 function playNextSequenceItem() {
     if (currentSequenceIndex < sequenceItems.length) {
         const item = sequenceItems[currentSequenceIndex];
-        const duration = parseFloat(document.getElementById('sequenceDuration').value) * 1000; // Convert to milliseconds
+        const duration = parseFloat(document.getElementById('sequenceDuration').value) * 1000;
 
         playSequencePair(item);
 
         sequenceTimer = setTimeout(() => {
             stopSequencePair();
             currentSequenceIndex++;
-            playNextSequenceItem(); // Recursively play the next item
+            playNextSequenceItem();
         }, duration);
     } else {
-        stopSequence(); // Stop after sequence is complete
+        stopSequence();
         alert("Sequence playback completed.");
         if (mediaRecorder && mediaRecorder.state === 'recording') {
-             mediaRecorder.stop(); // Stop recording when sequence finishes
+            mediaRecorder.stop();
         }
     }
 }
 
 function playSequencePair(item) {
-    // Play Generator 1
     stopTone(1);
     const oscillator1 = audioContext.createOscillator();
     oscillator1.type = item.waveform1;
     oscillator1.frequency.setValueAtTime(parseFloat(item.frequency1), audioContext.currentTime);
-    oscillator1.connect(mediaStreamDestination); // Connect to mediaStreamDestination
-    oscillator1.start();
-    oscillators[1] = oscillator1;
+    oscillator1.connect(mediaStreamDestination);
 
-    // Play Generator 2
     stopTone(2);
     const oscillator2 = audioContext.createOscillator();
     oscillator2.type = item.waveform2;
     oscillator2.frequency.setValueAtTime(parseFloat(item.frequency2), audioContext.currentTime);
-    oscillator2.connect(mediaStreamDestination); // Connect to mediaStreamDestination
+    oscillator2.connect(mediaStreamDestination);
+
+    oscillator1.start();
+    oscillators[1] = oscillator1;
     oscillator2.start();
     oscillators[2] = oscillator2;
 }
@@ -234,15 +246,6 @@ function stopSequence() {
 }
 
 
-function downloadSequenceButton() {
-    if (audioChunks.length === 0) {
-        alert("No audio sequence recorded yet. Please play the sequence first.");
-        return;
-    }
-    downloadSequence();
-}
-
-
 function downloadSequence() {
     if (audioChunks.length === 0) return;
 
@@ -254,12 +257,20 @@ function downloadSequence() {
     downloadLink.textContent = 'Download Sequence Audio File';
 
     const downloadLinkContainer = document.getElementById('download-link-container');
-    downloadLinkContainer.innerHTML = ''; // Clear previous link
+    downloadLinkContainer.innerHTML = '';
     downloadLinkContainer.appendChild(downloadLink);
 
-    // Clean up URL object after creating the download link (optional, but good practice)
     URL.revokeObjectURL(url);
-    audioChunks = []; // Clear audio chunks after download is ready
+    audioChunks = [];
+}
+
+function downloadSequenceButton() {
+    if (sequenceItems.length === 0) {
+        alert("Please add sequence items first.");
+        return;
+    }
+    playSequence(); // Start sequence which will trigger recording and download after completion
+    alert("Sequence playback and recording started. Download link will appear after sequence completes.");
 }
 
 
