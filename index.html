@@ -75,6 +75,8 @@
             vertical-align: middle;
         }
     </style>
+    <!-- Include the audio-buffer-to-wav library for WAV conversion -->
+    <script src="https://unpkg.com/audio-buffer-to-wav@1.0.0"></script>
 </head>
 <body>
     <h1>Sequence Playback Controls</h1>
@@ -131,12 +133,21 @@
             </svg>
             Stop
         </button>
+        <button id="download">
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+            Download WAV
+        </button>
     </div>
     <script>
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         let playlist = [];
         let activeOscillators = [];
 
+        // Add an item to the playlist
         function addToPlaylist() {
             const typeA = document.getElementById('freqA-type').value;
             const freqA = parseFloat(document.getElementById('freqA-freq').value);
@@ -165,6 +176,7 @@
             document.getElementById('playlist').appendChild(itemDiv);
         }
 
+        // Play the playlist
         function playPlaylist() {
             if (playlist.length === 0) {
                 alert('Playlist is empty');
@@ -189,10 +201,11 @@
                 oscB.stop(currentTime + item.duration);
                 activeOscillators.push(oscB);
 
-                currentTime += item.duration + 0.5;
+                currentTime += item.duration + 0.5; // Add 0.5s pause between items
             });
         }
 
+        // Stop playback
         function stopPlaylist() {
             activeOscillators.forEach(osc => {
                 osc.stop();
@@ -200,9 +213,59 @@
             activeOscillators = [];
         }
 
+        // Download the playlist as a WAV file
+        function downloadPlaylist() {
+            if (playlist.length === 0) {
+                alert('Playlist is empty');
+                return;
+            }
+            const sampleRate = audioContext.sampleRate;
+            const totalDuration = playlist.reduce((acc, item) => acc + item.duration + 0.5, 0) - 0.5; // Exclude the last pause
+            const offlineContext = new OfflineAudioContext(1, totalDuration * sampleRate, sampleRate);
+            let currentTime = 0;
+
+            // Schedule all oscillators in the offline context
+            playlist.forEach((item, index) => {
+                const oscA = offlineContext.createOscillator();
+                oscA.type = item.typeA;
+                oscA.frequency.setValueAtTime(item.freqA, currentTime);
+                oscA.connect(offlineContext.destination);
+                oscA.start(currentTime);
+                oscA.stop(currentTime + item.duration);
+
+                const oscB = offlineContext.createOscillator();
+                oscB.type = item.typeB;
+                oscB.frequency.setValueAtTime(item.freqB, currentTime);
+                oscB.connect(offlineContext.destination);
+                oscB.start(currentTime);
+                oscB.stop(currentTime + item.duration);
+
+                if (index < playlist.length - 1) {
+                    currentTime += item.duration + 0.5; // Add pause except after the last item
+                }
+            });
+
+            // Render the audio and convert to WAV
+            offlineContext.startRendering().then(renderedBuffer => {
+                const wav = audioBufferToWav(renderedBuffer); // Convert to WAV using the library
+                const blob = new Blob([wav], { type: 'audio/wav' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'playlist.wav';
+                a.click();
+                URL.revokeObjectURL(url);
+            }).catch(err => {
+                console.error('Rendering failed: ', err);
+                alert('Failed to render audio. Please try again.');
+            });
+        }
+
+        // Event listeners
         document.getElementById('add-to-playlist').addEventListener('click', addToPlaylist);
         document.getElementById('play').addEventListener('click', playPlaylist);
         document.getElementById('stop').addEventListener('click', stopPlaylist);
+        document.getElementById('download').addEventListener('click', downloadPlaylist);
     </script>
 </body>
 </html>
