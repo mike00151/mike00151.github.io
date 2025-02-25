@@ -3,44 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>頻率產生器</title>
+    <title>Sequence Playback Controls</title>
     <style>
-        body { font-family: Arial, sans-serif; padding: 10px; }
-        .controls { margin-bottom: 20px; }
-        .playlist-item { margin-bottom: 10px; }
-        button { padding: 10px; margin-right: 10px; font-size: 16px; }
-        input[type="range"], input[type="number"], select { margin: 5px 0; width: 100%; }
-        label { font-size: 16px; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+        .controls {
+            margin-bottom: 20px;
+        }
+        .playlist-item {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px;
+            margin-right: 10px;
+            font-size: 16px;
+        }
+        input[type="range"], input[type="number"], select {
+            margin: 5px 0;
+            width: 100%;
+        }
+        label {
+            font-size: 16px;
+        }
+        .loading {
+            font-size: 18px;
+            color: blue;
+            margin-top: 10px;
+        }
     </style>
     <script src="https://unpkg.com/audio-buffer-to-wav"></script>
 </head>
 <body>
-    <h1>頻率產生器</h1>
+    <h1>Sequence Playback Controls</h1>
     <div class="controls">
-        <h2>頻率產生器 1</h2>
-        <label for="osc1-type">波形：</label>
-        <select id="osc1-type">
+        <h2>頻率 A 設置</h2>
+        <label for="freqA-type">波形：</label>
+        <select id="freqA-type">
             <option value="sine">正弦波</option>
             <option value="square">方波</option>
             <option value="triangle">三角波</option>
         </select>
         <br>
-        <label for="osc1-freq-slider">頻率 (Hz)：</label>
-        <input type="range" id="osc1-freq-slider" min="0.5" max="5000" step="0.1" value="443">
-        <input type="number" id="osc1-freq-input" min="0.5" max="5000" step="0.1" value="443">
+        <label for="freqA-freq">頻率 (Hz)：</label>
+        <input type="number" id="freqA-freq" min="0.5" max="5000" step="0.1" value="440">
     </div>
     <div class="controls">
-        <h2>頻率產生器 2</h2>
-        <label for="osc2-type">波形：</label>
-        <select id="osc2-type">
+        <h2>頻率 B 設置</h2>
+        <label for="freqB-type">波形：</label>
+        <select id="freqB-type">
             <option value="sine">正弦波</option>
             <option value="square">方波</option>
             <option value="triangle">三角波</option>
         </select>
         <br>
-        <label for="osc2-freq-slider">頻率 (Hz)：</label>
-        <input type="range" id="osc2-freq-slider" min="0.5" max="5000" step="0.1" value="66">
-        <input type="number" id="osc2-freq-input" min="0.5" max="5000" step="0.1" value="66">
+        <label for="freqB-freq">頻率 (Hz)：</label>
+        <input type="number" id="freqB-freq" min="0.5" max="5000" step="0.1" value="440">
     </div>
     <div class="controls">
         <label for="duration">播放時長 (秒)：</label>
@@ -60,98 +79,92 @@
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         let playlist = [];
 
-        // 綁定頻率滑塊和輸入框
-        const osc1FreqSlider = document.getElementById('osc1-freq-slider');
-        const osc1FreqInput = document.getElementById('osc1-freq-input');
-        osc1FreqSlider.addEventListener('input', () => { osc1FreqInput.value = osc1FreqSlider.value; });
-        osc1FreqInput.addEventListener('input', () => { osc1FreqSlider.value = osc1FreqInput.value; });
-
-        const osc2FreqSlider = document.getElementById('osc2-freq-slider');
-        const osc2FreqInput = document.getElementById('osc2-freq-input');
-        osc2FreqSlider.addEventListener('input', () => { osc2FreqInput.value = osc2FreqSlider.value; });
-        osc2FreqInput.addEventListener('input', () => { osc2FreqSlider.value = osc2FreqInput.value; });
-
-        // 添加到播放列表
         function addToPlaylist() {
-            const type1 = document.getElementById('osc1-type').value;
-            const freq1 = parseFloat(osc1FreqInput.value);
-            const type2 = document.getElementById('osc2-type').value;
-            const freq2 = parseFloat(osc2FreqInput.value);
+            const typeA = document.getElementById('freqA-type').value;
+            const freqA = parseFloat(document.getElementById('freqA-freq').value);
+            const typeB = document.getElementById('freqB-type').value;
+            const freqB = parseFloat(document.getElementById('freqB-freq').value);
             const duration = parseFloat(document.getElementById('duration').value);
-            if (isNaN(freq1) || isNaN(freq2) || isNaN(duration) || freq1 < 0.5 || freq1 > 5000 || freq2 < 0.5 || freq2 > 5000 || duration <= 0) {
+            if (isNaN(freqA) || isNaN(freqB) || isNaN(duration) || freqA < 0.5 || freqA > 5000 || freqB < 0.5 || freqB > 5000 || duration <= 0) {
                 alert('輸入無效，請檢查頻率和時長');
                 return;
             }
-            const item = { type1, freq1, type2, freq2, duration };
+            const item = { typeA, freqA, typeB, freqB, duration };
             playlist.push(item);
             const itemDiv = document.createElement('div');
             itemDiv.className = 'playlist-item';
-            itemDiv.textContent = `頻率1: ${type1} ${freq1}Hz, 頻率2: ${type2} ${freq2}Hz, 時長: ${duration}秒`;
+            itemDiv.textContent = `頻率A: ${typeA} ${freqA}Hz, 頻率B: ${typeB} ${freqB}Hz, 時長: ${duration}秒`;
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = '刪除';
             deleteBtn.onclick = () => {
                 const index = playlist.indexOf(item);
-                if (index > -1) playlist.splice(index, 1);
+                if (index > -1) {
+                    playlist.splice(index, 1);
+                }
                 itemDiv.remove();
             };
             itemDiv.appendChild(deleteBtn);
             document.getElementById('playlist').appendChild(itemDiv);
         }
 
-        // 播放播放列表
         function playPlaylist() {
             if (playlist.length === 0) {
                 alert('播放列表為空');
                 return;
             }
             let currentTime = audioContext.currentTime;
-            playlist.forEach(item => {
-                const osc1 = audioContext.createOscillator();
-                osc1.type = item.type1;
-                osc1.frequency.setValueAtTime(item.freq1, currentTime);
-                osc1.connect(audioContext.destination);
-                osc1.start(currentTime);
-                osc1.stop(currentTime + item.duration);
+            playlist.forEach((item, index) => {
+                const oscA = audioContext.createOscillator();
+                oscA.type = item.typeA;
+                oscA.frequency.setValueAtTime(item.freqA, currentTime);
+                oscA.connect(audioContext.destination);
+                oscA.start(currentTime);
+                oscA.stop(currentTime + item.duration);
 
-                const osc2 = audioContext.createOscillator();
-                osc2.type = item.type2;
-                osc2.frequency.setValueAtTime(item.freq2, currentTime);
-                osc2.connect(audioContext.destination);
-                osc2.start(currentTime);
-                osc2.stop(currentTime + item.duration);
+                const oscB = audioContext.createOscillator();
+                oscB.type = item.typeB;
+                oscB.frequency.setValueAtTime(item.freqB, currentTime);
+                oscB.connect(audioContext.destination);
+                oscB.start(currentTime);
+                oscB.stop(currentTime + item.duration);
 
-                currentTime += item.duration;
+                currentTime += item.duration + 0.5; // 每個頻率組後停頓0.5秒
             });
         }
 
-        // 下載播放列表
         function downloadPlaylist() {
             if (playlist.length === 0) {
                 alert('播放列表為空');
                 return;
             }
-            const totalDuration = playlist.reduce((sum, item) => sum + item.duration, 0);
+            const pauseDuration = 0.5; // 每個頻率組後的停頓時間
+            const totalDuration = playlist.reduce((sum, item) => sum + item.duration, 0) + (playlist.length - 1) * pauseDuration;
             const sampleRate = audioContext.sampleRate;
             const offlineContext = new OfflineAudioContext(2, totalDuration * sampleRate, sampleRate);
             let currentTime = 0;
-            playlist.forEach(item => {
-                const osc1 = offlineContext.createOscillator();
-                osc1.type = item.type1;
-                osc1.frequency.setValueAtTime(item.freq1, currentTime);
-                osc1.connect(offlineContext.destination);
-                osc1.start(currentTime);
-                osc1.stop(currentTime + item.duration);
+            playlist.forEach((item, index) => {
+                const oscA = offlineContext.createOscillator();
+                oscA.type = item.typeA;
+                oscA.frequency.setValueAtTime(item.freqA, currentTime);
+                oscA.connect(offlineContext.destination);
+                oscA.start(currentTime);
+                oscA.stop(currentTime + item.duration);
 
-                const osc2 = offlineContext.createOscillator();
-                osc2.type = item.type2;
-                osc2.frequency.setValueAtTime(item.freq2, currentTime);
-                osc2.connect(offlineContext.destination);
-                osc2.start(currentTime);
-                osc2.stop(currentTime + item.duration);
+                const oscB = offlineContext.createOscillator();
+                oscB.type = item.typeB;
+                oscB.frequency.setValueAtTime(item.freqB, currentTime);
+                oscB.connect(offlineContext.destination);
+                oscB.start(currentTime);
+                oscB.stop(currentTime + item.duration);
 
-                currentTime += item.duration;
+                if (index < playlist.length - 1) {
+                    currentTime += item.duration + pauseDuration;
+                } else {
+                    currentTime += item.duration;
+                }
             });
             const loading = document.createElement('div');
+            loading.className = 'loading';
             loading.textContent = '正在渲染音訊...';
             document.body.appendChild(loading);
             offlineContext.startRendering().then(renderedBuffer => {
