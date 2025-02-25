@@ -83,7 +83,7 @@
             }
         }
     </style>
-    <script src="https://unpkg.com/audio-buffer-to-wav"></script>
+    <script src="https://unpkg.com/audio-buffer-to-wav@1.0.0"></script>
 </head>
 <body>
     <h1>Sequence Playback Controls</h1>
@@ -245,6 +245,10 @@
                 a.click();
                 URL.revokeObjectURL(url);
                 document.body.removeChild(loading);
+            }).catch(err => {
+                console.error('Rendering failed: ', err);
+                document.body.removeChild(loading);
+                alert('Failed to render audio. Please try again.');
             });
         }
 
