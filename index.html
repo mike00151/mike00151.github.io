@@ -5,28 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>頻率產生器</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 10px;
-        }
-        .controls {
-            margin-bottom: 20px;
-        }
-        .playlist-item {
-            margin-bottom: 10px;
-        }
-        button {
-            padding: 10px;
-            margin-right: 10px;
-            font-size: 16px;
-        }
-        input[type="range"], input[type="number"], select {
-            margin: 5px 0;
-            width: 100%;
-        }
-        label {
-            font-size: 16px;
-        }
+        body { font-family: Arial, sans-serif; padding: 10px; }
+        .controls { margin-bottom: 20px; }
+        .playlist-item { margin-bottom: 10px; }
+        button { padding: 10px; margin-right: 10px; font-size: 16px; }
+        input[type="range"], input[type="number"], select { margin: 5px 0; width: 100%; }
+        label { font-size: 16px; }
     </style>
     <script src="https://unpkg.com/audio-buffer-to-wav"></script>
 </head>
@@ -42,8 +26,8 @@
         </select>
         <br>
         <label for="osc1-freq-slider">頻率 (Hz)：</label>
-        <input type="range" id="osc1-freq-slider" min="0.5" max="5000" step="0.1" value="440">
-        <input type="number" id="osc1-freq-input" min="0.5" max="5000" step="0.1" value="440">
+        <input type="range" id="osc1-freq-slider" min="0.5" max="5000" step="0.1" value="443">
+        <input type="number" id="osc1-freq-input" min="0.5" max="5000" step="0.1" value="443">
     </div>
     <div class="controls">
         <h2>頻率產生器 2</h2>
@@ -55,8 +39,8 @@
         </select>
         <br>
         <label for="osc2-freq-slider">頻率 (Hz)：</label>
-        <input type="range" id="osc2-freq-slider" min="0.5" max="5000" step="0.1" value="440">
-        <input type="number" id="osc2-freq-input" min="0.5" max="5000" step="0.1" value="440">
+        <input type="range" id="osc2-freq-slider" min="0.5" max="5000" step="0.1" value="66">
+        <input type="number" id="osc2-freq-input" min="0.5" max="5000" step="0.1" value="66">
     </div>
     <div class="controls">
         <label for="duration">播放時長 (秒)：</label>
@@ -79,22 +63,15 @@
         // 綁定頻率滑塊和輸入框
         const osc1FreqSlider = document.getElementById('osc1-freq-slider');
         const osc1FreqInput = document.getElementById('osc1-freq-input');
-        osc1FreqSlider.addEventListener('input', () => {
-            osc1FreqInput.value = osc1FreqSlider.value;
-        });
-        osc1FreqInput.addEventListener('input', () => {
-            osc1FreqSlider.value = osc1FreqInput.value;
-        });
+        osc1FreqSlider.addEventListener('input', () => { osc1FreqInput.value = osc1FreqSlider.value; });
+        osc1FreqInput.addEventListener('input', () => { osc1FreqSlider.value = osc1FreqInput.value; });
 
         const osc2FreqSlider = document.getElementById('osc2-freq-slider');
         const osc2FreqInput = document.getElementById('osc2-freq-input');
-        osc2FreqSlider.addEventListener('input', () => {
-            osc2FreqInput.value = osc2FreqSlider.value;
-        });
-        osc2FreqInput.addEventListener('input', () => {
-            osc2FreqSlider.value = osc2FreqInput.value;
-        });
+        osc2FreqSlider.addEventListener('input', () => { osc2FreqInput.value = osc2FreqSlider.value; });
+        osc2FreqInput.addEventListener('input', () => { osc2FreqSlider.value = osc2FreqInput.value; });
 
+        // 添加到播放列表
         function addToPlaylist() {
             const type1 = document.getElementById('osc1-type').value;
             const freq1 = parseFloat(osc1FreqInput.value);
@@ -114,15 +91,14 @@
             deleteBtn.textContent = '刪除';
             deleteBtn.onclick = () => {
                 const index = playlist.indexOf(item);
-                if (index > -1) {
-                    playlist.splice(index, 1);
-                }
+                if (index > -1) playlist.splice(index, 1);
                 itemDiv.remove();
             };
             itemDiv.appendChild(deleteBtn);
             document.getElementById('playlist').appendChild(itemDiv);
         }
 
+        // 播放播放列表
         function playPlaylist() {
             if (playlist.length === 0) {
                 alert('播放列表為空');
@@ -148,6 +124,7 @@
             });
         }
 
+        // 下載播放列表
         function downloadPlaylist() {
             if (playlist.length === 0) {
                 alert('播放列表為空');
