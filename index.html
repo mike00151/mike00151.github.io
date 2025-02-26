@@ -24,6 +24,12 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+        .frequency-input {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
         .playlist-item {
             background-color: #fff;
             border-radius: 8px;
@@ -58,7 +64,7 @@
         #stop:hover {
             background-color: #c82333;
         }
-        input[type="number"], select {
+        input[type="number"], select, textarea {
             width: 100%;
             margin: 10px 0;
             padding: 8px;
@@ -75,36 +81,22 @@
             vertical-align: middle;
         }
     </style>
-    <!-- Include the audio-buffer-to-wav library for WAV conversion -->
     <script src="https://cdn.jsdelivr.net/npm/audiobuffer-to-wav@1.0.0/index.min.js"></script>
 </head>
 <body>
     <h1>Sequence Playback Controls</h1>
     <div class="controls">
-        <h2>Frequency A Settings</h2>
-        <label for="freqA-type">Waveform:</label>
-        <select id="freqA-type">
-            <option value="sine">Sine</option>
-            <option value="square">Square</option>
-            <option value="triangle">Triangle</option>
-        </select>
-        <br>
-        <label for="freqA-freq">Frequency (Hz):</label>
-        <input type="number" id="freqA-freq" min="0.5" max="5000" step="0.1" value="440">
-    </div>
-    <div class="controls">
-        <h2>Frequency B Settings</h2>
-        <label for="freqB-type">Waveform:</label>
-        <select id="freqB-type">
-            <option value="sine">Sine</option>
-            <option value="square">Square</option>
-            <option value="triangle">Triangle</option>
-        </select>
-        <br>
-        <label for="freqB-freq">Frequency (Hz):</label>
-        <input type="number" id="freqB-freq" min="0.5" max="5000" step="0.1" value="440">
-    </div>
-    <div class="controls">
+        <h2>Manual Group Settings</h2>
+        <div id="frequency-list">
+            <!-- Frequency inputs added dynamically -->
+        </div>
+        <button id="add-frequency">
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Add Frequency
+        </button>
         <label for="duration">Duration (seconds):</label>
         <input type="number" id="duration" min="0.1" step="0.1" value="33">
         <br>
@@ -113,7 +105,19 @@
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Add to Playlist
+            Add Group to Playlist
+        </button>
+    </div>
+    <div class="controls">
+        <h2>Quick Input</h2>
+        <label for="quick-input">Enter frequencies and duration (e.g., 40/396;60):</label>
+        <textarea id="quick-input" rows="4" placeholder="40/396;60&#10;40/284/396;120&#10;81/49/124/100;60&#10;40/142;60"></textarea>
+        <button id="parse-input">
+            <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+            </svg>
+            Parse Input
         </button>
     </div>
     <div>
@@ -147,22 +151,93 @@
         let playlist = [];
         let activeOscillators = [];
 
-        // Add an item to the playlist
+        // Add a new frequency input field
+        function addFrequencyInput() {
+            const frequencyList = document.getElementById('frequency-list');
+            const freqDiv = document.createElement('div');
+            freqDiv.className = 'frequency-input';
+            freqDiv.innerHTML = `
+                <label>Waveform:</label>
+                <select class="waveform-type">
+                    <option value="sine">Sine</option>
+                    <option value="square">Square</option>
+                    <option value="triangle">Triangle</option>
+                </select>
+                <br>
+                <label>Frequency (Hz):</label>
+                <input type="number" class="freq-value" min="0.5" max="5000" step="0.1" value="440">
+                <button class="remove-frequency" style="background-color: #dc3545; margin-top: 10px;">Remove</button>
+            `;
+            freqDiv.querySelector('.remove-frequency').addEventListener('click', () => {
+                freqDiv.remove();
+            });
+            frequencyList.appendChild(freqDiv);
+        }
+
+        // Add manual group to playlist
         function addToPlaylist() {
-            const typeA = document.getElementById('freqA-type').value;
-            const freqA = parseFloat(document.getElementById('freqA-freq').value);
-            const typeB = document.getElementById('freqB-type').value;
-            const freqB = parseFloat(document.getElementById('freqB-freq').value);
+            const frequencyInputs = document.querySelectorAll('.frequency-input');
             const duration = parseFloat(document.getElementById('duration').value);
-            if (isNaN(freqA) || isNaN(freqB) || isNaN(duration) || freqA < 0.5 || freqA > 5000 || freqB < 0.5 || freqB > 5000 || duration <= 0) {
-                alert('Invalid input, please check frequency and duration');
+            if (frequencyInputs.length === 0) {
+                alert('Please add at least one frequency');
                 return;
             }
-            const item = { typeA, freqA, typeB, freqB, duration };
+            if (isNaN(duration) || duration <= 0) {
+                alert('Invalid duration');
+                return;
+            }
+            const frequencies = Array.from(frequencyInputs).map(input => {
+                const type = input.querySelector('.waveform-type').value;
+                const freq = parseFloat(input.querySelector('.freq-value').value);
+                if (isNaN(freq) || freq < 0.5 || freq > 5000) {
+                    alert('Invalid frequency value');
+                    throw new Error('Invalid frequency');
+                }
+                return { type, freq };
+            });
+            addGroupToPlaylist(frequencies, duration);
+            document.getElementById('frequency-list').innerHTML = '';
+        }
+
+        // Parse user input and add to playlist
+        function parseUserInput() {
+            const input = document.getElementById('quick-input').value.trim();
+            if (!input) {
+                alert('Please enter some frequencies');
+                return;
+            }
+            const lines = input.split('\n');
+            lines.forEach(line => {
+                const [freqPart, durationPart] = line.split(';');
+                if (!freqPart || !durationPart) {
+                    alert(`Invalid format in line: ${line}`);
+                    return;
+                }
+                const frequencies = freqPart.split('/').map(f => {
+                    const freq = parseFloat(f);
+                    if (isNaN(freq) || freq < 0.5 || freq > 5000) {
+                        alert(`Invalid frequency in line: ${line}`);
+                        throw new Error('Invalid frequency');
+                    }
+                    return { type: 'sine', freq }; // Default to sine wave
+                });
+                const duration = parseFloat(durationPart);
+                if (isNaN(duration) || duration <= 0) {
+                    alert(`Invalid duration in line: ${line}`);
+                    return;
+                }
+                addGroupToPlaylist(frequencies, duration);
+            });
+        }
+
+        // Helper function to add a group to the playlist
+        function addGroupToPlaylist(frequencies, duration) {
+            const item = { frequencies, duration };
             playlist.push(item);
             const itemDiv = document.createElement('div');
             itemDiv.className = 'playlist-item';
-            itemDiv.textContent = `Frequency A: ${typeA} ${freqA}Hz, Frequency B: ${typeB} ${freqB}Hz, Duration: ${duration}s`;
+            const freqText = frequencies.map(f => `${f.type} ${f.freq}Hz`).join(', ');
+            itemDiv.textContent = `Frequencies: ${freqText}, Duration: ${duration}s`;
             const deleteBtn = document.createElement('button');
             deleteBtn.textContent = 'Delete';
             deleteBtn.onclick = () => {
@@ -185,23 +260,16 @@
             stopPlaylist();
             let currentTime = audioContext.currentTime;
             playlist.forEach((item) => {
-                const oscA = audioContext.createOscillator();
-                oscA.type = item.typeA;
-                oscA.frequency.setValueAtTime(item.freqA, currentTime);
-                oscA.connect(audioContext.destination);
-                oscA.start(currentTime);
-                oscA.stop(currentTime + item.duration);
-                activeOscillators.push(oscA);
-
-                const oscB = audioContext.createOscillator();
-                oscB.type = item.typeB;
-                oscB.frequency.setValueAtTime(item.freqB, currentTime);
-                oscB.connect(audioContext.destination);
-                oscB.start(currentTime);
-                oscB.stop(currentTime + item.duration);
-                activeOscillators.push(oscB);
-
-                currentTime += item.duration + 0.5; // Add 0.5s pause between items
+                item.frequencies.forEach(({ type, freq }) => {
+                    const osc = audioContext.createOscillator();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, currentTime);
+                    osc.connect(audioContext.destination);
+                    osc.start(currentTime);
+                    osc.stop(currentTime + item.duration);
+                    activeOscillators.push(osc);
+                });
+                currentTime += item.duration + 0.5;
             });
         }
 
@@ -213,41 +281,33 @@
             activeOscillators = [];
         }
 
-        // Download the playlist as a WAV file
+        // Download playlist as WAV
         function downloadPlaylist() {
             if (playlist.length === 0) {
                 alert('Playlist is empty');
                 return;
             }
             const sampleRate = audioContext.sampleRate;
-            const totalDuration = playlist.reduce((acc, item) => acc + item.duration + 0.5, 0) - 0.5; // Exclude the last pause
+            const totalDuration = playlist.reduce((acc, item) => acc + item.duration + 0.5, 0) - 0.5;
             const offlineContext = new OfflineAudioContext(1, totalDuration * sampleRate, sampleRate);
             let currentTime = 0;
 
-            // Schedule all oscillators in the offline context
             playlist.forEach((item, index) => {
-                const oscA = offlineContext.createOscillator();
-                oscA.type = item.typeA;
-                oscA.frequency.setValueAtTime(item.freqA, currentTime);
-                oscA.connect(offlineContext.destination);
-                oscA.start(currentTime);
-                oscA.stop(currentTime + item.duration);
-
-                const oscB = offlineContext.createOscillator();
-                oscB.type = item.typeB;
-                oscB.frequency.setValueAtTime(item.freqB, currentTime);
-                oscB.connect(offlineContext.destination);
-                oscB.start(currentTime);
-                oscB.stop(currentTime + item.duration);
-
+                item.frequencies.forEach(({ type, freq }) => {
+                    const osc = offlineContext.createOscillator();
+                    osc.type = type;
+                    osc.frequency.setValueAtTime(freq, currentTime);
+                    osc.connect(offlineContext.destination);
+                    osc.start(currentTime);
+                    osc.stop(currentTime + item.duration);
+                });
                 if (index < playlist.length - 1) {
-                    currentTime += item.duration + 0.5; // Add pause except after the last item
+                    currentTime += item.duration + 0.5;
                 }
             });
 
-            // Render the audio and convert to WAV
             offlineContext.startRendering().then(renderedBuffer => {
-                const wav = audioBufferToWav(renderedBuffer); // Convert to WAV using the library
+                const wav = audioBufferToWav(renderedBuffer);
                 const blob = new Blob([wav], { type: 'audio/wav' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -257,15 +317,20 @@
                 URL.revokeObjectURL(url);
             }).catch(err => {
                 console.error('Rendering failed: ', err);
-                alert('Failed to render audio. Please try again.');
+                alert('Failed to render audio');
             });
         }
 
         // Event listeners
+        document.getElementById('add-frequency').addEventListener('click', addFrequencyInput);
         document.getElementById('add-to-playlist').addEventListener('click', addToPlaylist);
+        document.getElementById('parse-input').addEventListener('click', parseUserInput);
         document.getElementById('play').addEventListener('click', playPlaylist);
         document.getElementById('stop').addEventListener('click', stopPlaylist);
         document.getElementById('download').addEventListener('click', downloadPlaylist);
+
+        // Add initial frequency input for manual settings
+        addFrequencyInput();
     </script>
 </body>
 </html>
