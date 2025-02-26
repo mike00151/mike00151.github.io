@@ -81,7 +81,7 @@
             vertical-align: middle;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/npm/audiobuffer-to-wav@1.0.0/index.min.js"></script>
+    <script src="https://unpkg.com/audio-buffer-to-wav@1.0.0"></script>
 </head>
 <body>
     <h1>Sequence Playback Controls</h1>
@@ -111,7 +111,10 @@
     <div class="controls">
         <h2>Quick Input</h2>
         <label for="quick-input">Enter frequencies and duration (e.g., 40/396;60):</label>
-        <textarea id="quick-input" rows="4" placeholder="40/396;60&#10;40/284/396;120&#10;81/49/124/100;60&#10;40/142;60"></textarea>
+        <textarea id="quick-input" rows="4" placeholder="40/396;60
+40/284/396;120
+81/49/124/100;60
+40/142;60"></textarea>
         <button id="parse-input">
             <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
@@ -149,7 +152,24 @@
     <script>
         const audioContext = new (window.AudioContext || window.webkitAudioContext)();
         let playlist = [];
-        let activeOscillators = [];
+        let activeNodes = []; // To store oscillators and buffer sources
+
+        // Generate a synthetic meow sound buffer
+        function createMeowBuffer() {
+            const sampleRate = audioContext.sampleRate;
+            const duration = 0.5; // Short meow sound
+            const buffer = audioContext.createBuffer(1, duration * sampleRate, sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < data.length; i++) {
+                const t = i / sampleRate;
+                // Simple meow-like sound: modulated sine wave with envelope
+                const envelope = Math.exp(-10 * t) * (1 - t / duration);
+                const freq = 500 + 200 * Math.sin(20 * t); // Varying frequency for meow effect
+                data[i] = envelope * Math.sin(2 * Math.PI * freq * t);
+            }
+            return buffer;
+        }
+        const meowBuffer = createMeowBuffer();
 
         // Add a new frequency input field
         function addFrequencyInput() {
@@ -162,6 +182,7 @@
                     <option value="sine">Sine</option>
                     <option value="square">Square</option>
                     <option value="triangle">Triangle</option>
+                    <option value="meow">Meow Sound</option>
                 </select>
                 <br>
                 <label>Frequency (Hz):</label>
@@ -219,7 +240,7 @@
                         alert(`Invalid frequency in line: ${line}`);
                         throw new Error('Invalid frequency');
                     }
-                    return { type: 'sine', freq }; // Default to sine wave
+                    return { type: 'sine', freq }; // Default to sine wave for quick input
                 });
                 const duration = parseFloat(durationPart);
                 if (isNaN(duration) || duration <= 0) {
@@ -261,13 +282,23 @@
             let currentTime = audioContext.currentTime;
             playlist.forEach((item) => {
                 item.frequencies.forEach(({ type, freq }) => {
-                    const osc = audioContext.createOscillator();
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, currentTime);
-                    osc.connect(audioContext.destination);
-                    osc.start(currentTime);
-                    osc.stop(currentTime + item.duration);
-                    activeOscillators.push(osc);
+                    if (type === 'meow') {
+                        const source = audioContext.createBufferSource();
+                        source.buffer = meowBuffer;
+                        source.playbackRate.value = freq / 440; // Pitch shift based on frequency
+                        source.connect(audioContext.destination);
+                        source.start(currentTime);
+                        source.stop(currentTime + item.duration);
+                        activeNodes.push(source);
+                    } else {
+                        const osc = audioContext.createOscillator();
+                        osc.type = type;
+                        osc.frequency.setValueAtTime(freq, currentTime);
+                        osc.connect(audioContext.destination);
+                        osc.start(currentTime);
+                        osc.stop(currentTime + item.duration);
+                        activeNodes.push(osc);
+                    }
                 });
                 currentTime += item.duration + 0.5;
             });
@@ -275,10 +306,10 @@
 
         // Stop playback
         function stopPlaylist() {
-            activeOscillators.forEach(osc => {
-                osc.stop();
+            activeNodes.forEach(node => {
+                node.stop();
             });
-            activeOscillators = [];
+            activeNodes = [];
         }
 
         // Download playlist as WAV
@@ -294,12 +325,21 @@
 
             playlist.forEach((item, index) => {
                 item.frequencies.forEach(({ type, freq }) => {
-                    const osc = offlineContext.createOscillator();
-                    osc.type = type;
-                    osc.frequency.setValueAtTime(freq, currentTime);
-                    osc.connect(offlineContext.destination);
-                    osc.start(currentTime);
-                    osc.stop(currentTime + item.duration);
+                    if (type === 'meow') {
+                        const source = offlineContext.createBufferSource();
+                        source.buffer = meowBuffer;
+                        source.playbackRate.value = freq / 440;
+                        source.connect(offlineContext.destination);
+                        source.start(currentTime);
+                        source.stop(currentTime + item.duration);
+                    } else {
+                        const osc = offlineContext.createOscillator();
+                        osc.type = type;
+                        osc.frequency.setValueAtTime(freq, currentTime);
+                        osc.connect(offlineContext.destination);
+                        osc.start(currentTime);
+                        osc.stop(currentTime + item.duration);
+                    }
                 });
                 if (index < playlist.length - 1) {
                     currentTime += item.duration + 0.5;
