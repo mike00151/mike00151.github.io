@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>伊斯坦堡全能導遊 (同步版)</title>
+    <title>伊斯坦堡全能導遊 (KML 匯入版)</title>
     
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -74,12 +74,18 @@
         }
 
         .marker-backup {
-            background-color: #6B7280;
-            opacity: 0.6;
+            background-color: #4B5563;
+            opacity: 0.8;
             border-radius: 50%;
-            width: 14px;
-            height: 14px;
+            width: 18px;
+            height: 18px;
             border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            color: white;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
         .marker-temp {
@@ -106,7 +112,7 @@
         }
 
         .sortable-ghost { opacity: 0.4; background-color: #F3E5AB; }
-        #map { height: 38vh; width: 100%; z-index: 0; border-bottom: 4px solid #C5A059; }
+        #map { height: 40vh; width: 100%; z-index: 0; border-bottom: 4px solid #C5A059; }
     </style>
 </head>
 <body>
@@ -146,22 +152,35 @@
             </button>
         </div>
 
-        <!-- Sync Actions (NEW) -->
+        <!-- Sync & Google Actions -->
         <div class="card p-4">
             <h3 class="font-bold text-turk-blue mb-3 text-sm flex items-center justify-between">
-                <span><i class="fa-solid fa-share-nodes mr-2"></i>行程同步與分享</span>
+                <span><i class="fa-solid fa-share-nodes mr-2"></i>資料與備份</span>
                 <span class="text-[10px] bg-green-100 text-green-700 px-2 rounded-full" id="save-status">已自動儲存</span>
             </h3>
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="exportData()" class="bg-white border border-turk-blue text-turk-blue py-2 rounded-lg text-xs font-bold hover:bg-turk-sand transition">
-                    <i class="fa-solid fa-upload mr-1"></i> 分享行程給朋友
-                </button>
-                <button onclick="importDataModal()" class="bg-white border border-gray-400 text-gray-600 py-2 rounded-lg text-xs font-bold hover:bg-gray-100 transition">
-                    <i class="fa-solid fa-download mr-1"></i> 匯入朋友行程
+            
+            <!-- Google KML Import Section -->
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3">
+                <h4 class="text-xs font-bold text-gray-600 mb-2 flex items-center">
+                    <i class="fa-brands fa-google text-blue-500 mr-1"></i> 匯入 Google 地圖清單
+                </h4>
+                <p class="text-[10px] text-gray-500 mb-2 leading-relaxed">
+                    無法直接搜尋？請去 <a href="https://www.google.com/maps/d/" target="_blank" class="text-blue-600 underline">Google My Maps</a> 建立地圖，匯出 KML 檔後上傳。
+                </p>
+                <input type="file" id="kml-input" accept=".kml,.xml" class="hidden" onchange="handleKMLUpload(this)">
+                <button onclick="document.getElementById('kml-input').click()" class="w-full bg-white border border-turk-gold text-turk-gold py-2 rounded-lg text-xs font-bold hover:bg-turk-sand transition flex items-center justify-center">
+                    <i class="fa-solid fa-file-import mr-2"></i> 上傳 KML 檔案
                 </button>
             </div>
-            <div class="mt-3 text-[10px] text-gray-400 text-center">
-                <button onclick="resetToDefault()" class="underline hover:text-red-500">重置為原始設定</button>
+
+            <!-- Standard Sync -->
+            <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-200">
+                <button onclick="exportData()" class="text-turk-blue text-xs font-bold hover:underline">
+                    <i class="fa-solid fa-copy mr-1"></i> 複製行程代碼
+                </button>
+                <button onclick="importDataModal()" class="text-gray-600 text-xs font-bold hover:underline text-right">
+                    <i class="fa-solid fa-paste mr-1"></i> 貼上行程代碼
+                </button>
             </div>
         </div>
 
@@ -206,7 +225,7 @@
                 </div>
                 <div>
                     <div class="text-xs font-bold text-gray-500 mb-2 px-1 pt-2 border-t border-gray-200 flex justify-between">
-                        <span>備用清單</span>
+                        <span>備用清單 (含匯入景點)</span>
                         <span class="bg-gray-200 text-[10px] px-2 rounded-full py-0.5">可拖曳加入</span>
                     </div>
                     <div id="backup-list" class="space-y-2 min-h-[50px] bg-gray-100/50 rounded-lg p-1"></div>
@@ -217,6 +236,10 @@
 
     <!-- GUIDE VIEW -->
     <div id="view-guide" class="hidden pt-20 px-4 pb-24 space-y-6">
+        <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl p-6 text-white shadow-lg flex justify-between items-center">
+            <div><h2 class="font-bold text-lg">12月氣候</h2><p class="text-sm opacity-90">8°C - 12°C | 濕冷多雨</p></div>
+            <i class="fa-solid fa-cloud-showers-heavy text-4xl opacity-80"></i>
+        </div>
         <div class="card p-4 border-l-4 border-red-500">
             <h3 class="font-bold text-red-800 mb-2 text-sm"><i class="fa-solid fa-triangle-exclamation mr-2"></i>防騙</h3>
             <ul class="text-xs text-gray-700 space-y-2 list-disc pl-4">
@@ -244,7 +267,6 @@
     <button onclick="toggleCurrency()" class="fixed bottom-24 right-4 bg-turk-gold text-white w-12 h-12 rounded-full shadow-lg z-40 border-2 border-white flex items-center justify-center active:scale-90 transition"><i class="fa-solid fa-coins"></i></button>
 
     <!-- MODALS -->
-
     <!-- Currency Modal -->
     <div id="currency-sheet" class="fixed inset-0 z-[100] hidden flex items-end sm:items-center sm:justify-center pointer-events-none">
         <div class="absolute inset-0 bg-black/50 pointer-events-auto transition-opacity" onclick="toggleCurrency()"></div>
@@ -286,19 +308,14 @@
         <div class="bg-white p-6 rounded-xl shadow-2xl w-[90%] max-w-sm">
             <h3 class="font-bold text-lg text-turk-dark mb-2" id="sync-title">分享行程</h3>
             <p class="text-xs text-gray-500 mb-4" id="sync-desc">複製下方代碼傳給朋友，或貼上朋友的代碼。</p>
-            
             <textarea id="sync-data" class="w-full h-32 border border-gray-300 rounded p-2 text-xs font-mono bg-gray-50 focus:ring-2 focus:ring-turk-blue outline-none break-all" readonly></textarea>
-            
-            <div class="mt-4 flex flex-col gap-2" id="sync-actions">
-                <!-- Buttons injected via JS -->
-            </div>
+            <div class="mt-4 flex flex-col gap-2" id="sync-actions"></div>
             <button onclick="document.getElementById('sync-modal').classList.add('hidden')" class="mt-4 w-full text-gray-500 text-xs py-2">關閉視窗</button>
         </div>
     </div>
 
     <script>
         // --- DATA ---
-        // Default Data
         const defaultItinerary = [
             { date: "12/26", spots: [ { id: "s1", name: "伊斯坦堡機場", lat: 41.261, lng: 28.742, icon: "fa-plane" }, { id: "s2", name: "JW Marriott (入住)", lat: 41.025, lng: 28.977, icon: "fa-hotel" } ] },
             { date: "12/27", spots: [ { id: "s5", name: "聖索菲亞清真寺", lat: 41.0086, lng: 28.9802, icon: "fa-mosque" }, { id: "s6", name: "藍色清真寺", lat: 41.0054, lng: 28.9768, icon: "fa-mosque" }, { id: "s8", name: "地下水宮殿", lat: 41.0084, lng: 28.9779, icon: "fa-water" } ] },
@@ -309,28 +326,90 @@
             { date: "01/01", spots: [ { id: "s24", name: "蘇萊曼尼耶清真寺", lat: 41.0162, lng: 28.9638, icon: "fa-mosque" }, { id: "s25", name: "Balat 彩色街區", lat: 41.0315, lng: 28.9472, icon: "fa-camera" } ] }
         ];
 
+        // Expanded Backup List
         const defaultBackup = [
-            { id: "b1", name: "托普卡匹皇宮", lat: 41.0115, lng: 28.9833, icon: "fa-crown" },
-            { id: "b2", name: "考古博物館", lat: 41.0116, lng: 28.9813, icon: "fa-landmark" },
-            { id: "b3", name: "彩虹階梯", lat: 41.0326, lng: 28.9863, icon: "fa-stairs" }
+            { id: "b1", name: "Hafiz Mustafa 1864 (百年甜點)", lat: 41.0162, lng: 28.9729, icon: "fa-cookie" },
+            { id: "b2", name: "Seven Hills (網美觀景餐廳)", lat: 41.0062, lng: 28.9796, icon: "fa-utensils" },
+            { id: "b3", name: "托普卡匹皇宮", lat: 41.0115, lng: 28.9833, icon: "fa-crown" },
+            { id: "b4", name: "多爾瑪巴赫切宮", lat: 41.0391, lng: 29.0007, icon: "fa-landmark" },
+            { id: "b5", name: "Vefa Bozacisi (發酵飲)", lat: 41.0154, lng: 28.9592, icon: "fa-wine-glass" },
+            { id: "b6", name: "伊斯坦堡考古博物館", lat: 41.0116, lng: 28.9813, icon: "fa-landmark" },
+            { id: "b7", name: "少女塔 (Maiden's Tower)", lat: 41.0211, lng: 29.0041, icon: "fa-tower-observation" },
+            { id: "b8", name: "純真博物館", lat: 41.0304, lng: 28.9806, icon: "fa-book" },
+            { id: "b9", name: "奧塔科伊清真寺 (Ortakoy)", lat: 41.0471, lng: 29.0268, icon: "fa-mosque" },
+            { id: "b10", name: "Salt Galata (絕美圖書館)", lat: 41.0238, lng: 28.9739, icon: "fa-building-columns" },
+            { id: "b11", name: "皮埃爾洛蒂山 (Pierre Loti)", lat: 41.0543, lng: 28.9340, icon: "fa-mountain" },
+            { id: "b12", name: "Galataport (海濱購物)", lat: 41.0264, lng: 28.9825, icon: "fa-bag-shopping" },
+            { id: "b13", name: "Ciya Sofrasi (亞洲區美食)", lat: 40.9897, lng: 29.0260, icon: "fa-utensils" },
+            { id: "b14", name: "魯梅利堡壘", lat: 41.0853, lng: 29.0435, icon: "fa-chess-rook" },
+            { id: "b15", name: "柯拉教堂", lat: 41.0292, lng: 28.9392, icon: "fa-church" },
+            { id: "b16", name: "Kuzguncuk (彩色屋)", lat: 41.0350, lng: 29.0299, icon: "fa-camera" },
+            { id: "b17", name: "Arnavutkoy (海鮮街)", lat: 41.0666, lng: 29.0432, icon: "fa-fish" },
+            { id: "b18", name: "Miniaturk (小人國)", lat: 41.0588, lng: 28.9491, icon: "fa-magnifying-glass" },
+            { id: "b19", name: "伊斯坦堡現代美術館", lat: 41.0269, lng: 28.9832, icon: "fa-palette" },
+            { id: "b20", name: "法提赫清真寺", lat: 41.0196, lng: 28.9496, icon: "fa-mosque" }
         ];
 
-        // State variables
+        // State
         let itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
         let backupSpots = JSON.parse(JSON.stringify(defaultBackup));
-
         let currentDayIndex = 0;
         let map = null, polyline = null;
         let activeMarkers = [], backupMarkers = [];
         let activeSortable = null, backupSortable = null;
         let isAddMode = false, tempLatLng = null, tempMarker = null;
 
-        // --- LOCAL STORAGE LOGIC ---
+        // --- KML PARSER ---
+        function handleKMLUpload(input) {
+            const file = input.files[0];
+            if(!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, "text/xml");
+                const placemarks = xmlDoc.getElementsByTagName("Placemark");
+                let count = 0;
+
+                for (let i = 0; i < placemarks.length; i++) {
+                    const name = placemarks[i].getElementsByTagName("name")[0]?.textContent || "未命名";
+                    const pointStr = placemarks[i].getElementsByTagName("coordinates")[0]?.textContent;
+                    
+                    if (pointStr) {
+                        const coords = pointStr.trim().split(',');
+                        // KML: lng, lat, alt. We need lat, lng
+                        const lng = parseFloat(coords[0]);
+                        const lat = parseFloat(coords[1]);
+
+                        if(!isNaN(lat) && !isNaN(lng)) {
+                            backupSpots.push({
+                                id: 'kml_' + Date.now() + '_' + i,
+                                name: name,
+                                lat: lat,
+                                lng: lng,
+                                icon: 'fa-map-pin'
+                            });
+                            count++;
+                        }
+                    }
+                }
+
+                if(count > 0) {
+                    saveState();
+                    updateAll();
+                    alert(`成功匯入 ${count} 個景點到備用清單！`);
+                } else {
+                    alert("無法讀取 KML 檔案，請確認檔案格式正確。");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- LOCAL STORAGE ---
         function saveState() {
             const state = { itinerary: itineraryData, backup: backupSpots };
             localStorage.setItem('turk_planner_data', JSON.stringify(state));
-            
-            // UI Feedback
             const status = document.getElementById('save-status');
             status.innerText = "已儲存";
             status.className = "text-[10px] bg-green-100 text-green-700 px-2 rounded-full transition";
@@ -349,7 +428,7 @@
         }
 
         function resetToDefault() {
-            if(confirm("確定要重置所有行程回到預設值嗎？您的修改將會消失。")) {
+            if(confirm("重置將恢復預設行程，您的修改將會消失。")) {
                 itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
                 backupSpots = JSON.parse(JSON.stringify(defaultBackup));
                 saveState();
@@ -358,77 +437,53 @@
             }
         }
 
-        // --- EXPORT / IMPORT LOGIC ---
+        // --- EXPORT/IMPORT ---
         function exportData() {
-            const state = { itinerary: itineraryData, backup: backupSpots };
-            const code = JSON.stringify(state);
-            
+            const code = JSON.stringify({ itinerary: itineraryData, backup: backupSpots });
             document.getElementById('sync-title').innerText = "分享行程代碼";
-            document.getElementById('sync-desc').innerText = "複製下方代碼傳給朋友 (長按全選)";
-            const textArea = document.getElementById('sync-data');
-            textArea.value = code;
-            textArea.readOnly = true;
-            
-            document.getElementById('sync-actions').innerHTML = `
-                <button onclick="copyToClipboard()" class="bg-turk-blue text-white py-2 rounded-lg font-bold">複製代碼</button>
-            `;
+            document.getElementById('sync-desc').innerText = "複製代碼傳給朋友";
+            document.getElementById('sync-data').value = code;
+            document.getElementById('sync-data').readOnly = true;
+            document.getElementById('sync-actions').innerHTML = `<button onclick="copyToClipboard()" class="bg-turk-blue text-white py-2 rounded-lg font-bold">複製代碼</button>`;
             document.getElementById('sync-modal').classList.remove('hidden');
         }
 
         function importDataModal() {
             document.getElementById('sync-title').innerText = "匯入行程";
-            document.getElementById('sync-desc').innerText = "請貼上朋友傳來的行程代碼";
-            const textArea = document.getElementById('sync-data');
-            textArea.value = "";
-            textArea.readOnly = false;
-            textArea.placeholder = "在此貼上代碼...";
-            
-            document.getElementById('sync-actions').innerHTML = `
-                <button onclick="performImport()" class="bg-turk-gold text-white py-2 rounded-lg font-bold">確認匯入</button>
-            `;
+            document.getElementById('sync-desc').innerText = "貼上朋友的代碼";
+            const ta = document.getElementById('sync-data');
+            ta.value = ""; ta.readOnly = false; ta.placeholder = "貼上代碼...";
+            document.getElementById('sync-actions').innerHTML = `<button onclick="performImport()" class="bg-turk-gold text-white py-2 rounded-lg font-bold">確認匯入</button>`;
             document.getElementById('sync-modal').classList.remove('hidden');
         }
 
         function copyToClipboard() {
-            const copyText = document.getElementById("sync-data");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); 
-            navigator.clipboard.writeText(copyText.value).then(() => {
-                alert("已複製！請貼給朋友。");
-            });
+            const el = document.getElementById("sync-data");
+            el.select(); navigator.clipboard.writeText(el.value).then(() => alert("已複製！"));
         }
 
         function performImport() {
             const code = document.getElementById("sync-data").value;
             if(!code) return;
             try {
-                const parsed = JSON.parse(code);
-                if(parsed.itinerary && parsed.backup) {
-                    itineraryData = parsed.itinerary;
-                    backupSpots = parsed.backup;
-                    saveState();
-                    updateAll();
+                const p = JSON.parse(code);
+                if(p.itinerary && p.backup) {
+                    itineraryData = p.itinerary; backupSpots = p.backup;
+                    saveState(); updateAll();
                     document.getElementById('sync-modal').classList.add('hidden');
-                    alert("匯入成功！行程已更新。");
-                } else {
-                    alert("代碼格式錯誤");
-                }
-            } catch(e) {
-                alert("無效的代碼");
-            }
+                    alert("匯入成功！");
+                } else alert("格式錯誤");
+            } catch(e) { alert("無效代碼"); }
         }
 
-        // --- MAP & CORE LOGIC ---
+        // --- MAP LOGIC ---
         function initMap() {
             if(map) return;
             map = L.map('map', {zoomControl: false}).setView([41.0082, 28.9784], 13);
-            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '©OpenStreetMap', maxZoom: 19
-            }).addTo(map);
-
+            L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { attribution: '©OpenStreetMap', maxZoom: 19 }).addTo(map);
             map.on('click', function(e) {
                 if(isAddMode) {
-                    setTempLocation(e.latlng.lat, e.latlng.lng, "已點擊地圖位置");
+                    setTempLocation(e.latlng.lat, e.latlng.lng, "已點擊位置");
                     document.getElementById('name-modal').classList.remove('hidden');
                 }
             });
@@ -452,14 +507,12 @@
         }
 
         function updateAll() {
-            // Clean up
             activeMarkers.forEach(m => map.removeLayer(m));
             backupMarkers.forEach(m => map.removeLayer(m));
             if(polyline) map.removeLayer(polyline);
             if(tempMarker) map.removeLayer(tempMarker);
             activeMarkers = []; backupMarkers = [];
 
-            // Draw Active
             const activeSpots = itineraryData[currentDayIndex].spots;
             const latlngs = [];
             activeSpots.forEach((spot, i) => {
@@ -473,14 +526,12 @@
                 map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
             }
 
-            // Draw Backup
             backupSpots.forEach(spot => {
-                const icon = L.divIcon({ className: '', html: `<div class='marker-backup'></div>`, iconSize: [14,14], iconAnchor: [7,7] });
-                const m = L.marker([spot.lat, spot.lng], {icon: icon}).addTo(map).bindPopup(`<span class='text-gray-500'>${spot.name} (備用)</span>`);
+                const icon = L.divIcon({ className: '', html: `<div class='marker-backup'><i class='fa-solid ${spot.icon}'></i></div>`, iconSize: [18,18], iconAnchor: [9,9] });
+                const m = L.marker([spot.lat, spot.lng], {icon: icon}).addTo(map).bindPopup(`<span class='text-gray-500'>${spot.name}</span>`);
                 backupMarkers.push(m);
             });
 
-            // Lists
             const activeList = document.getElementById('itinerary-list');
             const backupList = document.getElementById('backup-list');
             activeList.innerHTML = ''; backupList.innerHTML = '';
@@ -521,11 +572,10 @@
             }
             itineraryData[currentDayIndex].spots = getIds('itinerary-list').map(findSpot).filter(Boolean);
             backupSpots = getIds('backup-list').map(findSpot).filter(Boolean);
-            saveState(); // SAVE ON CHANGE
-            updateAll();
+            saveState(); updateAll();
         }
 
-        // --- SEARCH & ADD LOGIC ---
+        // --- SEARCH/ADD ---
         function toggleAddMode() {
             isAddMode = !isAddMode;
             const btn = document.getElementById('add-mode-btn');
@@ -538,7 +588,7 @@
                 document.getElementById('search-results').classList.add('hidden');
                 document.getElementById('new-spot-name').value = '';
                 tempLatLng = null;
-                document.getElementById('location-status').innerHTML = '<i class="fa-solid fa-location-dot"></i> 請先搜尋或點擊地圖選擇位置';
+                document.getElementById('location-status').innerHTML = '<i class="fa-solid fa-location-dot"></i> 請先搜尋或點擊位置';
                 document.getElementById('location-status').className = 'text-[10px] text-gray-400 mt-1 italic';
             } else {
                 btn.classList.remove('bg-turk-gold', 'text-white', 'border-white');
@@ -553,23 +603,18 @@
             const query = document.getElementById('search-query').value;
             const resultList = document.getElementById('search-results');
             if(!query) return;
-            resultList.innerHTML = '<li class="p-2 text-gray-500">搜尋中...</li>';
-            resultList.classList.remove('hidden');
+            resultList.innerHTML = '<li class="p-2 text-gray-500">搜尋中...</li>'; resultList.classList.remove('hidden');
             try {
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&viewbox=28.0,41.5,30.0,40.5&bounded=1`);
-                const data = await response.json();
+                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&viewbox=28.0,41.5,30.0,40.5&bounded=1`);
+                const data = await res.json();
                 resultList.innerHTML = '';
-                if(data.length === 0) {
-                    resultList.innerHTML = '<li class="p-2 text-red-500">找不到地點</li>';
-                } else {
+                if(data.length === 0) { resultList.innerHTML = '<li class="p-2 text-red-500">找不到地點</li>'; }
+                else {
                     data.forEach(item => {
                         const li = document.createElement('li');
                         li.className = 'p-2 hover:bg-turk-sand cursor-pointer truncate';
                         li.innerText = item.display_name;
-                        li.onclick = () => {
-                            setTempLocation(item.lat, item.lon, item.display_name.split(',')[0]);
-                            resultList.classList.add('hidden');
-                        };
+                        li.onclick = () => { setTempLocation(item.lat, item.lon, item.display_name.split(',')[0]); resultList.classList.add('hidden'); };
                         resultList.appendChild(li);
                     });
                 }
@@ -593,9 +638,7 @@
             const name = document.getElementById('new-spot-name').value;
             if(name && tempLatLng) {
                 backupSpots.push({ id: 'b_'+Date.now(), name: name, lat: tempLatLng.lat, lng: tempLatLng.lng, icon: 'fa-map-pin' });
-                toggleAddMode();
-                saveState(); // SAVE
-                updateAll();
+                toggleAddMode(); saveState(); updateAll();
             } else { alert("請輸入名稱並確認位置"); }
         }
 
@@ -634,7 +677,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => { 
-            loadState(); // LOAD FROM STORAGE
+            loadState(); 
             setInterval(updateTime, 1000); updateTime(); calculateRate(); 
         });
     </script>
