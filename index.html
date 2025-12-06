@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>伊斯坦堡全能嚮導</title>
+    <title>伊斯坦堡全能嚮導 Pro</title>
     
     <!-- 1. Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -38,9 +38,6 @@
                     fontFamily: {
                         'serif': ['"Noto Serif TC"', 'serif'],
                         'display': ['"Cinzel"', 'serif'],
-                    },
-                    animation: {
-                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     }
                 }
             }
@@ -48,16 +45,14 @@
     </script>
 
     <style>
-        /* --- Styles --- */
         body {
             background-color: #F4EBD9;
             font-family: 'Noto Serif TC', serif;
             -webkit-tap-highlight-color: transparent;
-            padding-bottom: 90px; /* Space for bottom nav */
-            overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile */
+            padding-bottom: 90px;
+            overscroll-behavior-y: none;
         }
 
-        /* Ottoman Pattern Overlay */
         .pattern-bg {
             background-color: #F4EBD9;
             background-image: 
@@ -72,14 +67,7 @@
             pointer-events: none;
         }
 
-        /* Utility Classes */
-        .card {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid #C5A059;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
+        /* Marker Styles */
         .marker-number {
             background-color: #8B0000;
             color: white;
@@ -92,40 +80,45 @@
             font-weight: bold;
             font-family: sans-serif;
             border: 2px solid white;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.4);
+            z-index: 100;
         }
 
-        /* Sortable Dragging Style */
-        .sortable-ghost {
-            opacity: 0.4;
-            background-color: #F3E5AB;
-        }
-        .sortable-drag {
-            cursor: grabbing;
+        .marker-backup {
+            background-color: #9CA3AF; /* Gray */
+            opacity: 0.7;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
-        /* Map Container Height */
+        /* Layout */
         #map {
-            height: 35vh; /* Takes top 35% of screen */
+            height: 40vh; /* Map height */
             width: 100%;
             z-index: 0;
             border-bottom: 4px solid #C5A059;
         }
 
-        /* Scrollable List Container */
-        .scroll-container {
-            height: 50vh;
-            overflow-y: auto;
-            padding-bottom: 80px;
+        .sortable-ghost {
+            opacity: 0.4;
+            background-color: #F3E5AB;
         }
-
-        /* Toggle Switch */
-        .toggle-checkbox:checked {
-            right: 0;
-            border-color: #68D391;
+        
+        /* Pulse animation for add mode */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.33); }
+            80%, 100% { opacity: 0; }
         }
-        .toggle-checkbox:checked + .toggle-label {
-            background-color: #68D391;
+        .pulse-ring {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid #C5A059;
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
         }
     </style>
 </head>
@@ -135,172 +128,98 @@
 
     <!-- Top Info Bar -->
     <div class="fixed top-0 w-full z-50 bg-turk-blue text-white shadow-lg px-4 py-2 flex justify-between items-center h-14">
-        <div class="flex items-center space-x-2">
-            <span class="text-turk-gold text-lg"><i class="fa-solid fa-moon"></i></span>
-            <div class="leading-tight">
-                <div class="text-[10px] opacity-70">ISTANBUL</div>
-                <div id="clock-ist" class="font-bold text-sm font-mono">--:--</div>
-            </div>
-        </div>
-        
-        <div class="font-display text-turk-gold tracking-widest text-lg">ODYSSEY</div>
-
+        <div class="font-display text-turk-gold tracking-widest text-lg">ISTANBUL PRO</div>
         <div class="flex items-center space-x-2 text-right">
-            <div class="leading-tight">
-                <div class="text-[10px] opacity-70">TAIPEI</div>
-                <div id="clock-tpe" class="font-bold text-sm font-mono">--:--</div>
-            </div>
-            <span class="text-orange-300 text-lg"><i class="fa-solid fa-sun"></i></span>
+            <div id="clock-ist" class="font-bold text-sm font-mono">--:--</div>
         </div>
     </div>
 
-    <!-- ================= VIEW 1: DASHBOARD (Rich Content) ================= -->
-    <div id="view-dashboard" class="pt-16 px-4 pb-24 space-y-6 animate-fade-in">
-        
-        <!-- 1. Countdown -->
+    <!-- ================= VIEW 1: DASHBOARD ================= -->
+    <div id="view-dashboard" class="pt-16 px-4 pb-24 space-y-6">
         <div class="bg-gradient-to-r from-turk-night to-turk-blue rounded-xl p-6 text-white text-center shadow-lg relative overflow-hidden">
-            <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('https://www.transparenttextures.com/patterns/arabesque.png')]"></div>
-            <h2 class="text-turk-gold font-display text-xl mb-2">距離出發還有</h2>
+            <h2 class="text-turk-gold font-display text-xl mb-2">距離出發</h2>
             <div class="flex justify-center space-x-4 font-mono">
                 <div><span id="days" class="text-3xl font-bold">--</span><div class="text-[10px]">DAYS</div></div>
-                <div class="text-2xl opacity-50">:</div>
-                <div><span id="hours" class="text-3xl font-bold">--</span><div class="text-[10px]">HRS</div></div>
             </div>
-            <p class="text-xs mt-3 opacity-80"><i class="fa-solid fa-plane-departure mr-1"></i> 12/25 TPE -> BKK -> IST</p>
+            <button onclick="switchView('planner')" class="mt-4 bg-turk-gold text-white px-6 py-2 rounded-full font-bold shadow hover:bg-yellow-600 transition">
+                開始規劃行程
+            </button>
         </div>
-
-        <!-- 2. Budget Tracker (Interactive) -->
-        <div class="card p-4">
-            <div class="flex justify-between items-center mb-3">
-                <h3 class="font-bold text-turk-blue"><i class="fa-solid fa-wallet mr-2"></i>今日預算控制</h3>
-                <button onclick="resetBudget()" class="text-xs text-gray-400 underline">重置</button>
-            </div>
-            <div class="flex items-center space-x-2 mb-2">
-                <div class="relative flex-1">
-                    <span class="absolute left-3 top-2 text-gray-500">₺</span>
-                    <input type="number" id="budget-input" placeholder="輸入消費" class="w-full pl-8 pr-3 py-2 border rounded-lg focus:ring-2 focus:ring-turk-gold outline-none">
-                </div>
-                <button onclick="addExpense()" class="bg-turk-gold text-white px-4 py-2 rounded-lg font-bold shadow hover:bg-yellow-600 active:scale-95 transition">
-                    記帳
-                </button>
-            </div>
-            <div class="flex justify-between text-sm text-gray-600 bg-gray-50 p-2 rounded">
-                <span>今日累積:</span>
-                <span class="font-bold text-turk-red">₺ <span id="total-spent">0</span></span>
-            </div>
-        </div>
-
-        <!-- 3. Turkish Phrasebook (Scrollable) -->
-        <div>
-            <h3 class="font-display text-turk-dark mb-2 ml-1">🇹🇷 生存土耳其語</h3>
-            <div class="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide">
-                <div class="min-w-[140px] bg-white p-3 rounded-xl border-l-4 border-turk-blue shadow-sm">
-                    <div class="text-xs text-gray-400">你好</div>
-                    <div class="text-lg font-bold text-turk-dark">Merhaba</div>
-                    <div class="text-xs text-gray-500 italic">梅-哈-吧</div>
-                </div>
-                <div class="min-w-[140px] bg-white p-3 rounded-xl border-l-4 border-turk-red shadow-sm">
-                    <div class="text-xs text-gray-400">謝謝</div>
-                    <div class="text-lg font-bold text-turk-dark">Teşekkürler</div>
-                    <div class="text-xs text-gray-500 italic">特-薛-庫-勒</div>
-                </div>
-                <div class="min-w-[140px] bg-white p-3 rounded-xl border-l-4 border-turk-gold shadow-sm">
-                    <div class="text-xs text-gray-400">多少錢?</div>
-                    <div class="text-lg font-bold text-turk-dark">Ne kadar?</div>
-                    <div class="text-xs text-gray-500 italic">內 卡-達?</div>
-                </div>
-                <div class="min-w-[140px] bg-white p-3 rounded-xl border-l-4 border-gray-600 shadow-sm">
-                    <div class="text-xs text-gray-400">沒有 (拒絕)</div>
-                    <div class="text-lg font-bold text-turk-dark">Yok</div>
-                    <div class="text-xs text-gray-500 italic">優-克</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Checklist (Interactive) -->
-        <div class="card p-4">
-            <h3 class="font-bold text-turk-blue mb-3"><i class="fa-solid fa-clipboard-check mr-2"></i>行前確認</h3>
-            <div class="space-y-2">
-                <label class="flex items-center space-x-3 p-2 bg-gray-50 rounded cursor-pointer">
-                    <input type="checkbox" class="w-5 h-5 text-turk-blue rounded focus:ring-turk-gold">
-                    <span class="text-sm text-gray-700">護照與電子簽證 (印紙本備用)</span>
-                </label>
-                <label class="flex items-center space-x-3 p-2 bg-gray-50 rounded cursor-pointer">
-                    <input type="checkbox" class="w-5 h-5 text-turk-blue rounded focus:ring-turk-gold">
-                    <span class="text-sm text-gray-700">美金/歐元 (當地換里拉)</span>
-                </label>
-                <label class="flex items-center space-x-3 p-2 bg-gray-50 rounded cursor-pointer">
-                    <input type="checkbox" class="w-5 h-5 text-turk-blue rounded focus:ring-turk-gold">
-                    <span class="text-sm text-gray-700">牙刷/拖鞋 (環保旅館常不提供)</span>
-                </label>
-                <label class="flex items-center space-x-3 p-2 bg-gray-50 rounded cursor-pointer">
-                    <input type="checkbox" class="w-5 h-5 text-turk-blue rounded focus:ring-turk-gold">
-                    <span class="text-sm text-gray-700">轉接頭 (歐規雙圓孔)</span>
-                </label>
-            </div>
+        
+        <div class="bg-white/90 p-4 rounded-xl border border-turk-gold shadow-sm">
+            <h3 class="font-bold text-turk-blue mb-2">🇹🇷 快速指南</h3>
+            <p class="text-sm text-gray-600">前往「行程地圖」頁面，您可以長按拖曳景點來調整順序，或將景點移至「備用清單」。點擊地圖上的 "+" 號可以新增您發現的私房景點。</p>
         </div>
     </div>
 
-    <!-- ================= VIEW 2: MAP & PLANNER (Split View) ================= -->
+    <!-- ================= VIEW 2: MAP & PLANNER (Core) ================= -->
     <div id="view-planner" class="hidden h-screen flex flex-col pt-14">
         
-        <!-- Day Selector (Sticky) -->
+        <!-- Day Selector -->
         <div class="bg-turk-sand overflow-x-auto whitespace-nowrap p-2 shadow-inner z-10 flex space-x-2" id="day-selector">
-            <!-- Populated by JS -->
+            <!-- JS populated -->
         </div>
 
-        <!-- Map Area (Top 35%) -->
-        <div id="map"></div>
+        <!-- Map Area -->
+        <div class="relative">
+            <div id="map"></div>
+            <!-- Add Spot Control -->
+            <button onclick="toggleAddMode()" id="add-mode-btn" class="absolute top-4 right-4 z-[400] bg-white text-turk-dark p-2 rounded-lg shadow-lg border-2 border-transparent hover:border-turk-gold transition flex items-center space-x-1">
+                <i class="fa-solid fa-location-crosshairs text-lg"></i>
+                <span class="text-xs font-bold">新增景點</span>
+            </button>
+            <div id="add-hint" class="absolute top-16 right-4 z-[400] bg-turk-gold text-white text-xs px-2 py-1 rounded shadow hidden">
+                點擊地圖任意處新增
+            </div>
+        </div>
 
-        <!-- Draggable List Area (Bottom 65% - Header height) -->
-        <div class="flex-1 bg-white relative rounded-t-2xl -mt-4 z-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)] flex flex-col overflow-hidden">
-            <div class="p-3 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-20">
-                <div class="text-xs text-gray-500 flex items-center">
-                    <i class="fa-solid fa-hand-pointer mr-1 animate-bounce"></i> 長按拖曳可調整順序
+        <!-- Draggable Lists Area -->
+        <div class="flex-1 bg-white relative rounded-t-2xl -mt-4 z-10 shadow-lg flex flex-col overflow-hidden">
+            
+            <!-- Sticky Header -->
+            <div class="p-3 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-20 shadow-sm">
+                <div class="text-xs font-bold text-turk-blue">
+                    <i class="fa-solid fa-route mr-1"></i> 今日行程
                 </div>
                 <button onclick="openGoogleRoute()" class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full shadow hover:bg-blue-700 flex items-center">
                     <i class="fa-solid fa-location-arrow mr-1"></i> Google 導航
                 </button>
             </div>
             
-            <!-- List Container -->
-            <div id="itinerary-list" class="flex-1 overflow-y-auto p-2 pb-24 space-y-2 bg-gray-50">
-                <!-- Items populated by JS -->
+            <!-- Scrollable Content -->
+            <div class="flex-1 overflow-y-auto bg-gray-50 pb-24">
+                
+                <!-- Active Itinerary List -->
+                <div id="itinerary-list" class="p-2 space-y-2 min-h-[100px]">
+                    <!-- Items populated by JS -->
+                </div>
+
+                <!-- Backup List Header -->
+                <div class="px-3 py-2 mt-4 flex items-center justify-between text-gray-500 border-t border-gray-200">
+                    <div class="text-xs font-bold flex items-center">
+                        <i class="fa-solid fa-box-archive mr-1"></i> 備用清單 / 附近景點
+                    </div>
+                    <span class="text-[10px] bg-gray-200 px-2 py-0.5 rounded-full">可拖曳至上方加入行程</span>
+                </div>
+
+                <!-- Backup List -->
+                <div id="backup-list" class="p-2 space-y-2 bg-gray-100/50 min-h-[100px]">
+                    <!-- Backup items populated by JS -->
+                </div>
             </div>
         </div>
     </div>
 
-    <!-- ================= VIEW 3: GUIDE (Static) ================= -->
+    <!-- ================= VIEW 3: GUIDE ================= -->
     <div id="view-guide" class="hidden pt-20 px-4 pb-24 space-y-6">
-        <!-- Weather Card -->
-        <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl p-6 text-white shadow-lg">
-            <div class="flex justify-between items-start">
-                <div>
-                    <h2 class="font-bold text-xl">12月穿搭建議</h2>
-                    <p class="text-sm opacity-90 mt-1">均溫 8°C - 12°C，多雨濕冷。</p>
-                </div>
-                <i class="fa-solid fa-cloud-rain text-4xl opacity-80"></i>
-            </div>
-            <div class="mt-4 flex space-x-2 text-xs">
-                <span class="bg-white/20 px-2 py-1 rounded">防風外套</span>
-                <span class="bg-white/20 px-2 py-1 rounded">圍巾</span>
-                <span class="bg-white/20 px-2 py-1 rounded">防水鞋 (必備)</span>
-            </div>
-        </div>
-
-        <!-- Scams -->
-        <div class="card p-4 border-l-4 border-red-500">
-            <h3 class="font-bold text-red-700 mb-2">🚨 常見騙局 (必讀)</h3>
-            <ul class="list-disc pl-5 text-sm text-gray-700 space-y-2">
-                <li><strong>擦鞋匠:</strong> 刷子掉在你面前是故意的，千萬別撿。撿了就要收你 50-100 里拉擦鞋費。</li>
-                <li><strong>喝一杯 (Let's have a drink):</strong> 單身男性在 Taksim/Sultanahmet 遇到熱情路人邀約喝酒，最後帳單會是幾萬台幣。</li>
-                <li><strong>計程車換鈔:</strong> 拿 100 給司機，他會像變魔術一樣換成 20 說你給錯了。建議用 Uber 或 BiTaksi。</li>
-            </ul>
+        <div class="bg-white p-4 rounded-xl border-l-4 border-turk-red shadow-sm">
+            <h3 class="font-bold text-turk-red mb-2">緊急聯絡</h3>
+            <p class="text-sm text-gray-700">警察: 155 | 急救: 112</p>
         </div>
     </div>
 
     <!-- ================= BOTTOM NAV ================= -->
-    <nav class="fixed bottom-0 w-full bg-white border-t border-turk-gold/30 shadow-[0_-5px_10px_rgba(0,0,0,0.05)] h-20 z-50 safe-area-pb">
+    <nav class="fixed bottom-0 w-full bg-white border-t border-turk-gold/30 shadow-lg h-20 z-50 safe-area-pb">
         <div class="grid grid-cols-3 h-full pb-2">
             <button onclick="switchView('dashboard')" class="nav-item active flex flex-col items-center justify-center text-turk-dark" id="btn-dashboard">
                 <i class="fa-solid fa-house text-xl mb-1"></i>
@@ -319,69 +238,48 @@
         </div>
     </nav>
 
-    <!-- Currency Modal (Bottom Sheet) -->
-    <button onclick="toggleCurrency()" class="fixed bottom-24 right-4 bg-turk-gold text-white p-3 rounded-full shadow-lg z-40 border-2 border-white">
-        <i class="fa-solid fa-coins"></i>
-    </button>
-
-    <div id="currency-sheet" class="fixed inset-0 z-[60] hidden">
-        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="toggleCurrency()"></div>
-        <div class="absolute bottom-0 w-full bg-white rounded-t-2xl p-6 shadow-2xl transition-transform transform translate-y-0">
-            <h3 class="font-bold text-center text-lg mb-4 text-turk-dark">快速匯率 (TRY to TWD)</h3>
-            <div class="flex items-center space-x-2 bg-gray-100 p-3 rounded-lg mb-4">
-                <span class="text-xl">🇹🇷</span>
-                <input type="number" id="calc-try" value="100" class="w-full bg-transparent text-right text-2xl font-bold outline-none" oninput="calculateRate()">
-                <span class="text-gray-500 font-bold">TRY</span>
+    <!-- Modal: Add Spot Name -->
+    <div id="name-modal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-80">
+            <h3 class="font-bold text-turk-dark mb-4">新增自訂景點</h3>
+            <input type="text" id="new-spot-name" placeholder="輸入景點名稱..." class="w-full border p-2 rounded mb-4 focus:ring-2 focus:ring-turk-blue outline-none">
+            <div class="flex justify-end space-x-2">
+                <button onclick="cancelAddSpot()" class="px-4 py-2 text-gray-500 text-sm">取消</button>
+                <button onclick="confirmAddSpot()" class="px-4 py-2 bg-turk-blue text-white rounded text-sm font-bold">加入備用清單</button>
             </div>
-            <div class="flex justify-center text-turk-gold mb-4"><i class="fa-solid fa-arrow-down"></i></div>
-            <div class="flex items-center space-x-2 bg-turk-sand/30 p-3 rounded-lg border border-turk-gold/30">
-                <span class="text-xl">🇹🇼</span>
-                <input type="text" id="calc-twd" readonly class="w-full bg-transparent text-right text-2xl font-bold text-turk-blue outline-none">
-                <span class="text-gray-500 font-bold">TWD</span>
-            </div>
-            <p class="text-xs text-center mt-4 text-gray-400">匯率約 0.93 (浮動)</p>
         </div>
     </div>
 
     <!-- Script Logic -->
     <script>
-        // --- 1. DATA: Geocoded Itinerary ---
-        // Coordinates focused on grouping areas tightly
-        const fullItinerary = [
+        // --- 1. DATA ---
+        
+        // Active Itinerary (Grouped by Date)
+        const itineraryData = [
             {
                 date: "12/26",
-                title: "抵達與初見",
                 spots: [
                     { id: "s1", name: "伊斯坦堡機場 (IST)", lat: 41.261, lng: 28.742, icon: "fa-plane" },
-                    { id: "s2", name: "JW Marriott Bosphorus", lat: 41.025, lng: 28.977, icon: "fa-hotel" },
-                    { id: "s3", name: "Karaköy Güllüoğlu (甜點)", lat: 41.023, lng: 28.976, icon: "fa-utensils" }
+                    { id: "s2", name: "JW Marriott Bosphorus", lat: 41.025, lng: 28.977, icon: "fa-hotel" }
                 ]
             },
             {
                 date: "12/27",
-                title: "舊城區經典",
                 spots: [
-                    { id: "s4", name: "JW Marriott (出發)", lat: 41.025, lng: 28.977, icon: "fa-hotel" },
                     { id: "s5", name: "聖索菲亞大清真寺", lat: 41.0086, lng: 28.9802, icon: "fa-mosque" },
                     { id: "s6", name: "藍色清真寺", lat: 41.0054, lng: 28.9768, icon: "fa-mosque" },
-                    { id: "s7", name: "Sultanahmet Köftecisi (午餐)", lat: 41.0075, lng: 28.9775, icon: "fa-utensils" },
                     { id: "s8", name: "地下水宮殿", lat: 41.0084, lng: 28.9779, icon: "fa-water" }
                 ]
             },
             {
                 date: "12/28",
-                title: "市集大採購",
                 spots: [
-                    { id: "s9", name: "JW Marriott (退房)", lat: 41.025, lng: 28.977, icon: "fa-suitcase" },
-                    { id: "s10", name: "Orientbank Hotel (寄放行李)", lat: 41.0163, lng: 28.9744, icon: "fa-hotel" },
                     { id: "s11", name: "大巴扎 (Grand Bazaar)", lat: 41.0107, lng: 28.9680, icon: "fa-bag-shopping" },
-                    { id: "s12", name: "香料市場", lat: 41.0165, lng: 28.9705, icon: "fa-pepper-hot" },
-                    { id: "s13", name: "Orientbank Hotel (入住)", lat: 41.0163, lng: 28.9744, icon: "fa-bed" }
+                    { id: "s12", name: "香料市場", lat: 41.0165, lng: 28.9705, icon: "fa-pepper-hot" }
                 ]
             },
             {
                 date: "12/29",
-                title: "公主群島",
                 spots: [
                     { id: "s14", name: "Kabatas 碼頭", lat: 41.0345, lng: 28.9934, icon: "fa-ship" },
                     { id: "s15", name: "Buyukada (大島)", lat: 40.8738, lng: 29.1276, icon: "fa-umbrella-beach" }
@@ -389,63 +287,72 @@
             },
             {
                 date: "12/30",
-                title: "新城漫步",
                 spots: [
                     { id: "s16", name: "Taksim 廣場", lat: 41.0370, lng: 28.9850, icon: "fa-flag" },
-                    { id: "s17", name: "獨立大街", lat: 41.0336, lng: 28.9780, icon: "fa-road" },
-                    { id: "s18", name: "加拉達塔", lat: 41.0256, lng: 28.9741, icon: "fa-tower-observation" },
-                    { id: "s19", name: "遊船碼頭 (Eminonu)", lat: 41.018, lng: 28.973, icon: "fa-anchor" }
+                    { id: "s18", name: "加拉達塔", lat: 41.0256, lng: 28.9741, icon: "fa-tower-observation" }
                 ]
             },
             {
                 date: "12/31",
-                title: "亞洲區跨年",
                 spots: [
-                    { id: "s20", name: "Eminonu 碼頭", lat: 41.018, lng: 28.973, icon: "fa-ship" },
                     { id: "s21", name: "Kadikoy (亞洲區)", lat: 40.990, lng: 29.025, icon: "fa-map-pin" },
-                    { id: "s22", name: "Moda 海濱", lat: 40.982, lng: 29.023, icon: "fa-water" },
-                    { id: "s23", name: "Orientbank (跨年晚餐)", lat: 41.0163, lng: 28.9744, icon: "fa-champagne-glasses" }
+                    { id: "s23", name: "Orientbank Hotel", lat: 41.0163, lng: 28.9744, icon: "fa-champagne-glasses" }
                 ]
             },
-            {
+             {
                 date: "01/01",
-                title: "新年文青遊",
                 spots: [
                     { id: "s24", name: "蘇萊曼尼耶清真寺", lat: 41.0162, lng: 28.9638, icon: "fa-mosque" },
-                    { id: "s25", name: "Balat 彩色街區", lat: 41.0315, lng: 28.9472, icon: "fa-camera" },
-                    { id: "s26", name: "Pierre Loti 山丘", lat: 41.0543, lng: 28.9340, icon: "fa-mountain-sun" },
-                    { id: "s27", name: "前往機場 (IST)", lat: 41.261, lng: 28.742, icon: "fa-plane-departure" }
+                    { id: "s25", name: "Balat 彩色街區", lat: 41.0315, lng: 28.9472, icon: "fa-camera" }
                 ]
             }
         ];
 
-        // State Management
+        // Global Backup List (Shared across all days)
+        let backupSpots = [
+            { id: "b1", name: "托普卡匹皇宮 (備用)", lat: 41.0115, lng: 28.9833, icon: "fa-crown" },
+            { id: "b2", name: "考古博物館 (備用)", lat: 41.0116, lng: 28.9813, icon: "fa-landmark" },
+            { id: "b3", name: "彩虹階梯 (備用)", lat: 41.0326, lng: 28.9863, icon: "fa-stairs" }
+        ];
+
+        // State
         let currentDayIndex = 0;
         let map = null;
-        let markers = [];
+        let activeMarkers = [];
+        let backupMarkers = [];
         let polyline = null;
-        let sortable = null;
+        let activeSortable = null;
+        let backupSortable = null;
+        let isAddMode = false;
+        let tempLatLng = null;
 
-        // --- 2. MAP & LIST LOGIC ---
+        // --- 2. MAP & CORE LOGIC ---
 
         function initMap() {
             if(map) return;
-            // Initialize Leaflet
             map = L.map('map', {zoomControl: false}).setView([41.0082, 28.9784], 13);
             
-            // Minimalist Tile Layer (CartoDB Light)
             L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-                attribution: '©OpenStreetMap, ©CartoDB',
+                attribution: '©OpenStreetMap',
                 maxZoom: 19
             }).addTo(map);
 
+            // Map Click Event for Adding Spots
+            map.on('click', function(e) {
+                if(isAddMode) {
+                    tempLatLng = e.latlng;
+                    document.getElementById('name-modal').classList.remove('hidden');
+                    document.getElementById('new-spot-name').focus();
+                }
+            });
+
             renderDaySelector();
-            loadDay(0); // Load first day
+            loadDay(0);
         }
 
         function renderDaySelector() {
             const container = document.getElementById('day-selector');
-            container.innerHTML = fullItinerary.map((day, idx) => `
+            container.innerHTML = itineraryData.map((day, idx) => `
                 <button onclick="loadDay(${idx})" 
                     class="day-btn px-4 py-2 rounded-full text-xs font-bold transition flex-shrink-0 ${idx === 0 ? 'bg-turk-blue text-white shadow' : 'bg-white text-gray-500 border border-gray-200'}" 
                     data-idx="${idx}">
@@ -456,9 +363,8 @@
 
         function loadDay(idx) {
             currentDayIndex = idx;
-            const data = fullItinerary[idx];
-
-            // Update Buttons
+            
+            // UI Styling for Buttons
             document.querySelectorAll('.day-btn').forEach(btn => {
                 if(parseInt(btn.dataset.idx) === idx) {
                     btn.className = 'day-btn px-4 py-2 rounded-full text-xs font-bold transition flex-shrink-0 bg-turk-blue text-white shadow';
@@ -467,23 +373,31 @@
                 }
             });
 
-            // Update Map
-            updateMap(data.spots);
-
-            // Update List
-            renderList(data.spots);
+            updateAll();
         }
 
-        function updateMap(spots) {
-            // Clear existing
-            markers.forEach(m => map.removeLayer(m));
+        function updateAll() {
+            renderLists();
+            drawMap();
+        }
+
+        // --- MAP DRAWING ---
+        function drawMap() {
+            const activeSpots = itineraryData[currentDayIndex].spots;
+
+            // 1. Clear Active Layers
+            activeMarkers.forEach(m => map.removeLayer(m));
             if(polyline) map.removeLayer(polyline);
-            markers = [];
+            activeMarkers = [];
+
+            // 2. Clear Backup Layers
+            backupMarkers.forEach(m => map.removeLayer(m));
+            backupMarkers = [];
 
             const latlngs = [];
 
-            spots.forEach((spot, i) => {
-                // Custom Numbered Icon
+            // 3. Draw Active Spots (Bold, Numbered, Connected)
+            activeSpots.forEach((spot, i) => {
                 const icon = L.divIcon({
                     className: 'custom-div-icon',
                     html: `<div class='marker-number'>${i+1}</div>`,
@@ -495,161 +409,226 @@
                     .addTo(map)
                     .bindPopup(`<b>${spot.name}</b>`);
                 
-                markers.push(marker);
+                activeMarkers.push(marker);
                 latlngs.push([spot.lat, spot.lng]);
             });
 
-            // Draw connecting line
+            // 4. Draw Route Line
             if(latlngs.length > 0) {
-                polyline = L.polyline(latlngs, {color: '#1D5D68', weight: 4, opacity: 0.7, dashArray: '5, 10'}).addTo(map);
-                // Fit bounds to show all points
+                polyline = L.polyline(latlngs, {color: '#1D5D68', weight: 4, opacity: 0.8}).addTo(map);
                 map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
             }
-        }
 
-        function renderList(spots) {
-            const listContainer = document.getElementById('itinerary-list');
-            listContainer.innerHTML = '';
-
-            spots.forEach((spot, i) => {
-                const el = document.createElement('div');
-                el.className = 'bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between group cursor-grab active:cursor-grabbing';
-                el.dataset.id = spot.id;
-                el.innerHTML = `
-                    <div class="flex items-center space-x-3">
-                        <div class="w-6 h-6 bg-turk-red text-white rounded-full flex items-center justify-center text-xs font-bold handle">
-                            ${i + 1}
-                        </div>
-                        <div>
-                            <div class="font-bold text-gray-800 text-sm">${spot.name}</div>
-                            <div class="text-xs text-gray-400"><i class="fa-solid ${spot.icon}"></i> 點擊導航</div>
-                        </div>
-                    </div>
-                    <div class="text-gray-300">
-                        <i class="fa-solid fa-bars"></i>
-                    </div>
-                `;
-                // Click on text to pan map
-                el.querySelector('div.font-bold').addEventListener('click', () => {
-                   map.flyTo([spot.lat, spot.lng], 16);
-                   markers[i].openPopup();
+            // 5. Draw Backup Spots (Faded, Ghost Dots)
+            backupSpots.forEach((spot) => {
+                const icon = L.divIcon({
+                    className: 'custom-div-icon',
+                    html: `<div class='marker-backup'></div>`, // Simple gray dot
+                    iconSize: [16, 16],
+                    iconAnchor: [8, 8]
                 });
-                listContainer.appendChild(el);
-            });
 
-            // Init Sortable
-            if(sortable) sortable.destroy();
-            sortable = new Sortable(listContainer, {
-                animation: 150,
-                handle: '.bg-white', // Drag whole item
-                onEnd: function (evt) {
-                    // Reorder Data
-                    const item = fullItinerary[currentDayIndex].spots.splice(evt.oldIndex, 1)[0];
-                    fullItinerary[currentDayIndex].spots.splice(evt.newIndex, 0, item);
-                    
-                    // Refresh Map & List Indices
-                    updateMap(fullItinerary[currentDayIndex].spots);
-                    renderList(fullItinerary[currentDayIndex].spots);
-                }
+                const marker = L.marker([spot.lat, spot.lng], {icon: icon})
+                    .addTo(map)
+                    .bindPopup(`<span class="text-gray-500 font-bold">${spot.name} (備用)</span>`);
+                
+                backupMarkers.push(marker);
             });
         }
 
-        // --- 3. GOOGLE MAPS NAVIGATION (Route) ---
-        function openGoogleRoute() {
-            const spots = fullItinerary[currentDayIndex].spots;
-            if (spots.length < 2) {
-                alert("至少需要兩個地點才能導航");
-                return;
+        // --- LIST RENDERING & DRAG DROP ---
+        function renderLists() {
+            const activeListEl = document.getElementById('itinerary-list');
+            const backupListEl = document.getElementById('backup-list');
+            
+            activeListEl.innerHTML = '';
+            backupListEl.innerHTML = '';
+
+            // Render Active Items
+            itineraryData[currentDayIndex].spots.forEach((spot, i) => {
+                const el = createListItem(spot, i + 1, true);
+                activeListEl.appendChild(el);
+            });
+
+            // Render Backup Items
+            backupSpots.forEach((spot) => {
+                const el = createListItem(spot, null, false);
+                backupListEl.appendChild(el);
+            });
+
+            // Initialize Sortable (Active List)
+            if(activeSortable) activeSortable.destroy();
+            activeSortable = new Sortable(activeListEl, {
+                group: 'shared', // Allow drag between lists
+                animation: 150,
+                onEnd: handleDragEnd
+            });
+
+            // Initialize Sortable (Backup List)
+            if(backupSortable) backupSortable.destroy();
+            backupSortable = new Sortable(backupListEl, {
+                group: 'shared',
+                animation: 150,
+                sort: false, // Optional: disable sorting within backup if desired
+                onEnd: handleDragEnd
+            });
+        }
+
+        function createListItem(spot, index, isActive) {
+            const el = document.createElement('div');
+            el.className = isActive 
+                ? 'bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between cursor-grab active:cursor-grabbing mb-2'
+                : 'bg-white/60 p-2 rounded-lg border border-dashed border-gray-300 flex items-center justify-between cursor-grab active:cursor-grabbing opacity-80 hover:opacity-100 mb-2';
+            
+            el.dataset.id = spot.id;
+            
+            const iconHtml = isActive 
+                ? `<div class="w-6 h-6 bg-turk-red text-white rounded-full flex items-center justify-center text-xs font-bold mr-3">${index}</div>`
+                : `<div class="w-6 h-6 bg-gray-300 text-white rounded-full flex items-center justify-center text-xs font-bold mr-3"><i class="fa-solid fa-box-archive"></i></div>`;
+
+            el.innerHTML = `
+                <div class="flex items-center">
+                    ${iconHtml}
+                    <div>
+                        <div class="font-bold text-gray-800 text-sm">${spot.name}</div>
+                        ${isActive ? '<div class="text-[10px] text-turk-blue">目前行程</div>' : '<div class="text-[10px] text-gray-500">備用清單</div>'}
+                    </div>
+                </div>
+                <div class="text-gray-300"><i class="fa-solid fa-grip-lines"></i></div>
+            `;
+            
+            // Click to pan map
+            el.addEventListener('click', () => {
+                map.flyTo([spot.lat, spot.lng], 16);
+            });
+
+            return el;
+        }
+
+        function handleDragEnd(evt) {
+            // Need to synchronize DOM changes with Data Arrays
+            const activeListEl = document.getElementById('itinerary-list');
+            const backupListEl = document.getElementById('backup-list');
+
+            // Reconstruct Active Array from DOM order
+            const newActiveIds = Array.from(activeListEl.children).map(el => el.dataset.id);
+            const newBackupIds = Array.from(backupListEl.children).map(el => el.dataset.id);
+
+            // Helper to find spot object from ID (searching both source arrays)
+            const findSpot = (id) => {
+                let found = itineraryData[currentDayIndex].spots.find(s => s.id === id);
+                if(!found) found = backupSpots.find(s => s.id === id);
+                return found;
             }
 
-            // Google Maps URL Format:
-            // https://www.google.com/maps/dir/?api=1&origin=Lat,Lng&destination=Lat,Lng&waypoints=Lat,Lng|Lat,Lng&travelmode=walking
+            // Build new arrays
+            const newActiveSpots = newActiveIds.map(id => findSpot(id)).filter(Boolean);
+            const newBackupSpots = newBackupIds.map(id => findSpot(id)).filter(Boolean);
+
+            // Update Global State
+            itineraryData[currentDayIndex].spots = newActiveSpots;
+            backupSpots = newBackupSpots;
+
+            // Re-render everything to update UI (numbers, colors) and Map
+            updateAll();
+        }
+
+
+        // --- 3. ADD SPOT FUNCTIONALITY ---
+
+        function toggleAddMode() {
+            isAddMode = !isAddMode;
+            const btn = document.getElementById('add-mode-btn');
+            const hint = document.getElementById('add-hint');
             
-            // We use the first spot as origin (assuming user starts there, or we can leave origin blank to use current location)
-            // Strategy: Let's use the first spot as 'destination' relative to user, OR build a full route.
-            // Best for planning: Full route from Spot 1 to End.
+            if(isAddMode) {
+                btn.classList.add('bg-turk-gold', 'text-white', 'border-white');
+                btn.classList.remove('bg-white', 'text-turk-dark');
+                hint.classList.remove('hidden');
+                document.body.style.cursor = 'crosshair';
+            } else {
+                btn.classList.remove('bg-turk-gold', 'text-white', 'border-white');
+                btn.classList.add('bg-white', 'text-turk-dark');
+                hint.classList.add('hidden');
+                document.body.style.cursor = 'default';
+            }
+        }
+
+        function cancelAddSpot() {
+            document.getElementById('name-modal').classList.add('hidden');
+            document.getElementById('new-spot-name').value = '';
+            toggleAddMode(); // Turn off mode
+        }
+
+        function confirmAddSpot() {
+            const name = document.getElementById('new-spot-name').value;
+            if(!name) return;
+
+            const newSpot = {
+                id: 'b_' + Date.now(), // unique ID
+                name: name,
+                lat: tempLatLng.lat,
+                lng: tempLatLng.lng,
+                icon: 'fa-map-pin'
+            };
+
+            // Add to Backup List by default
+            backupSpots.push(newSpot);
             
+            // Reset
+            document.getElementById('name-modal').classList.add('hidden');
+            document.getElementById('new-spot-name').value = '';
+            toggleAddMode();
+            
+            // Refresh
+            updateAll();
+            
+            // Show confirmation toast (simple alert for now)
+            // alert('已加入備用清單');
+        }
+
+        // --- 4. UTILS ---
+
+        function openGoogleRoute() {
+            const spots = itineraryData[currentDayIndex].spots;
+            if (spots.length < 2) {
+                alert("今日行程至少需要兩個地點才能導航");
+                return;
+            }
             const origin = `${spots[0].lat},${spots[0].lng}`;
             const destination = `${spots[spots.length-1].lat},${spots[spots.length-1].lng}`;
-            
             let waypoints = "";
             if (spots.length > 2) {
                 const intermediate = spots.slice(1, spots.length - 1);
                 waypoints = "&waypoints=" + intermediate.map(s => `${s.lat},${s.lng}`).join('|');
             }
-
             const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}${waypoints}&travelmode=walking`;
             window.open(url, '_blank');
         }
 
-
-        // --- 4. DASHBOARD UTILS ---
-        function calculateRate() {
-            const rate = 0.93; 
-            const val = document.getElementById('calc-try').value;
-            document.getElementById('calc-twd').value = (val * rate).toFixed(1);
-        }
-        function toggleCurrency() {
-            document.getElementById('currency-sheet').classList.toggle('hidden');
-        }
-
-        // Budget
-        let totalSpent = 0;
-        function addExpense() {
-            const val = parseFloat(document.getElementById('budget-input').value);
-            if(val) {
-                totalSpent += val;
-                document.getElementById('total-spent').innerText = totalSpent;
-                document.getElementById('budget-input').value = '';
-            }
-        }
-        function resetBudget() {
-            totalSpent = 0;
-            document.getElementById('total-spent').innerText = 0;
-        }
-
-        // Countdown
-        function updateCountdown() {
-            const target = new Date('2025-12-25T09:25:00').getTime();
-            const now = new Date().getTime();
-            const diff = target - now;
-
-            if(diff > 0) {
-                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
-                document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            } else {
-                document.getElementById('days').innerText = "0";
-            }
-        }
-
-        // Clocks
         function updateClocks() {
             const now = new Date();
             const ist = new Date(now.toLocaleString("en-US", {timeZone: "Europe/Istanbul"}));
-            const tpe = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Taipei"}));
             document.getElementById('clock-ist').innerText = ist.toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit', hour12:false});
-            document.getElementById('clock-tpe').innerText = tpe.toLocaleTimeString('zh-TW', {hour:'2-digit', minute:'2-digit', hour12:false});
+            
+            // Countdown
+            const target = new Date('2025-12-25T09:25:00').getTime();
+            const diff = target - now.getTime();
+            if(diff > 0) {
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+            }
         }
 
-        // View Switcher
         function switchView(viewId) {
-            // Hide all
-            document.getElementById('view-dashboard').classList.add('hidden');
-            document.getElementById('view-planner').classList.add('hidden');
-            document.getElementById('view-guide').classList.add('hidden');
-            
-            // Show one
+            document.querySelectorAll('[id^="view-"]').forEach(el => el.classList.add('hidden'));
             document.getElementById('view-' + viewId).classList.remove('hidden');
-
-            // Reset Nav
+            
             document.querySelectorAll('.nav-item').forEach(el => {
                 el.classList.remove('text-turk-dark', 'active');
                 el.classList.add('text-gray-400');
             });
             document.getElementById('btn-' + viewId).classList.add('text-turk-dark', 'active');
-            document.getElementById('btn-' + viewId).classList.remove('text-gray-400');
-
-            // Map resize fix
+            
             if(viewId === 'planner') {
                 setTimeout(() => {
                     initMap();
@@ -659,13 +638,11 @@
             window.scrollTo(0,0);
         }
 
-        // Init
         document.addEventListener('DOMContentLoaded', () => {
-            updateClocks();
             setInterval(updateClocks, 1000);
-            updateCountdown();
-            calculateRate();
+            updateClocks();
         });
+
     </script>
 </body>
 </html>
