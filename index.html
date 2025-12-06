@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>伊斯坦堡全能導遊 (KML 客製版)</title>
+    <title>伊斯坦堡全能導遊 (KML+地圖版)</title>
     
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -74,7 +74,7 @@
         }
 
         .marker-backup {
-            background-color: #4B5563;
+            background-color: #6B7280;
             opacity: 0.8;
             border-radius: 50%;
             width: 20px;
@@ -104,6 +104,17 @@
             100% { transform: scale(1); opacity: 1; }
         }
 
+        /* Popup Styling */
+        .leaflet-popup-content-wrapper {
+            border-radius: 8px;
+            padding: 0;
+            overflow: hidden;
+        }
+        .leaflet-popup-content {
+            margin: 0;
+            width: 200px !important;
+        }
+        
         .card {
             background: rgba(255, 255, 255, 0.9);
             border: 1px solid #C5A059;
@@ -112,7 +123,7 @@
         }
 
         .sortable-ghost { opacity: 0.4; background-color: #F3E5AB; }
-        #map { height: 40vh; width: 100%; z-index: 0; border-bottom: 4px solid #C5A059; }
+        #map { height: 50vh; width: 100%; z-index: 0; border-bottom: 4px solid #C5A059; }
     </style>
 </head>
 <body>
@@ -155,15 +166,30 @@
         <!-- Sync Actions -->
         <div class="card p-4">
             <h3 class="font-bold text-turk-blue mb-3 text-sm flex items-center justify-between">
-                <span><i class="fa-solid fa-share-nodes mr-2"></i>行程同步與分享</span>
+                <span><i class="fa-solid fa-share-nodes mr-2"></i>資料與備份</span>
                 <span class="text-[10px] bg-green-100 text-green-700 px-2 rounded-full" id="save-status">已自動儲存</span>
             </h3>
-            <div class="grid grid-cols-2 gap-3">
-                <button onclick="exportData()" class="bg-white border border-turk-blue text-turk-blue py-2 rounded-lg text-xs font-bold hover:bg-turk-sand transition">
-                    <i class="fa-solid fa-upload mr-1"></i> 分享行程
+            
+            <!-- KML IMPORT BUTTON -->
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3">
+                <h4 class="text-xs font-bold text-gray-600 mb-2 flex items-center">
+                    <i class="fa-solid fa-map text-turk-blue mr-1"></i> 匯入 KML 圖資
+                </h4>
+                <p class="text-[10px] text-gray-500 mb-2 leading-relaxed">
+                    將 Google My Maps 匯出的 KML 檔案匯入為備用景點。
+                </p>
+                <input type="file" id="kml-input" accept=".kml,.xml" class="hidden" onchange="handleKMLUpload(this)">
+                <button onclick="document.getElementById('kml-input').click()" class="w-full bg-white border border-turk-gold text-turk-gold py-2 rounded-lg text-xs font-bold hover:bg-turk-sand transition flex items-center justify-center">
+                    <i class="fa-solid fa-file-import mr-2"></i> 選擇檔案 (.kml)
                 </button>
-                <button onclick="importDataModal()" class="bg-white border border-gray-400 text-gray-600 py-2 rounded-lg text-xs font-bold hover:bg-gray-100 transition">
-                    <i class="fa-solid fa-download mr-1"></i> 匯入行程
+            </div>
+
+            <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-200">
+                <button onclick="exportData()" class="text-turk-blue text-xs font-bold hover:underline text-left">
+                    <i class="fa-solid fa-copy mr-1"></i> 複製行程代碼
+                </button>
+                <button onclick="importDataModal()" class="text-gray-600 text-xs font-bold hover:underline text-right">
+                    <i class="fa-solid fa-paste mr-1"></i> 貼上行程代碼
                 </button>
             </div>
             <div class="mt-3 text-[10px] text-gray-400 text-center">
@@ -186,25 +212,6 @@
                 <span class="font-bold text-turk-red">₺ <span id="total-spent">0</span></span>
             </div>
         </div>
-        
-        <!-- Phrasebook -->
-        <div>
-            <h3 class="font-bold text-turk-dark mb-2 ml-1 text-sm">🇹🇷 實用土耳其語</h3>
-            <div class="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide">
-                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-blue shadow-sm">
-                    <div class="text-xs text-gray-400">你好</div>
-                    <div class="font-bold text-turk-dark">Merhaba</div>
-                </div>
-                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-red shadow-sm">
-                    <div class="text-xs text-gray-400">謝謝</div>
-                    <div class="font-bold text-turk-dark">Teşekkürler</div>
-                </div>
-                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-gold shadow-sm">
-                    <div class="text-xs text-gray-400">多少錢?</div>
-                    <div class="font-bold text-turk-dark">Ne kadar?</div>
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- PLANNER VIEW -->
@@ -212,29 +219,30 @@
         <div class="bg-turk-sand overflow-x-auto whitespace-nowrap p-2 shadow-inner z-10 flex space-x-2" id="day-selector"></div>
         <div class="relative">
             <div id="map"></div>
-            <button onclick="toggleAddMode()" id="add-mode-btn" class="absolute top-3 right-3 z-[400] bg-white text-turk-dark px-3 py-2 rounded-lg shadow-lg border border-gray-200 text-xs font-bold flex items-center gap-1">
-                <i class="fa-solid fa-search-location"></i> 新增/搜尋
-            </button>
-            <div id="add-hint" class="absolute top-14 right-3 z-[400] bg-turk-gold text-white text-xs px-2 py-1 rounded shadow hidden">
-                點擊地圖或搜尋
+            <!-- Map Controls -->
+            <div class="absolute top-3 right-3 z-[400] flex flex-col gap-2">
+                <button onclick="toggleAddMode()" id="add-mode-btn" class="bg-white text-turk-dark p-2 rounded-lg shadow-lg border border-gray-200 text-xs font-bold w-10 h-10 flex items-center justify-center">
+                    <i class="fa-solid fa-search"></i>
+                </button>
+            </div>
+            <div id="add-hint" class="absolute top-3 left-1/2 transform -translate-x-1/2 z-[400] bg-turk-gold text-white text-xs px-4 py-2 rounded-full shadow-lg hidden whitespace-nowrap">
+                點擊地圖位置
             </div>
         </div>
         <div class="flex-1 bg-white relative rounded-t-2xl -mt-4 z-10 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] flex flex-col overflow-hidden">
             <div class="p-3 border-b border-gray-100 flex justify-between items-center bg-white sticky top-0 z-20">
-                <div class="text-xs text-gray-500"><i class="fa-solid fa-hand-pointer animate-pulse mr-1"></i> 長按拖曳排序</div>
+                <div class="text-xs text-gray-500"><i class="fa-solid fa-route mr-1 text-turk-blue"></i> 拖曳調整順序</div>
                 <button onclick="openGoogleRoute()" class="bg-blue-600 text-white text-xs px-3 py-1.5 rounded-full shadow flex items-center"><i class="fa-solid fa-diamond-turn-right mr-1"></i> Google 導航</button>
             </div>
             <div class="flex-1 overflow-y-auto bg-gray-50 pb-24 p-2 space-y-4">
                 <div>
-                    <div class="text-xs font-bold text-turk-red mb-2 px-1">今日行程</div>
-                    <div id="itinerary-list" class="space-y-2 min-h-[50px]"></div>
-                </div>
-                <div>
-                    <div class="text-xs font-bold text-gray-500 mb-2 px-1 pt-2 border-t border-gray-200 flex justify-between">
-                        <span>我的收藏景點 (來自 KML)</span>
-                        <span class="bg-gray-200 text-[10px] px-2 rounded-full py-0.5">可拖曳加入</span>
+                    <!-- Active Itinerary Only -->
+                    <div id="itinerary-list" class="space-y-2 min-h-[100px]"></div>
+                    <div class="mt-8 text-center text-xs text-gray-400 p-4 border-t border-gray-200 border-dashed">
+                        <p><i class="fa-solid fa-circle-info mr-1"></i> 操作提示</p>
+                        <p class="mt-1">點擊地圖上的灰色圓點可加入行程</p>
+                        <p class="mt-1">點擊紅色圓點可移回備用清單</p>
                     </div>
-                    <div id="backup-list" class="space-y-2 min-h-[50px] bg-gray-100/50 rounded-lg p-1"></div>
                 </div>
             </div>
         </div>
@@ -242,10 +250,6 @@
 
     <!-- GUIDE VIEW -->
     <div id="view-guide" class="hidden pt-20 px-4 pb-24 space-y-6">
-        <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl p-6 text-white shadow-lg flex justify-between items-center">
-            <div><h2 class="font-bold text-lg">12月氣候</h2><p class="text-sm opacity-90">8°C - 12°C | 濕冷多雨</p></div>
-            <i class="fa-solid fa-cloud-showers-heavy text-4xl opacity-80"></i>
-        </div>
         <div class="card p-4 border-l-4 border-red-500">
             <h3 class="font-bold text-red-800 mb-2 text-sm"><i class="fa-solid fa-triangle-exclamation mr-2"></i>防騙</h3>
             <ul class="text-xs text-gray-700 space-y-2 list-disc pl-4">
@@ -273,7 +277,7 @@
     <button onclick="toggleCurrency()" class="fixed bottom-24 right-4 bg-turk-gold text-white w-12 h-12 rounded-full shadow-lg z-40 border-2 border-white flex items-center justify-center active:scale-90 transition"><i class="fa-solid fa-coins"></i></button>
 
     <!-- MODALS -->
-    <!-- Currency Modal -->
+    <!-- Currency -->
     <div id="currency-sheet" class="fixed inset-0 z-[100] hidden flex items-end sm:items-center sm:justify-center pointer-events-none">
         <div class="absolute inset-0 bg-black/50 pointer-events-auto transition-opacity" onclick="toggleCurrency()"></div>
         <div class="bg-white w-full sm:w-80 rounded-t-2xl sm:rounded-2xl p-6 shadow-2xl relative pointer-events-auto">
@@ -285,7 +289,7 @@
         </div>
     </div>
 
-    <!-- Add Spot Modal -->
+    <!-- Add Spot -->
     <div id="name-modal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
         <div class="bg-white p-5 rounded-xl shadow-2xl w-80">
             <h3 class="font-bold text-turk-dark mb-3 text-lg border-b pb-2">新增景點</h3>
@@ -309,7 +313,7 @@
         </div>
     </div>
 
-    <!-- Import/Export Modal -->
+    <!-- Sync -->
     <div id="sync-modal" class="fixed inset-0 z-[2000] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm">
         <div class="bg-white p-6 rounded-xl shadow-2xl w-[90%] max-w-sm">
             <h3 class="font-bold text-lg text-turk-dark mb-2" id="sync-title">分享行程</h3>
@@ -332,7 +336,7 @@
             { date: "01/01", spots: [ { id: "s24", name: "蘇萊曼尼耶清真寺", lat: 41.0162, lng: 28.9638, icon: "fa-mosque" }, { id: "s25", name: "Balat 彩色街區", lat: 41.0315, lng: 28.9472, icon: "fa-camera" } ] }
         ];
 
-        // Backup List from KML
+        // Default KML/Backup List
         const defaultBackup = [
             { id: "k1", name: "Pierre Loti Hill", lat: 41.0542212, lng: 28.9337884, icon: "fa-mountain" },
             { id: "k2", name: "Çamlıca Tower", lat: 41.0163191, lng: 29.0655582, icon: "fa-tower-broadcast" },
@@ -379,10 +383,77 @@
         let currentDayIndex = 0;
         let map = null, polyline = null;
         let activeMarkers = [], backupMarkers = [];
-        let activeSortable = null, backupSortable = null;
+        let activeSortable = null;
         let isAddMode = false, tempLatLng = null, tempMarker = null;
 
-        // --- LOCAL STORAGE LOGIC ---
+        // --- GLOBAL ACTIONS ---
+        window.addToItinerary = function(id) {
+            const spotIndex = backupSpots.findIndex(s => s.id === id);
+            if(spotIndex > -1) {
+                const spot = backupSpots[spotIndex];
+                backupSpots.splice(spotIndex, 1);
+                itineraryData[currentDayIndex].spots.push(spot);
+                saveState();
+                updateAll();
+            }
+        };
+
+        window.removeFromItinerary = function(id) {
+            const spotIndex = itineraryData[currentDayIndex].spots.findIndex(s => s.id === id);
+            if(spotIndex > -1) {
+                const spot = itineraryData[currentDayIndex].spots[spotIndex];
+                itineraryData[currentDayIndex].spots.splice(spotIndex, 1);
+                backupSpots.push(spot);
+                saveState();
+                updateAll();
+            }
+        };
+
+        // --- KML UPLOAD ---
+        function handleKMLUpload(input) {
+            const file = input.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const text = e.target.result;
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(text, "text/xml");
+                const placemarks = xmlDoc.getElementsByTagName("Placemark");
+                let count = 0;
+                for (let i = 0; i < placemarks.length; i++) {
+                    const name = placemarks[i].getElementsByTagName("name")[0]?.textContent || "未命名";
+                    const pointStr = placemarks[i].getElementsByTagName("coordinates")[0]?.textContent;
+                    if (pointStr) {
+                        const coords = pointStr.trim().split(',');
+                        const lng = parseFloat(coords[0]);
+                        const lat = parseFloat(coords[1]);
+                        if(!isNaN(lat) && !isNaN(lng)) {
+                            // Check dupes
+                            if(!backupSpots.some(s => s.name === name) && !itineraryData.some(d => d.spots.some(s => s.name === name))) {
+                                backupSpots.push({
+                                    id: 'kml_' + Date.now() + '_' + i,
+                                    name: name,
+                                    lat: lat,
+                                    lng: lng,
+                                    icon: 'fa-map-pin'
+                                });
+                                count++;
+                            }
+                        }
+                    }
+                }
+                if(count > 0) {
+                    saveState();
+                    updateAll();
+                    alert(`成功匯入 ${count} 個新景點！`);
+                } else {
+                    alert("匯入完成，但沒有發現新景點 (可能重複或格式錯誤)。");
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- LOCAL STORAGE ---
         function saveState() {
             const state = { itinerary: itineraryData, backup: backupSpots };
             localStorage.setItem('turk_planner_data', JSON.stringify(state));
@@ -398,14 +469,13 @@
                 try {
                     const parsed = JSON.parse(saved);
                     itineraryData = parsed.itinerary;
-                    // Note: We use the saved state if exists, but you can force reset to use KML by clearing storage
                     if(parsed.backup) backupSpots = parsed.backup;
                 } catch(e) { console.error("Load error", e); }
             }
         }
 
         function resetToDefault() {
-            if(confirm("確定要重置為預設 (KML 匯入狀態) 嗎？")) {
+            if(confirm("確定要重置為預設設定嗎？")) {
                 itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
                 backupSpots = JSON.parse(JSON.stringify(defaultBackup));
                 saveState();
@@ -414,15 +484,13 @@
             }
         }
 
-        // --- EXPORT / IMPORT LOGIC ---
+        // --- SYNC ---
         function exportData() {
-            const state = { itinerary: itineraryData, backup: backupSpots };
-            const code = JSON.stringify(state);
+            const code = JSON.stringify({ itinerary: itineraryData, backup: backupSpots });
             document.getElementById('sync-title').innerText = "分享行程代碼";
-            document.getElementById('sync-desc').innerText = "複製下方代碼傳給朋友";
-            const textArea = document.getElementById('sync-data');
-            textArea.value = code;
-            textArea.readOnly = true;
+            document.getElementById('sync-desc').innerText = "複製代碼傳給朋友";
+            document.getElementById('sync-data').value = code;
+            document.getElementById('sync-data').readOnly = true;
             document.getElementById('sync-actions').innerHTML = `<button onclick="copyToClipboard()" class="bg-turk-blue text-white py-2 rounded-lg font-bold">複製代碼</button>`;
             document.getElementById('sync-modal').classList.remove('hidden');
         }
@@ -430,38 +498,32 @@
         function importDataModal() {
             document.getElementById('sync-title').innerText = "匯入行程";
             document.getElementById('sync-desc').innerText = "貼上朋友的代碼";
-            const textArea = document.getElementById('sync-data');
-            textArea.value = "";
-            textArea.readOnly = false;
-            textArea.placeholder = "貼上代碼...";
+            const ta = document.getElementById('sync-data');
+            ta.value = ""; ta.readOnly = false; ta.placeholder = "貼上代碼...";
             document.getElementById('sync-actions').innerHTML = `<button onclick="performImport()" class="bg-turk-gold text-white py-2 rounded-lg font-bold">確認匯入</button>`;
             document.getElementById('sync-modal').classList.remove('hidden');
         }
 
         function copyToClipboard() {
-            const copyText = document.getElementById("sync-data");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); 
-            navigator.clipboard.writeText(copyText.value).then(() => alert("已複製！"));
+            const el = document.getElementById("sync-data");
+            el.select(); navigator.clipboard.writeText(el.value).then(() => alert("已複製！"));
         }
 
         function performImport() {
             const code = document.getElementById("sync-data").value;
             if(!code) return;
             try {
-                const parsed = JSON.parse(code);
-                if(parsed.itinerary && parsed.backup) {
-                    itineraryData = parsed.itinerary;
-                    backupSpots = parsed.backup;
-                    saveState();
-                    updateAll();
+                const p = JSON.parse(code);
+                if(p.itinerary && p.backup) {
+                    itineraryData = p.itinerary; backupSpots = p.backup;
+                    saveState(); updateAll();
                     document.getElementById('sync-modal').classList.add('hidden');
                     alert("匯入成功！");
-                } else { alert("代碼格式錯誤"); }
-            } catch(e) { alert("無效的代碼"); }
+                } else alert("格式錯誤");
+            } catch(e) { alert("無效代碼"); }
         }
 
-        // --- MAP & CORE LOGIC ---
+        // --- MAP LOGIC ---
         function initMap() {
             if(map) return;
             map = L.map('map', {zoomControl: false}).setView([41.0082, 28.9784], 13);
@@ -500,47 +562,58 @@
 
             const activeSpots = itineraryData[currentDayIndex].spots;
             const latlngs = [];
+            
+            // Draw Active
             activeSpots.forEach((spot, i) => {
                 const icon = L.divIcon({ className: '', html: `<div class='marker-number'>${i+1}</div>`, iconSize: [24,24], iconAnchor: [12,12] });
-                const m = L.marker([spot.lat, spot.lng], {icon: icon}).addTo(map).bindPopup(`<b>${spot.name}</b>`);
+                const popup = `
+                    <div class="text-center p-2 font-serif">
+                        <h3 class="font-bold text-turk-red mb-2 text-sm">${spot.name}</h3>
+                        <button onclick="removeFromItinerary('${spot.id}')" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 text-xs py-1.5 px-3 rounded flex items-center justify-center">
+                            <i class="fa-solid fa-arrow-down mr-1"></i> 移回備用
+                        </button>
+                    </div>`;
+                const m = L.marker([spot.lat, spot.lng], {icon: icon}).addTo(map).bindPopup(popup);
                 activeMarkers.push(m);
                 latlngs.push([spot.lat, spot.lng]);
             });
+            
             if(latlngs.length > 0) {
                 polyline = L.polyline(latlngs, {color: '#8B0000', weight: 4, opacity: 0.8}).addTo(map);
                 map.fitBounds(polyline.getBounds(), {padding: [50, 50]});
             }
 
+            // Draw Backup
             backupSpots.forEach(spot => {
-                const icon = L.divIcon({ className: '', html: `<div class='marker-backup'><i class='fa-solid ${spot.icon}'></i></div>`, iconSize: [20,20], iconAnchor: [10,10] });
-                const m = L.marker([spot.lat, spot.lng], {icon: icon}).addTo(map).bindPopup(`<span class='text-gray-500'>${spot.name}</span>`);
+                const icon = L.divIcon({ className: '', html: `<div class='marker-backup'><i class='fa-solid ${spot.icon || 'fa-map-pin'}'></i></div>`, iconSize: [20,20], iconAnchor: [10,10] });
+                const popup = `
+                    <div class="text-center p-2 font-serif">
+                        <h3 class="font-bold text-gray-700 mb-2 text-sm">${spot.name}</h3>
+                        <button onclick="addToItinerary('${spot.id}')" class="w-full bg-turk-blue text-white text-xs py-1.5 px-3 rounded shadow hover:bg-turk-night flex items-center justify-center">
+                            <i class="fa-solid fa-plus mr-1"></i> 加入行程
+                        </button>
+                    </div>`;
+                const m = L.marker([spot.lat, spot.lng], {icon: icon}).addTo(map).bindPopup(popup);
                 backupMarkers.push(m);
             });
 
+            // List
             const activeList = document.getElementById('itinerary-list');
-            const backupList = document.getElementById('backup-list');
-            activeList.innerHTML = ''; backupList.innerHTML = '';
-
-            activeSpots.forEach((spot, i) => activeList.appendChild(createListItem(spot, i+1, true)));
-            backupSpots.forEach(spot => backupList.appendChild(createListItem(spot, null, false)));
+            activeList.innerHTML = '';
+            activeSpots.forEach((spot, i) => activeList.appendChild(createListItem(spot, i+1)));
 
             if(activeSortable) activeSortable.destroy();
-            if(backupSortable) backupSortable.destroy();
-            const sortOptions = { group: 'shared', animation: 150, onEnd: handleDragEnd };
-            activeSortable = new Sortable(activeList, sortOptions);
-            backupSortable = new Sortable(backupList, sortOptions);
+            activeSortable = new Sortable(activeList, { animation: 150, onEnd: handleDragEnd });
         }
 
-        function createListItem(spot, index, isActive) {
+        function createListItem(spot, index) {
             const el = document.createElement('div');
             el.dataset.id = spot.id;
-            el.className = isActive 
-                ? 'bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between cursor-grab active:cursor-grabbing'
-                : 'bg-white/60 p-2 rounded-lg border border-dashed border-gray-300 flex items-center justify-between cursor-grab active:cursor-grabbing opacity-75 hover:opacity-100';
+            el.className = 'bg-white p-3 rounded-lg border border-gray-200 shadow-sm flex items-center justify-between cursor-grab active:cursor-grabbing';
             el.innerHTML = `
                 <div class="flex items-center gap-3">
-                    <div class="${isActive ? 'bg-turk-red' : 'bg-gray-400'} w-6 h-6 text-white rounded-full flex items-center justify-center text-xs font-bold">${isActive ? index : '<i class="fa-solid fa-box"></i>'}</div>
-                    <div class="font-bold text-gray-800 text-sm truncate max-w-[180px]">${spot.name}</div>
+                    <div class="bg-turk-red w-6 h-6 text-white rounded-full flex items-center justify-center text-xs font-bold">${index}</div>
+                    <div class="font-bold text-gray-800 text-sm truncate max-w-[200px]">${spot.name}</div>
                 </div>
                 <div class="text-gray-300"><i class="fa-solid fa-bars"></i></div>
             `;
@@ -550,13 +623,8 @@
 
         function handleDragEnd() {
             const getIds = (id) => Array.from(document.getElementById(id).children).map(el => el.dataset.id);
-            const findSpot = (id) => {
-                let s = itineraryData[currentDayIndex].spots.find(x => x.id === id);
-                if(!s) s = backupSpots.find(x => x.id === id);
-                return s;
-            }
+            const findSpot = (id) => itineraryData[currentDayIndex].spots.find(x => x.id === id);
             itineraryData[currentDayIndex].spots = getIds('itinerary-list').map(findSpot).filter(Boolean);
-            backupSpots = getIds('backup-list').map(findSpot).filter(Boolean);
             saveState(); updateAll();
         }
 
