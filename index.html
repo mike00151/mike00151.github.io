@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>伊斯坦堡全能導遊 (搜尋版)</title>
+    <title>伊斯坦堡全能導遊 (同步版)</title>
     
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -82,7 +82,6 @@
             border: 2px solid white;
         }
         
-        /* Temp Marker for Search */
         .marker-temp {
             background-color: #C5A059;
             width: 20px;
@@ -135,16 +134,38 @@
 
     <!-- DASHBOARD VIEW -->
     <div id="view-dashboard" class="pt-16 px-4 pb-24 space-y-5 animate-fade-in">
+        
+        <!-- Main Actions -->
         <div class="bg-gradient-to-r from-turk-night to-turk-blue rounded-xl p-5 text-white text-center shadow-lg relative overflow-hidden">
             <h2 class="text-turk-gold font-display text-lg mb-1">距離出發</h2>
             <div class="flex justify-center items-baseline space-x-2 font-mono">
                 <span id="days" class="text-4xl font-bold">--</span><span class="text-xs">DAYS</span>
             </div>
             <button onclick="switchView('planner')" class="mt-3 bg-turk-gold text-white px-6 py-2 rounded-full text-sm font-bold shadow hover:bg-yellow-600 transition">
-                查看今日行程
+                進入行程地圖
             </button>
         </div>
 
+        <!-- Sync Actions (NEW) -->
+        <div class="card p-4">
+            <h3 class="font-bold text-turk-blue mb-3 text-sm flex items-center justify-between">
+                <span><i class="fa-solid fa-share-nodes mr-2"></i>行程同步與分享</span>
+                <span class="text-[10px] bg-green-100 text-green-700 px-2 rounded-full" id="save-status">已自動儲存</span>
+            </h3>
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="exportData()" class="bg-white border border-turk-blue text-turk-blue py-2 rounded-lg text-xs font-bold hover:bg-turk-sand transition">
+                    <i class="fa-solid fa-upload mr-1"></i> 分享行程給朋友
+                </button>
+                <button onclick="importDataModal()" class="bg-white border border-gray-400 text-gray-600 py-2 rounded-lg text-xs font-bold hover:bg-gray-100 transition">
+                    <i class="fa-solid fa-download mr-1"></i> 匯入朋友行程
+                </button>
+            </div>
+            <div class="mt-3 text-[10px] text-gray-400 text-center">
+                <button onclick="resetToDefault()" class="underline hover:text-red-500">重置為原始設定</button>
+            </div>
+        </div>
+
+        <!-- Budget -->
         <div class="card p-4">
             <div class="flex justify-between items-center mb-3">
                 <h3 class="font-bold text-turk-blue text-sm"><i class="fa-solid fa-wallet mr-2"></i>今日記帳</h3>
@@ -159,33 +180,6 @@
                 <span class="font-bold text-turk-red">₺ <span id="total-spent">0</span></span>
             </div>
         </div>
-
-        <div>
-            <h3 class="font-bold text-turk-dark mb-2 ml-1 text-sm">🇹🇷 實用土耳其語</h3>
-            <div class="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide">
-                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-blue shadow-sm">
-                    <div class="text-xs text-gray-400">你好</div>
-                    <div class="font-bold text-turk-dark">Merhaba</div>
-                </div>
-                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-red shadow-sm">
-                    <div class="text-xs text-gray-400">謝謝</div>
-                    <div class="font-bold text-turk-dark">Teşekkürler</div>
-                </div>
-                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-gold shadow-sm">
-                    <div class="text-xs text-gray-400">多少錢?</div>
-                    <div class="font-bold text-turk-dark">Ne kadar?</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Checklist -->
-        <div class="card p-4">
-            <h3 class="font-bold text-turk-blue mb-2 text-sm"><i class="fa-solid fa-clipboard-check mr-2"></i>每日確認</h3>
-            <div class="space-y-2 text-xs text-gray-700">
-                <label class="flex items-center space-x-3 p-2 bg-gray-50 rounded cursor-pointer"><input type="checkbox" class="w-4 h-4 text-turk-blue rounded"><span>護照/錢包/房卡</span></label>
-                <label class="flex items-center space-x-3 p-2 bg-gray-50 rounded cursor-pointer"><input type="checkbox" class="w-4 h-4 text-turk-blue rounded"><span>雨具/防水鞋</span></label>
-            </div>
-        </div>
     </div>
 
     <!-- PLANNER VIEW -->
@@ -197,7 +191,7 @@
                 <i class="fa-solid fa-search-location"></i> 新增/搜尋
             </button>
             <div id="add-hint" class="absolute top-14 right-3 z-[400] bg-turk-gold text-white text-xs px-2 py-1 rounded shadow hidden">
-                點擊地圖或使用搜尋
+                點擊地圖或搜尋
             </div>
         </div>
         <div class="flex-1 bg-white relative rounded-t-2xl -mt-4 z-10 shadow-[0_-4px_10px_rgba(0,0,0,0.1)] flex flex-col overflow-hidden">
@@ -223,10 +217,6 @@
 
     <!-- GUIDE VIEW -->
     <div id="view-guide" class="hidden pt-20 px-4 pb-24 space-y-6">
-        <div class="bg-gradient-to-br from-blue-400 to-blue-600 rounded-xl p-6 text-white shadow-lg flex justify-between items-center">
-            <div><h2 class="font-bold text-lg">12月氣候</h2><p class="text-sm opacity-90">8°C - 12°C | 濕冷多雨</p></div>
-            <i class="fa-solid fa-cloud-showers-heavy text-4xl opacity-80"></i>
-        </div>
         <div class="card p-4 border-l-4 border-red-500">
             <h3 class="font-bold text-red-800 mb-2 text-sm"><i class="fa-solid fa-triangle-exclamation mr-2"></i>防騙</h3>
             <ul class="text-xs text-gray-700 space-y-2 list-disc pl-4">
@@ -250,8 +240,10 @@
         </div>
     </nav>
 
-    <!-- Currency Button -->
+    <!-- Floating Currency -->
     <button onclick="toggleCurrency()" class="fixed bottom-24 right-4 bg-turk-gold text-white w-12 h-12 rounded-full shadow-lg z-40 border-2 border-white flex items-center justify-center active:scale-90 transition"><i class="fa-solid fa-coins"></i></button>
+
+    <!-- MODALS -->
 
     <!-- Currency Modal -->
     <div id="currency-sheet" class="fixed inset-0 z-[100] hidden flex items-end sm:items-center sm:justify-center pointer-events-none">
@@ -265,29 +257,23 @@
         </div>
     </div>
 
-    <!-- ADD SPOT MODAL (New Search Feature) -->
+    <!-- Add Spot Modal -->
     <div id="name-modal" class="fixed inset-0 z-[1000] hidden flex items-center justify-center bg-black/50 backdrop-blur-sm">
         <div class="bg-white p-5 rounded-xl shadow-2xl w-80">
             <h3 class="font-bold text-turk-dark mb-3 text-lg border-b pb-2">新增景點</h3>
-            
-            <!-- Search Section -->
             <div class="mb-4">
-                <label class="text-xs text-gray-500 mb-1 block">1. 搜尋地點 (OpenStreetMap)</label>
+                <label class="text-xs text-gray-500 mb-1 block">1. 搜尋 (OpenStreetMap)</label>
                 <div class="flex space-x-2 relative">
-                    <input type="text" id="search-query" placeholder="輸入名稱 (例如: Galata Tower)" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-turk-blue outline-none bg-gray-50">
+                    <input type="text" id="search-query" placeholder="輸入名稱 (如: Galata Tower)" class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-turk-blue outline-none bg-gray-50">
                     <button onclick="searchPlace()" class="bg-turk-blue text-white px-3 rounded text-sm whitespace-nowrap"><i class="fa-solid fa-search"></i></button>
                 </div>
-                <!-- Search Results List -->
                 <ul id="search-results" class="hidden mt-2 bg-white border rounded shadow-md max-h-32 overflow-y-auto text-xs divide-y"></ul>
             </div>
-
-            <!-- Manual Section -->
             <div class="mb-4">
                 <label class="text-xs text-gray-500 mb-1 block">2. 確認名稱</label>
                 <input type="text" id="new-spot-name" placeholder="景點名稱..." class="w-full border p-2 rounded text-sm focus:ring-2 focus:ring-turk-gold outline-none font-bold text-turk-dark">
                 <p id="location-status" class="text-[10px] text-gray-400 mt-1 italic"><i class="fa-solid fa-location-dot"></i> 請先搜尋或點擊地圖選擇位置</p>
             </div>
-
             <div class="flex justify-end gap-2 border-t pt-3">
                 <button onclick="cancelAddSpot()" class="px-4 py-2 text-gray-500 text-sm hover:bg-gray-100 rounded">取消</button>
                 <button onclick="confirmAddSpot()" class="px-4 py-2 bg-turk-gold text-white rounded text-sm font-bold shadow hover:bg-yellow-600">加入備用</button>
@@ -295,9 +281,25 @@
         </div>
     </div>
 
+    <!-- Import/Export Modal -->
+    <div id="sync-modal" class="fixed inset-0 z-[2000] hidden flex items-center justify-center bg-black/60 backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-xl shadow-2xl w-[90%] max-w-sm">
+            <h3 class="font-bold text-lg text-turk-dark mb-2" id="sync-title">分享行程</h3>
+            <p class="text-xs text-gray-500 mb-4" id="sync-desc">複製下方代碼傳給朋友，或貼上朋友的代碼。</p>
+            
+            <textarea id="sync-data" class="w-full h-32 border border-gray-300 rounded p-2 text-xs font-mono bg-gray-50 focus:ring-2 focus:ring-turk-blue outline-none break-all" readonly></textarea>
+            
+            <div class="mt-4 flex flex-col gap-2" id="sync-actions">
+                <!-- Buttons injected via JS -->
+            </div>
+            <button onclick="document.getElementById('sync-modal').classList.add('hidden')" class="mt-4 w-full text-gray-500 text-xs py-2">關閉視窗</button>
+        </div>
+    </div>
+
     <script>
         // --- DATA ---
-        const itineraryData = [
+        // Default Data
+        const defaultItinerary = [
             { date: "12/26", spots: [ { id: "s1", name: "伊斯坦堡機場", lat: 41.261, lng: 28.742, icon: "fa-plane" }, { id: "s2", name: "JW Marriott (入住)", lat: 41.025, lng: 28.977, icon: "fa-hotel" } ] },
             { date: "12/27", spots: [ { id: "s5", name: "聖索菲亞清真寺", lat: 41.0086, lng: 28.9802, icon: "fa-mosque" }, { id: "s6", name: "藍色清真寺", lat: 41.0054, lng: 28.9768, icon: "fa-mosque" }, { id: "s8", name: "地下水宮殿", lat: 41.0084, lng: 28.9779, icon: "fa-water" } ] },
             { date: "12/28", spots: [ { id: "s11", name: "大巴扎", lat: 41.0107, lng: 28.9680, icon: "fa-bag-shopping" }, { id: "s12", name: "香料市場", lat: 41.0165, lng: 28.9705, icon: "fa-pepper-hot" }, { id: "s13", name: "Orientbank (換飯店)", lat: 41.0163, lng: 28.9744, icon: "fa-hotel" } ] },
@@ -307,18 +309,114 @@
             { date: "01/01", spots: [ { id: "s24", name: "蘇萊曼尼耶清真寺", lat: 41.0162, lng: 28.9638, icon: "fa-mosque" }, { id: "s25", name: "Balat 彩色街區", lat: 41.0315, lng: 28.9472, icon: "fa-camera" } ] }
         ];
 
-        let backupSpots = [
+        const defaultBackup = [
             { id: "b1", name: "托普卡匹皇宮", lat: 41.0115, lng: 28.9833, icon: "fa-crown" },
             { id: "b2", name: "考古博物館", lat: 41.0116, lng: 28.9813, icon: "fa-landmark" },
             { id: "b3", name: "彩虹階梯", lat: 41.0326, lng: 28.9863, icon: "fa-stairs" }
         ];
 
+        // State variables
+        let itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
+        let backupSpots = JSON.parse(JSON.stringify(defaultBackup));
+
         let currentDayIndex = 0;
         let map = null, polyline = null;
         let activeMarkers = [], backupMarkers = [];
         let activeSortable = null, backupSortable = null;
-        let isAddMode = false, tempLatLng = null;
-        let tempMarker = null; // For search preview
+        let isAddMode = false, tempLatLng = null, tempMarker = null;
+
+        // --- LOCAL STORAGE LOGIC ---
+        function saveState() {
+            const state = { itinerary: itineraryData, backup: backupSpots };
+            localStorage.setItem('turk_planner_data', JSON.stringify(state));
+            
+            // UI Feedback
+            const status = document.getElementById('save-status');
+            status.innerText = "已儲存";
+            status.className = "text-[10px] bg-green-100 text-green-700 px-2 rounded-full transition";
+            setTimeout(() => status.className = "text-[10px] bg-gray-100 text-gray-500 px-2 rounded-full transition", 2000);
+        }
+
+        function loadState() {
+            const saved = localStorage.getItem('turk_planner_data');
+            if (saved) {
+                try {
+                    const parsed = JSON.parse(saved);
+                    itineraryData = parsed.itinerary;
+                    backupSpots = parsed.backup;
+                } catch(e) { console.error("Load error", e); }
+            }
+        }
+
+        function resetToDefault() {
+            if(confirm("確定要重置所有行程回到預設值嗎？您的修改將會消失。")) {
+                itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
+                backupSpots = JSON.parse(JSON.stringify(defaultBackup));
+                saveState();
+                updateAll();
+                alert("已重置");
+            }
+        }
+
+        // --- EXPORT / IMPORT LOGIC ---
+        function exportData() {
+            const state = { itinerary: itineraryData, backup: backupSpots };
+            const code = JSON.stringify(state);
+            
+            document.getElementById('sync-title').innerText = "分享行程代碼";
+            document.getElementById('sync-desc').innerText = "複製下方代碼傳給朋友 (長按全選)";
+            const textArea = document.getElementById('sync-data');
+            textArea.value = code;
+            textArea.readOnly = true;
+            
+            document.getElementById('sync-actions').innerHTML = `
+                <button onclick="copyToClipboard()" class="bg-turk-blue text-white py-2 rounded-lg font-bold">複製代碼</button>
+            `;
+            document.getElementById('sync-modal').classList.remove('hidden');
+        }
+
+        function importDataModal() {
+            document.getElementById('sync-title').innerText = "匯入行程";
+            document.getElementById('sync-desc').innerText = "請貼上朋友傳來的行程代碼";
+            const textArea = document.getElementById('sync-data');
+            textArea.value = "";
+            textArea.readOnly = false;
+            textArea.placeholder = "在此貼上代碼...";
+            
+            document.getElementById('sync-actions').innerHTML = `
+                <button onclick="performImport()" class="bg-turk-gold text-white py-2 rounded-lg font-bold">確認匯入</button>
+            `;
+            document.getElementById('sync-modal').classList.remove('hidden');
+        }
+
+        function copyToClipboard() {
+            const copyText = document.getElementById("sync-data");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            navigator.clipboard.writeText(copyText.value).then(() => {
+                alert("已複製！請貼給朋友。");
+            });
+        }
+
+        function performImport() {
+            const code = document.getElementById("sync-data").value;
+            if(!code) return;
+            try {
+                const parsed = JSON.parse(code);
+                if(parsed.itinerary && parsed.backup) {
+                    itineraryData = parsed.itinerary;
+                    backupSpots = parsed.backup;
+                    saveState();
+                    updateAll();
+                    document.getElementById('sync-modal').classList.add('hidden');
+                    alert("匯入成功！行程已更新。");
+                } else {
+                    alert("代碼格式錯誤");
+                }
+            } catch(e) {
+                alert("無效的代碼");
+            }
+        }
 
         // --- MAP & CORE LOGIC ---
         function initMap() {
@@ -423,10 +521,11 @@
             }
             itineraryData[currentDayIndex].spots = getIds('itinerary-list').map(findSpot).filter(Boolean);
             backupSpots = getIds('backup-list').map(findSpot).filter(Boolean);
+            saveState(); // SAVE ON CHANGE
             updateAll();
         }
 
-        // --- NEW SEARCH & ADD SPOT LOGIC ---
+        // --- SEARCH & ADD LOGIC ---
         function toggleAddMode() {
             isAddMode = !isAddMode;
             const btn = document.getElementById('add-mode-btn');
@@ -434,8 +533,7 @@
                 btn.classList.add('bg-turk-gold', 'text-white', 'border-white');
                 btn.classList.remove('bg-white', 'text-turk-dark');
                 document.getElementById('add-hint').classList.remove('hidden');
-                document.getElementById('name-modal').classList.remove('hidden'); // Open immediately for search
-                // Clear previous state
+                document.getElementById('name-modal').classList.remove('hidden');
                 document.getElementById('search-query').value = '';
                 document.getElementById('search-results').classList.add('hidden');
                 document.getElementById('new-spot-name').value = '';
@@ -455,18 +553,14 @@
             const query = document.getElementById('search-query').value;
             const resultList = document.getElementById('search-results');
             if(!query) return;
-
             resultList.innerHTML = '<li class="p-2 text-gray-500">搜尋中...</li>';
             resultList.classList.remove('hidden');
-
             try {
-                // Use OpenStreetMap Nominatim API
-                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&viewbox=28.0,41.5,30.0,40.5&bounded=1`); // Bound search to Istanbul area roughly
+                const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&viewbox=28.0,41.5,30.0,40.5&bounded=1`);
                 const data = await response.json();
-
                 resultList.innerHTML = '';
                 if(data.length === 0) {
-                    resultList.innerHTML = '<li class="p-2 text-red-500">找不到地點，請換個關鍵字</li>';
+                    resultList.innerHTML = '<li class="p-2 text-red-500">找不到地點</li>';
                 } else {
                     data.forEach(item => {
                         const li = document.createElement('li');
@@ -479,21 +573,15 @@
                         resultList.appendChild(li);
                     });
                 }
-            } catch (e) {
-                resultList.innerHTML = '<li class="p-2 text-red-500">搜尋錯誤</li>';
-            }
+            } catch (e) { resultList.innerHTML = '<li class="p-2 text-red-500">搜尋錯誤</li>'; }
         }
 
         function setTempLocation(lat, lng, name) {
             tempLatLng = { lat: parseFloat(lat), lng: parseFloat(lng) };
-            
-            // Update UI
             document.getElementById('new-spot-name').value = name;
             const statusEl = document.getElementById('location-status');
             statusEl.innerHTML = '<i class="fa-solid fa-check text-green-500"></i> 位置已鎖定';
             statusEl.className = 'text-[10px] text-green-600 mt-1 font-bold';
-
-            // Show on Map
             if(tempMarker) map.removeLayer(tempMarker);
             const icon = L.divIcon({ className: '', html: `<div class='marker-temp'></div>`, iconSize: [20,20], iconAnchor: [10,10] });
             tempMarker = L.marker([lat, lng], {icon: icon}).addTo(map);
@@ -501,16 +589,14 @@
         }
 
         function cancelAddSpot() { toggleAddMode(); }
-        
         function confirmAddSpot() {
             const name = document.getElementById('new-spot-name').value;
             if(name && tempLatLng) {
                 backupSpots.push({ id: 'b_'+Date.now(), name: name, lat: tempLatLng.lat, lng: tempLatLng.lng, icon: 'fa-map-pin' });
                 toggleAddMode();
+                saveState(); // SAVE
                 updateAll();
-            } else {
-                alert("請輸入名稱並確認位置");
-            }
+            } else { alert("請輸入名稱並確認位置"); }
         }
 
         // --- UTILS ---
@@ -525,15 +611,10 @@
         }
 
         let totalSpent = 0;
-        function addExpense() {
-            const v = parseFloat(document.getElementById('budget-input').value);
-            if(v) { totalSpent += v; document.getElementById('total-spent').innerText = totalSpent; document.getElementById('budget-input').value = ''; }
-        }
+        function addExpense() { const v = parseFloat(document.getElementById('budget-input').value); if(v) { totalSpent += v; document.getElementById('total-spent').innerText = totalSpent; document.getElementById('budget-input').value = ''; } }
         function resetBudget() { totalSpent = 0; document.getElementById('total-spent').innerText = 0; }
-
         function calculateRate() { document.getElementById('calc-twd').value = (document.getElementById('calc-try').value * 0.93).toFixed(1); }
         function toggleCurrency() { const el = document.getElementById('currency-sheet'); el.classList.toggle('hidden'); }
-
         function updateTime() {
             const now = new Date();
             const fmt = (tz) => now.toLocaleTimeString('zh-TW', {timeZone: tz, hour:'2-digit', minute:'2-digit', hour12:false});
@@ -552,7 +633,10 @@
             window.scrollTo(0,0);
         }
 
-        document.addEventListener('DOMContentLoaded', () => { setInterval(updateTime, 1000); updateTime(); calculateRate(); });
+        document.addEventListener('DOMContentLoaded', () => { 
+            loadState(); // LOAD FROM STORAGE
+            setInterval(updateTime, 1000); updateTime(); calculateRate(); 
+        });
     </script>
 </body>
 </html>
