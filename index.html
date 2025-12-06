@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>伊斯坦堡全能導遊 (KML 匯入版)</title>
+    <title>伊斯坦堡全能導遊 (KML 客製版)</title>
     
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -77,8 +77,8 @@
             background-color: #4B5563;
             opacity: 0.8;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border: 2px solid white;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             color: white;
@@ -152,35 +152,22 @@
             </button>
         </div>
 
-        <!-- Sync & Google Actions -->
+        <!-- Sync Actions -->
         <div class="card p-4">
             <h3 class="font-bold text-turk-blue mb-3 text-sm flex items-center justify-between">
-                <span><i class="fa-solid fa-share-nodes mr-2"></i>資料與備份</span>
+                <span><i class="fa-solid fa-share-nodes mr-2"></i>行程同步與分享</span>
                 <span class="text-[10px] bg-green-100 text-green-700 px-2 rounded-full" id="save-status">已自動儲存</span>
             </h3>
-            
-            <!-- Google KML Import Section -->
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-3 mb-3">
-                <h4 class="text-xs font-bold text-gray-600 mb-2 flex items-center">
-                    <i class="fa-brands fa-google text-blue-500 mr-1"></i> 匯入 Google 地圖清單
-                </h4>
-                <p class="text-[10px] text-gray-500 mb-2 leading-relaxed">
-                    無法直接搜尋？請去 <a href="https://www.google.com/maps/d/" target="_blank" class="text-blue-600 underline">Google My Maps</a> 建立地圖，匯出 KML 檔後上傳。
-                </p>
-                <input type="file" id="kml-input" accept=".kml,.xml" class="hidden" onchange="handleKMLUpload(this)">
-                <button onclick="document.getElementById('kml-input').click()" class="w-full bg-white border border-turk-gold text-turk-gold py-2 rounded-lg text-xs font-bold hover:bg-turk-sand transition flex items-center justify-center">
-                    <i class="fa-solid fa-file-import mr-2"></i> 上傳 KML 檔案
+            <div class="grid grid-cols-2 gap-3">
+                <button onclick="exportData()" class="bg-white border border-turk-blue text-turk-blue py-2 rounded-lg text-xs font-bold hover:bg-turk-sand transition">
+                    <i class="fa-solid fa-upload mr-1"></i> 分享行程
+                </button>
+                <button onclick="importDataModal()" class="bg-white border border-gray-400 text-gray-600 py-2 rounded-lg text-xs font-bold hover:bg-gray-100 transition">
+                    <i class="fa-solid fa-download mr-1"></i> 匯入行程
                 </button>
             </div>
-
-            <!-- Standard Sync -->
-            <div class="grid grid-cols-2 gap-3 pt-2 border-t border-gray-200">
-                <button onclick="exportData()" class="text-turk-blue text-xs font-bold hover:underline">
-                    <i class="fa-solid fa-copy mr-1"></i> 複製行程代碼
-                </button>
-                <button onclick="importDataModal()" class="text-gray-600 text-xs font-bold hover:underline text-right">
-                    <i class="fa-solid fa-paste mr-1"></i> 貼上行程代碼
-                </button>
+            <div class="mt-3 text-[10px] text-gray-400 text-center">
+                <button onclick="resetToDefault()" class="underline hover:text-red-500">重置為原始設定</button>
             </div>
         </div>
 
@@ -197,6 +184,25 @@
             <div class="flex justify-between text-sm bg-gray-50 p-2 rounded">
                 <span class="text-gray-500">累積:</span>
                 <span class="font-bold text-turk-red">₺ <span id="total-spent">0</span></span>
+            </div>
+        </div>
+        
+        <!-- Phrasebook -->
+        <div>
+            <h3 class="font-bold text-turk-dark mb-2 ml-1 text-sm">🇹🇷 實用土耳其語</h3>
+            <div class="flex overflow-x-auto space-x-3 pb-2 scrollbar-hide">
+                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-blue shadow-sm">
+                    <div class="text-xs text-gray-400">你好</div>
+                    <div class="font-bold text-turk-dark">Merhaba</div>
+                </div>
+                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-red shadow-sm">
+                    <div class="text-xs text-gray-400">謝謝</div>
+                    <div class="font-bold text-turk-dark">Teşekkürler</div>
+                </div>
+                <div class="min-w-[120px] bg-white p-3 rounded-xl border-l-4 border-turk-gold shadow-sm">
+                    <div class="text-xs text-gray-400">多少錢?</div>
+                    <div class="font-bold text-turk-dark">Ne kadar?</div>
+                </div>
             </div>
         </div>
     </div>
@@ -225,7 +231,7 @@
                 </div>
                 <div>
                     <div class="text-xs font-bold text-gray-500 mb-2 px-1 pt-2 border-t border-gray-200 flex justify-between">
-                        <span>備用清單 (含匯入景點)</span>
+                        <span>我的收藏景點 (來自 KML)</span>
                         <span class="bg-gray-200 text-[10px] px-2 rounded-full py-0.5">可拖曳加入</span>
                     </div>
                     <div id="backup-list" class="space-y-2 min-h-[50px] bg-gray-100/50 rounded-lg p-1"></div>
@@ -326,87 +332,57 @@
             { date: "01/01", spots: [ { id: "s24", name: "蘇萊曼尼耶清真寺", lat: 41.0162, lng: 28.9638, icon: "fa-mosque" }, { id: "s25", name: "Balat 彩色街區", lat: 41.0315, lng: 28.9472, icon: "fa-camera" } ] }
         ];
 
-        // Expanded Backup List
+        // Backup List from KML
         const defaultBackup = [
-            { id: "b1", name: "Hafiz Mustafa 1864 (百年甜點)", lat: 41.0162, lng: 28.9729, icon: "fa-cookie" },
-            { id: "b2", name: "Seven Hills (網美觀景餐廳)", lat: 41.0062, lng: 28.9796, icon: "fa-utensils" },
-            { id: "b3", name: "托普卡匹皇宮", lat: 41.0115, lng: 28.9833, icon: "fa-crown" },
-            { id: "b4", name: "多爾瑪巴赫切宮", lat: 41.0391, lng: 29.0007, icon: "fa-landmark" },
-            { id: "b5", name: "Vefa Bozacisi (發酵飲)", lat: 41.0154, lng: 28.9592, icon: "fa-wine-glass" },
-            { id: "b6", name: "伊斯坦堡考古博物館", lat: 41.0116, lng: 28.9813, icon: "fa-landmark" },
-            { id: "b7", name: "少女塔 (Maiden's Tower)", lat: 41.0211, lng: 29.0041, icon: "fa-tower-observation" },
-            { id: "b8", name: "純真博物館", lat: 41.0304, lng: 28.9806, icon: "fa-book" },
-            { id: "b9", name: "奧塔科伊清真寺 (Ortakoy)", lat: 41.0471, lng: 29.0268, icon: "fa-mosque" },
-            { id: "b10", name: "Salt Galata (絕美圖書館)", lat: 41.0238, lng: 28.9739, icon: "fa-building-columns" },
-            { id: "b11", name: "皮埃爾洛蒂山 (Pierre Loti)", lat: 41.0543, lng: 28.9340, icon: "fa-mountain" },
-            { id: "b12", name: "Galataport (海濱購物)", lat: 41.0264, lng: 28.9825, icon: "fa-bag-shopping" },
-            { id: "b13", name: "Ciya Sofrasi (亞洲區美食)", lat: 40.9897, lng: 29.0260, icon: "fa-utensils" },
-            { id: "b14", name: "魯梅利堡壘", lat: 41.0853, lng: 29.0435, icon: "fa-chess-rook" },
-            { id: "b15", name: "柯拉教堂", lat: 41.0292, lng: 28.9392, icon: "fa-church" },
-            { id: "b16", name: "Kuzguncuk (彩色屋)", lat: 41.0350, lng: 29.0299, icon: "fa-camera" },
-            { id: "b17", name: "Arnavutkoy (海鮮街)", lat: 41.0666, lng: 29.0432, icon: "fa-fish" },
-            { id: "b18", name: "Miniaturk (小人國)", lat: 41.0588, lng: 28.9491, icon: "fa-magnifying-glass" },
-            { id: "b19", name: "伊斯坦堡現代美術館", lat: 41.0269, lng: 28.9832, icon: "fa-palette" },
-            { id: "b20", name: "法提赫清真寺", lat: 41.0196, lng: 28.9496, icon: "fa-mosque" }
+            { id: "k1", name: "Pierre Loti Hill", lat: 41.0542212, lng: 28.9337884, icon: "fa-mountain" },
+            { id: "k2", name: "Çamlıca Tower", lat: 41.0163191, lng: 29.0655582, icon: "fa-tower-broadcast" },
+            { id: "k3", name: "托普卡匹皇宮", lat: 41.0115195, lng: 28.9833789, icon: "fa-landmark" },
+            { id: "k4", name: "Ahşap Evler", lat: 41.0338085, lng: 29.03165, icon: "fa-house" },
+            { id: "k5", name: "Beylerbeyi Palace", lat: 41.0426451, lng: 29.039905, icon: "fa-landmark" },
+            { id: "k6", name: "Miniaturk", lat: 41.0589927, lng: 28.9492193, icon: "fa-magnifying-glass" },
+            { id: "k7", name: "Kuzguncuk Bostanı", lat: 41.0346407, lng: 29.03147, icon: "fa-seedling" },
+            { id: "k8", name: "Istanbul Lamps Workshops", lat: 41.0095807, lng: 28.9679256, icon: "fa-lightbulb" },
+            { id: "k9", name: "Küçüksu Pavilion", lat: 41.0784181, lng: 29.0648789, icon: "fa-place-of-worship" },
+            { id: "k10", name: "KüçükÇiftlik Park", lat: 41.042965, lng: 28.99297, icon: "fa-tree" },
+            { id: "k11", name: "蘇萊曼尼耶清真寺", lat: 41.016047, lng: 28.9639711, icon: "fa-mosque" },
+            { id: "k12", name: "Agios Panteleimonas Church", lat: 41.0346085, lng: 29.0305442, icon: "fa-church" },
+            { id: "k13", name: "Florence Nightingale Museum", lat: 41.0069533, lng: 29.0167853, icon: "fa-kit-medical" },
+            { id: "k14", name: "Galataport Istanbul", lat: 41.0276477, lng: 28.9852806, icon: "fa-ship" },
+            { id: "k15", name: "Camlica Hill", lat: 41.028244, lng: 29.0691617, icon: "fa-mountain" },
+            { id: "k16", name: "Büyük Valide Han", lat: 41.0130856, lng: 28.9683738, icon: "fa-archway" },
+            { id: "k17", name: "少女塔", lat: 41.0211216, lng: 29.0041105, icon: "fa-tower-observation" },
+            { id: "k18", name: "Bosphorus View Point", lat: 41.03375, lng: 29.029934, icon: "fa-camera" },
+            { id: "k19", name: "Camlica Terrace", lat: 41.0351833, lng: 29.0691303, icon: "fa-mug-hot" },
+            { id: "k20", name: "Kuzguncuk Evleri", lat: 41.0356182, lng: 29.0300243, icon: "fa-house-chimney" },
+            { id: "k21", name: "香料市集", lat: 41.016499, lng: 28.9705191, icon: "fa-pepper-hot" },
+            { id: "k22", name: "İstiklal Caddesi", lat: 41.0322178, lng: 28.9762806, icon: "fa-road" },
+            { id: "k23", name: "聖喬治主教座堂", lat: 41.0292218, lng: 28.9517316, icon: "fa-church" },
+            { id: "k24", name: "科拉教堂", lat: 41.031205, lng: 28.9391883, icon: "fa-church" },
+            { id: "k25", name: "Orientbank Hotel", lat: 41.0151366, lng: 28.9723512, icon: "fa-hotel" },
+            { id: "k26", name: "Üsküdar Tekel Stage", lat: 41.031436, lng: 29.0216139, icon: "fa-masks-theater" },
+            { id: "k27", name: "Neviye Sokağı Merdivenleri", lat: 41.0051835, lng: 28.9678151, icon: "fa-stairs" },
+            { id: "k28", name: "塔克西姆廣場", lat: 41.0370023, lng: 28.9850917, icon: "fa-flag" },
+            { id: "k29", name: "佐盧中心 (Zorlu)", lat: 41.0669934, lng: 29.0155549, icon: "fa-bag-shopping" },
+            { id: "k30", name: "新皇太后清真寺", lat: 41.0247332, lng: 29.0150879, icon: "fa-mosque" },
+            { id: "k31", name: "米赫里馬赫蘇丹清真寺", lat: 41.0267792, lng: 29.0159815, icon: "fa-mosque" },
+            { id: "k32", name: "Çiçek Pasajı", lat: 41.0339387, lng: 28.9780878, icon: "fa-utensils" },
+            { id: "k33", name: "蘇丹艾哈邁德清真寺", lat: 41.0054096, lng: 28.9768138, icon: "fa-mosque" },
+            { id: "k34", name: "Eyüp Sultan Mosque", lat: 41.0479225, lng: 28.9338509, icon: "fa-mosque" },
+            { id: "k35", name: "JW Marriott Bosphorus", lat: 41.0241112, lng: 28.9792252, icon: "fa-hotel" },
+            { id: "k36", name: "奧塔科伊清真寺", lat: 41.0472151, lng: 29.0269478, icon: "fa-mosque" }
         ];
 
-        // State
+        // State variables
         let itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
         let backupSpots = JSON.parse(JSON.stringify(defaultBackup));
+
         let currentDayIndex = 0;
         let map = null, polyline = null;
         let activeMarkers = [], backupMarkers = [];
         let activeSortable = null, backupSortable = null;
         let isAddMode = false, tempLatLng = null, tempMarker = null;
 
-        // --- KML PARSER ---
-        function handleKMLUpload(input) {
-            const file = input.files[0];
-            if(!file) return;
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const text = e.target.result;
-                const parser = new DOMParser();
-                const xmlDoc = parser.parseFromString(text, "text/xml");
-                const placemarks = xmlDoc.getElementsByTagName("Placemark");
-                let count = 0;
-
-                for (let i = 0; i < placemarks.length; i++) {
-                    const name = placemarks[i].getElementsByTagName("name")[0]?.textContent || "未命名";
-                    const pointStr = placemarks[i].getElementsByTagName("coordinates")[0]?.textContent;
-                    
-                    if (pointStr) {
-                        const coords = pointStr.trim().split(',');
-                        // KML: lng, lat, alt. We need lat, lng
-                        const lng = parseFloat(coords[0]);
-                        const lat = parseFloat(coords[1]);
-
-                        if(!isNaN(lat) && !isNaN(lng)) {
-                            backupSpots.push({
-                                id: 'kml_' + Date.now() + '_' + i,
-                                name: name,
-                                lat: lat,
-                                lng: lng,
-                                icon: 'fa-map-pin'
-                            });
-                            count++;
-                        }
-                    }
-                }
-
-                if(count > 0) {
-                    saveState();
-                    updateAll();
-                    alert(`成功匯入 ${count} 個景點到備用清單！`);
-                } else {
-                    alert("無法讀取 KML 檔案，請確認檔案格式正確。");
-                }
-            };
-            reader.readAsText(file);
-        }
-
-        // --- LOCAL STORAGE ---
+        // --- LOCAL STORAGE LOGIC ---
         function saveState() {
             const state = { itinerary: itineraryData, backup: backupSpots };
             localStorage.setItem('turk_planner_data', JSON.stringify(state));
@@ -422,13 +398,14 @@
                 try {
                     const parsed = JSON.parse(saved);
                     itineraryData = parsed.itinerary;
-                    backupSpots = parsed.backup;
+                    // Note: We use the saved state if exists, but you can force reset to use KML by clearing storage
+                    if(parsed.backup) backupSpots = parsed.backup;
                 } catch(e) { console.error("Load error", e); }
             }
         }
 
         function resetToDefault() {
-            if(confirm("重置將恢復預設行程，您的修改將會消失。")) {
+            if(confirm("確定要重置為預設 (KML 匯入狀態) 嗎？")) {
                 itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
                 backupSpots = JSON.parse(JSON.stringify(defaultBackup));
                 saveState();
@@ -437,13 +414,15 @@
             }
         }
 
-        // --- EXPORT/IMPORT ---
+        // --- EXPORT / IMPORT LOGIC ---
         function exportData() {
-            const code = JSON.stringify({ itinerary: itineraryData, backup: backupSpots });
+            const state = { itinerary: itineraryData, backup: backupSpots };
+            const code = JSON.stringify(state);
             document.getElementById('sync-title').innerText = "分享行程代碼";
-            document.getElementById('sync-desc').innerText = "複製代碼傳給朋友";
-            document.getElementById('sync-data').value = code;
-            document.getElementById('sync-data').readOnly = true;
+            document.getElementById('sync-desc').innerText = "複製下方代碼傳給朋友";
+            const textArea = document.getElementById('sync-data');
+            textArea.value = code;
+            textArea.readOnly = true;
             document.getElementById('sync-actions').innerHTML = `<button onclick="copyToClipboard()" class="bg-turk-blue text-white py-2 rounded-lg font-bold">複製代碼</button>`;
             document.getElementById('sync-modal').classList.remove('hidden');
         }
@@ -451,32 +430,38 @@
         function importDataModal() {
             document.getElementById('sync-title').innerText = "匯入行程";
             document.getElementById('sync-desc').innerText = "貼上朋友的代碼";
-            const ta = document.getElementById('sync-data');
-            ta.value = ""; ta.readOnly = false; ta.placeholder = "貼上代碼...";
+            const textArea = document.getElementById('sync-data');
+            textArea.value = "";
+            textArea.readOnly = false;
+            textArea.placeholder = "貼上代碼...";
             document.getElementById('sync-actions').innerHTML = `<button onclick="performImport()" class="bg-turk-gold text-white py-2 rounded-lg font-bold">確認匯入</button>`;
             document.getElementById('sync-modal').classList.remove('hidden');
         }
 
         function copyToClipboard() {
-            const el = document.getElementById("sync-data");
-            el.select(); navigator.clipboard.writeText(el.value).then(() => alert("已複製！"));
+            const copyText = document.getElementById("sync-data");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            navigator.clipboard.writeText(copyText.value).then(() => alert("已複製！"));
         }
 
         function performImport() {
             const code = document.getElementById("sync-data").value;
             if(!code) return;
             try {
-                const p = JSON.parse(code);
-                if(p.itinerary && p.backup) {
-                    itineraryData = p.itinerary; backupSpots = p.backup;
-                    saveState(); updateAll();
+                const parsed = JSON.parse(code);
+                if(parsed.itinerary && parsed.backup) {
+                    itineraryData = parsed.itinerary;
+                    backupSpots = parsed.backup;
+                    saveState();
+                    updateAll();
                     document.getElementById('sync-modal').classList.add('hidden');
                     alert("匯入成功！");
-                } else alert("格式錯誤");
-            } catch(e) { alert("無效代碼"); }
+                } else { alert("代碼格式錯誤"); }
+            } catch(e) { alert("無效的代碼"); }
         }
 
-        // --- MAP LOGIC ---
+        // --- MAP & CORE LOGIC ---
         function initMap() {
             if(map) return;
             map = L.map('map', {zoomControl: false}).setView([41.0082, 28.9784], 13);
@@ -527,7 +512,7 @@
             }
 
             backupSpots.forEach(spot => {
-                const icon = L.divIcon({ className: '', html: `<div class='marker-backup'><i class='fa-solid ${spot.icon}'></i></div>`, iconSize: [18,18], iconAnchor: [9,9] });
+                const icon = L.divIcon({ className: '', html: `<div class='marker-backup'><i class='fa-solid ${spot.icon}'></i></div>`, iconSize: [20,20], iconAnchor: [10,10] });
                 const m = L.marker([spot.lat, spot.lng], {icon: icon}).addTo(map).bindPopup(`<span class='text-gray-500'>${spot.name}</span>`);
                 backupMarkers.push(m);
             });
