@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>伊斯坦堡全能導遊 (KML+地圖版)</title>
+    <title>伊斯坦堡全能導遊</title>
     
     <!-- Libraries -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -130,30 +130,40 @@
 
     <div class="pattern-bg"></div>
 
-    <!-- Top Bar -->
-    <div class="fixed top-0 w-full z-50 bg-turk-blue text-white shadow-lg px-4 py-2 flex justify-between items-center h-14">
-        <div class="flex flex-col">
-            <div class="flex items-center space-x-1 text-turk-gold">
-                <i class="fa-solid fa-moon text-xs"></i>
-                <span class="text-[10px] opacity-80">ISTANBUL</span>
+    <!-- Top Bar (3-Column Timezone) -->
+    <div class="fixed top-0 w-full z-50 bg-turk-blue text-white shadow-lg flex justify-between items-center h-16 px-1 text-[10px] md:text-xs">
+        
+        <!-- ISTANBUL -->
+        <div class="flex flex-col items-center justify-center w-1/3 border-r border-white/10 h-full">
+            <div class="flex items-center space-x-1 text-turk-gold mb-0.5">
+                <i class="fa-solid fa-moon"></i> <span class="font-bold tracking-wider">土耳其 IST</span>
             </div>
-            <div id="clock-ist" class="font-bold text-sm font-mono leading-none">--:--</div>
+            <div id="clock-ist" class="font-mono leading-tight text-center opacity-90 scale-90 sm:scale-100">--/--<br>--:--</div>
         </div>
-        <div class="font-display text-turk-gold text-lg tracking-widest">ODYSSEY</div>
-        <div class="flex flex-col text-right">
-            <div class="flex items-center justify-end space-x-1 text-orange-300">
-                <span class="text-[10px] opacity-80">TAIPEI</span>
-                <i class="fa-solid fa-sun text-xs"></i>
+
+        <!-- BANGKOK -->
+        <div class="flex flex-col items-center justify-center w-1/3 border-r border-white/10 h-full">
+            <div class="flex items-center space-x-1 text-green-300 mb-0.5">
+                <i class="fa-solid fa-plane"></i> <span class="font-bold tracking-wider">曼谷 BKK</span>
             </div>
-            <div id="clock-tpe" class="font-bold text-sm font-mono leading-none">--:--</div>
+            <div id="clock-bkk" class="font-mono leading-tight text-center opacity-90 scale-90 sm:scale-100">--/--<br>--:--</div>
+        </div>
+
+        <!-- TAIPEI -->
+        <div class="flex flex-col items-center justify-center w-1/3 h-full">
+            <div class="flex items-center space-x-1 text-orange-300 mb-0.5">
+                <span class="font-bold tracking-wider">台北 TPE</span> <i class="fa-solid fa-sun"></i>
+            </div>
+            <div id="clock-tpe" class="font-mono leading-tight text-center opacity-90 scale-90 sm:scale-100">--/--<br>--:--</div>
         </div>
     </div>
 
     <!-- DASHBOARD VIEW -->
-    <div id="view-dashboard" class="pt-16 px-4 pb-24 space-y-5 animate-fade-in">
+    <div id="view-dashboard" class="pt-20 px-4 pb-24 space-y-5 animate-fade-in">
         
         <!-- Main Actions -->
         <div class="bg-gradient-to-r from-turk-night to-turk-blue rounded-xl p-5 text-white text-center shadow-lg relative overflow-hidden">
+            <div class="absolute top-2 right-2 text-turk-gold opacity-30 text-4xl font-display">ODYSSEY</div>
             <h2 class="text-turk-gold font-display text-lg mb-1">距離出發</h2>
             <div class="flex justify-center items-baseline space-x-2 font-mono">
                 <span id="days" class="text-4xl font-bold">--</span><span class="text-xs">DAYS</span>
@@ -175,9 +185,6 @@
                 <h4 class="text-xs font-bold text-gray-600 mb-2 flex items-center">
                     <i class="fa-solid fa-map text-turk-blue mr-1"></i> 匯入 KML 圖資
                 </h4>
-                <p class="text-[10px] text-gray-500 mb-2 leading-relaxed">
-                    將 Google My Maps 匯出的 KML 檔案匯入為備用景點。
-                </p>
                 <input type="file" id="kml-input" accept=".kml,.xml" class="hidden" onchange="handleKMLUpload(this)">
                 <button onclick="document.getElementById('kml-input').click()" class="w-full bg-white border border-turk-gold text-turk-gold py-2 rounded-lg text-xs font-bold hover:bg-turk-sand transition flex items-center justify-center">
                     <i class="fa-solid fa-file-import mr-2"></i> 選擇檔案 (.kml)
@@ -215,7 +222,7 @@
     </div>
 
     <!-- PLANNER VIEW -->
-    <div id="view-planner" class="hidden h-screen flex flex-col pt-14">
+    <div id="view-planner" class="hidden h-screen flex flex-col pt-16">
         <div class="bg-turk-sand overflow-x-auto whitespace-nowrap p-2 shadow-inner z-10 flex space-x-2" id="day-selector"></div>
         <div class="relative">
             <div id="map"></div>
@@ -240,8 +247,8 @@
                     <div id="itinerary-list" class="space-y-2 min-h-[100px]"></div>
                     <div class="mt-8 text-center text-xs text-gray-400 p-4 border-t border-gray-200 border-dashed">
                         <p><i class="fa-solid fa-circle-info mr-1"></i> 操作提示</p>
-                        <p class="mt-1">點擊地圖上的灰色圓點可加入行程</p>
-                        <p class="mt-1">點擊紅色圓點可移回備用清單</p>
+                        <p class="mt-1">點擊地圖上的灰色圓點 <i class="fa-solid fa-arrow-right text-[10px]"></i> 加入行程</p>
+                        <p class="mt-1">點擊紅色圓點 <i class="fa-solid fa-arrow-right text-[10px]"></i> 移回備用</p>
                     </div>
                 </div>
             </div>
@@ -469,13 +476,14 @@
                 try {
                     const parsed = JSON.parse(saved);
                     itineraryData = parsed.itinerary;
+                    // Note: We use the saved state if exists, but you can force reset to use KML by clearing storage
                     if(parsed.backup) backupSpots = parsed.backup;
                 } catch(e) { console.error("Load error", e); }
             }
         }
 
         function resetToDefault() {
-            if(confirm("確定要重置為預設設定嗎？")) {
+            if(confirm("確定要重置為預設 (KML 匯入狀態) 嗎？")) {
                 itineraryData = JSON.parse(JSON.stringify(defaultItinerary));
                 backupSpots = JSON.parse(JSON.stringify(defaultBackup));
                 saveState();
@@ -484,13 +492,15 @@
             }
         }
 
-        // --- SYNC ---
+        // --- EXPORT / IMPORT LOGIC ---
         function exportData() {
-            const code = JSON.stringify({ itinerary: itineraryData, backup: backupSpots });
+            const state = { itinerary: itineraryData, backup: backupSpots };
+            const code = JSON.stringify(state);
             document.getElementById('sync-title').innerText = "分享行程代碼";
-            document.getElementById('sync-desc').innerText = "複製代碼傳給朋友";
-            document.getElementById('sync-data').value = code;
-            document.getElementById('sync-data').readOnly = true;
+            document.getElementById('sync-desc').innerText = "複製下方代碼傳給朋友";
+            const textArea = document.getElementById('sync-data');
+            textArea.value = code;
+            textArea.readOnly = true;
             document.getElementById('sync-actions').innerHTML = `<button onclick="copyToClipboard()" class="bg-turk-blue text-white py-2 rounded-lg font-bold">複製代碼</button>`;
             document.getElementById('sync-modal').classList.remove('hidden');
         }
@@ -498,32 +508,38 @@
         function importDataModal() {
             document.getElementById('sync-title').innerText = "匯入行程";
             document.getElementById('sync-desc').innerText = "貼上朋友的代碼";
-            const ta = document.getElementById('sync-data');
-            ta.value = ""; ta.readOnly = false; ta.placeholder = "貼上代碼...";
+            const textArea = document.getElementById('sync-data');
+            textArea.value = "";
+            textArea.readOnly = false;
+            textArea.placeholder = "貼上代碼...";
             document.getElementById('sync-actions').innerHTML = `<button onclick="performImport()" class="bg-turk-gold text-white py-2 rounded-lg font-bold">確認匯入</button>`;
             document.getElementById('sync-modal').classList.remove('hidden');
         }
 
         function copyToClipboard() {
-            const el = document.getElementById("sync-data");
-            el.select(); navigator.clipboard.writeText(el.value).then(() => alert("已複製！"));
+            const copyText = document.getElementById("sync-data");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); 
+            navigator.clipboard.writeText(copyText.value).then(() => alert("已複製！"));
         }
 
         function performImport() {
             const code = document.getElementById("sync-data").value;
             if(!code) return;
             try {
-                const p = JSON.parse(code);
-                if(p.itinerary && p.backup) {
-                    itineraryData = p.itinerary; backupSpots = p.backup;
-                    saveState(); updateAll();
+                const parsed = JSON.parse(code);
+                if(parsed.itinerary && parsed.backup) {
+                    itineraryData = parsed.itinerary;
+                    backupSpots = parsed.backup;
+                    saveState();
+                    updateAll();
                     document.getElementById('sync-modal').classList.add('hidden');
                     alert("匯入成功！");
-                } else alert("格式錯誤");
-            } catch(e) { alert("無效代碼"); }
+                } else { alert("代碼格式錯誤"); }
+            } catch(e) { alert("無效的代碼"); }
         }
 
-        // --- MAP LOGIC ---
+        // --- MAP & CORE LOGIC ---
         function initMap() {
             if(map) return;
             map = L.map('map', {zoomControl: false}).setView([41.0082, 28.9784], 13);
@@ -711,11 +727,24 @@
         function resetBudget() { totalSpent = 0; document.getElementById('total-spent').innerText = 0; }
         function calculateRate() { document.getElementById('calc-twd').value = (document.getElementById('calc-try').value * 0.93).toFixed(1); }
         function toggleCurrency() { const el = document.getElementById('currency-sheet'); el.classList.toggle('hidden'); }
+        
         function updateTime() {
             const now = new Date();
-            const fmt = (tz) => now.toLocaleTimeString('zh-TW', {timeZone: tz, hour:'2-digit', minute:'2-digit', hour12:false});
-            document.getElementById('clock-ist').innerText = fmt("Europe/Istanbul");
-            document.getElementById('clock-tpe').innerText = fmt("Asia/Taipei");
+            const format = (tz) => {
+                const parts = new Intl.DateTimeFormat('zh-TW', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(now);
+                const p = {}; parts.forEach(pt => p[pt.type] = pt.value);
+                return { date: `${p.year}/${p.month}/${p.day}`, time: `${p.hour}:${p.minute}` };
+            };
+            
+            const ist = format("Europe/Istanbul");
+            document.getElementById('clock-ist').innerHTML = `${ist.date}<br>${ist.time}`;
+            
+            const bkk = format("Asia/Bangkok");
+            document.getElementById('clock-bkk').innerHTML = `${bkk.date}<br>${bkk.time}`;
+            
+            const tpe = format("Asia/Taipei");
+            document.getElementById('clock-tpe').innerHTML = `${tpe.date}<br>${tpe.time}`;
+            
             const days = Math.floor((new Date('2025-12-25') - now) / (86400000));
             if(days > 0) document.getElementById('days').innerText = days;
         }
