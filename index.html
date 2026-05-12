@@ -21,12 +21,8 @@
   html,body{font-family:-apple-system,"Segoe UI","Microsoft JhengHei",Roboto,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
   .container{max-width:1180px;margin:0 auto;padding:24px}
 
-  /* ---------- HEADER ---------- */
-  .hero{
-    background:linear-gradient(135deg,#8B0000 0%,#C8102E 40%,#D4A24C 100%);
-    color:#fff;border-radius:24px;padding:36px 36px 28px;position:relative;overflow:hidden;
-    box-shadow:0 12px 36px rgba(200,16,46,.25);
-  }
+  /* HEADER */
+  .hero{background:linear-gradient(135deg,#8B0000 0%,#C8102E 40%,#D4A24C 100%);color:#fff;border-radius:24px;padding:36px 36px 28px;position:relative;overflow:hidden;box-shadow:0 12px 36px rgba(200,16,46,.25)}
   .hero::before{content:"☪";position:absolute;font-size:280px;right:-20px;top:-60px;opacity:.10;line-height:1}
   .hero h1{font-size:32px;margin-bottom:8px;letter-spacing:.5px}
   .hero .sub{opacity:.92;font-size:15px}
@@ -36,7 +32,7 @@
   .countdown .num{font-size:54px;font-weight:800;line-height:1}
   .countdown .lbl{font-size:12px;opacity:.85}
 
-  /* ---------- TAB NAV ---------- */
+  /* TABS */
   .tabs{display:flex;gap:6px;overflow-x:auto;margin:22px 0 14px;padding-bottom:6px;scrollbar-width:thin}
   .tabs::-webkit-scrollbar{height:6px}
   .tabs::-webkit-scrollbar-thumb{background:#d6c9b0;border-radius:3px}
@@ -47,20 +43,15 @@
   .tab.active .d{opacity:.9}
   .tab.today{box-shadow:0 0 0 3px rgba(231,111,81,.3);border-color:var(--warm)}
 
-  /* ---------- PANEL ---------- */
+  /* PANEL */
   .panel{display:none;animation:fade .3s ease}
   .panel.active{display:block}
   @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
-  /* day banner */
-  .daybanner{
-    background:linear-gradient(120deg,var(--bosphorus),var(--teal));
-    color:#fff;border-radius:20px;padding:28px 32px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;
-    position:relative;overflow:hidden;
-  }
+  .daybanner{background:linear-gradient(120deg,var(--bosphorus),var(--teal));color:#fff;border-radius:20px;padding:28px 32px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px;position:relative;overflow:hidden}
   .daybanner::after{content:"";position:absolute;right:-40px;bottom:-40px;width:240px;height:240px;background:radial-gradient(circle,rgba(255,255,255,.18) 0%,transparent 70%);border-radius:50%}
   .daybanner h2{font-size:26px;margin-bottom:6px;position:relative;z-index:1}
-  .daybanner .sub{opacity:.92;font-size:14px;position:relative;z-index:1;max-width:600px}
+  .daybanner .sub{opacity:.92;font-size:14px;position:relative;z-index:1;max-width:680px}
   .daybanner .emoji{font-size:64px;position:relative;z-index:1}
 
   /* timeline */
@@ -96,7 +87,6 @@
   .img-5{background:linear-gradient(135deg,#264653,#2A9D8F)}
   .img-6{background:linear-gradient(135deg,#1E5F74,#D4A24C)}
 
-  /* Senior callout */
   .senior{background:linear-gradient(135deg,#FFF3E0,#FFE0B2);border-left:4px solid #E65100;border-radius:12px;padding:18px 22px;margin-bottom:14px}
   .senior h4{color:#BF360C;margin-bottom:10px;font-size:15px}
   .senior li{font-size:13.5px;color:#5D2E0E;margin:5px 0}
@@ -113,22 +103,46 @@
   .route h4{color:#01579B;margin-bottom:10px;font-size:15px}
   .route li{font-size:13.5px;color:#063246;margin:5px 0}
 
+  .energy{background:linear-gradient(135deg,#E0F2F1,#B2DFDB);border-left:4px solid #00695C;border-radius:12px;padding:18px 22px;margin-bottom:14px}
+  .energy h4{color:#004D40;margin-bottom:10px;font-size:15px}
+  .energy li{font-size:13.5px;color:#003329;margin:5px 0}
+
   .footer{text-align:center;padding:28px 16px;color:var(--muted);font-size:13px}
 
-  /* General info two-column */
   .twocol{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   @media(max-width:760px){.twocol{grid-template-columns:1fr}.hero{padding:28px 24px}.countdown{position:relative;right:0;top:0;margin-top:14px}.hero h1{font-size:24px}}
 
-  /* checklist */
   .check{background:#fff;border:1px solid var(--line);border-radius:14px;padding:18px 22px}
   .check label{display:flex;gap:10px;align-items:flex-start;padding:6px 0;font-size:14px;cursor:pointer}
   .check input{margin-top:5px}
 
-  /* keyinfo row */
   .keyrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:18px}
   .keyrow .k{background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px 16px}
   .keyrow .k .l{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
   .keyrow .k .v{font-size:16px;font-weight:700}
+
+  /* Currency converter specific */
+  .fx-card{background:linear-gradient(135deg,#1E5F74,#2A9D8F);color:#fff;border-radius:18px;padding:28px;margin-bottom:18px}
+  .fx-card .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px}
+  .fx-card h3{font-size:20px}
+  .fx-card .updated{font-size:12px;opacity:.85}
+  .fx-card .reload{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);color:#fff;padding:6px 12px;border-radius:8px;cursor:pointer;font-size:12px}
+  .fx-rates{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px}
+  .fx-rate{background:rgba(255,255,255,.15);border-radius:12px;padding:14px;backdrop-filter:blur(6px)}
+  .fx-rate .pair{font-size:12px;opacity:.85;margin-bottom:4px}
+  .fx-rate .val{font-size:22px;font-weight:700}
+  .fx-calc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:24px;margin-bottom:18px}
+  .fx-calc .row{display:grid;grid-template-columns:1fr 100px;gap:10px;align-items:center;margin-bottom:12px}
+  .fx-calc input,.fx-calc select{padding:12px 14px;font-size:16px;border:1.5px solid var(--line);border-radius:10px;font-family:inherit;width:100%}
+  .fx-calc input:focus,.fx-calc select:focus{outline:none;border-color:var(--bosphorus)}
+  .fx-calc .arrow{text-align:center;font-size:24px;color:var(--bosphorus);margin:8px 0}
+  .fx-calc .result{background:var(--cream);border-radius:10px;padding:14px 16px;font-size:18px;font-weight:600;color:var(--ink)}
+  .fx-table{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:18px}
+  .fx-table table{width:100%;border-collapse:collapse}
+  .fx-table th,.fx-table td{padding:12px 16px;text-align:left;border-bottom:1px solid var(--line);font-size:14px}
+  .fx-table th{background:var(--cream);font-weight:700;font-size:13px}
+  .fx-table tr:last-child td{border-bottom:none}
+  .fx-table .amt{font-weight:700;color:var(--turkish-red)}
 
   hr.div{border:none;border-top:1px dashed var(--line);margin:14px 0}
 </style>
@@ -141,10 +155,11 @@
     <h1>🇹🇷 伊斯坦堡 8 天行程</h1>
     <div class="sub">2026 年 5 月 24 日 — 5 月 31 日　·　跨越歐亞、博斯普魯斯、香料與信仰</div>
     <div class="meta">
-      <span class="pill">👤 3 人</span>
-      <span class="pill">🏨 Dela Hotels → Gezi Hotel</span>
-      <span class="pill">✈️ KE956 21:20 回程</span>
-      <span class="pill">💰 Turkish Lira (TRY)</span>
+      <span class="pill">👤 3 人(40 + 70 + 70)</span>
+      <span class="pill">🏨 Delta → Gezi → DeCamondo</span>
+      <span class="pill">✈️ KE955 抵達 / KE956 返程</span>
+      <span class="pill">🇹🇼 台灣護照</span>
+      <span class="pill">💰 TRY · EUR · USD</span>
       <span class="pill">⏰ 比台灣慢 5 小時</span>
     </div>
     <div class="countdown">
@@ -156,14 +171,16 @@
   <!-- TABS -->
   <div class="tabs" id="tabs">
     <button class="tab active" data-i="0">📌 通用資訊<span class="d">隨時翻閱</span></button>
-    <button class="tab" data-i="1">Day 1<span class="d">5/24 抵達</span></button>
-    <button class="tab" data-i="2">Day 2<span class="d">5/25 換飯店</span></button>
-    <button class="tab" data-i="3">Day 3<span class="d">5/26 香料市集</span></button>
-    <button class="tab" data-i="4">Day 4<span class="d">5/27 蘇丹艾哈邁德</span></button>
-    <button class="tab" data-i="5">Day 5<span class="d">5/28 亞洲區</span></button>
-    <button class="tab" data-i="6">Day 6<span class="d">5/29 王子島</span></button>
-    <button class="tab" data-i="7">Day 7<span class="d">5/30 柯拉教堂</span></button>
-    <button class="tab" data-i="8">Day 8<span class="d">5/31 回程</span></button>
+    <button class="tab" data-i="1">🇹🇼 台灣護照<span class="d">e-Visa·海關·駐館</span></button>
+    <button class="tab" data-i="2">💱 換匯計算<span class="d">即時匯率</span></button>
+    <button class="tab" data-i="3">Day 1<span class="d">5/24 抵達</span></button>
+    <button class="tab" data-i="4">Day 2<span class="d">5/25 遊船晚宴</span></button>
+    <button class="tab" data-i="5">Day 3<span class="d">5/26 Mürver</span></button>
+    <button class="tab" data-i="6">Day 4<span class="d">5/27 Neolokal</span></button>
+    <button class="tab" data-i="7">Day 5<span class="d">5/28 亞洲區</span></button>
+    <button class="tab" data-i="8">Day 6<span class="d">5/29 王子島</span></button>
+    <button class="tab" data-i="9">Day 7<span class="d">5/30 柯拉教堂</span></button>
+    <button class="tab" data-i="10">Day 8<span class="d">5/31 回程</span></button>
   </div>
 
   <!-- ============ PANEL 0: GENERAL INFO ============ -->
@@ -180,9 +197,19 @@
       <div class="k"><div class="l">時差</div><div class="v">台灣 −5 小時</div></div>
       <div class="k"><div class="l">貨幣</div><div class="v">TRY 土耳其里拉</div></div>
       <div class="k"><div class="l">電壓</div><div class="v">220V / Type C/F</div></div>
-      <div class="k"><div class="l">語言</div><div class="v">土耳其文（觀光區通英）</div></div>
+      <div class="k"><div class="l">語言</div><div class="v">土耳其文(觀光區通英)</div></div>
       <div class="k"><div class="l">小費</div><div class="v">餐廳 5–10%</div></div>
       <div class="k"><div class="l">飲水</div><div class="v">買瓶裝水 (Sular)</div></div>
+    </div>
+
+    <div class="energy">
+      <h4>⚡ 每日能量管理曲線(長輩專屬節奏)</h4>
+      <ul>
+        <li><b>09:30–12:30　黃金早晨</b>：體力巔峰,走訪核心古蹟(聖索菲亞、香料市集等)。</li>
+        <li><b>12:30–14:00　坐下用膳</b>：精選距景點步行 5 分鐘內的優質餐廳,避免額外找路。</li>
+        <li><b>14:00–16:30　電池回充</b>(絕對留白!)：返回飯店午休,或安排全坐姿靜態行程(遊船、品茶)。</li>
+        <li><b>18:00–20:00　優雅晚宴</b>：前往已預約訂位的景觀餐廳,免候位直接入座。</li>
+      </ul>
     </div>
 
     <div class="grid">
@@ -190,74 +217,95 @@
         <h4>💱 換匯與付款</h4>
         <p><span class="tag tag-money">建議匯率參考</span></p>
         <ul>
-          <li><b>不要在機場全換</b>，機場匯率比市區差 5–10%，只換 50 美金當下車錢與小費。</li>
-          <li>市區換匯處（Döviz）集中在 Sultanahmet、Eminönü、Grand Bazaar 旁。<b>請比較三家</b>掛牌再決定。</li>
-          <li>大多餐廳、博物館收 Visa / Master 信用卡，<b>建議帶兩張不同銀行的卡備用</b>。</li>
-          <li>小費通常給 5–10%（餐廳）；計程車不必小費，<b>湊整數</b>即可。</li>
-          <li>千萬不要在路邊跟人換匯，違法且常被掉包假鈔。</li>
+          <li><b>不要在機場全換</b>,機場匯率比市區差 5–10%,只換 50 美金當下車錢與小費。</li>
+          <li>市區換匯處(Döviz)集中在 Sultanahmet、Eminönü、Grand Bazaar 旁。<b>請比較三家</b>掛牌再決定。</li>
+          <li>大多餐廳、博物館收 Visa / Master 信用卡,<b>建議帶兩張不同銀行的卡備用</b>。</li>
+          <li>小費通常給 5–10%(餐廳);計程車不必小費,<b>湊整數</b>即可。</li>
+          <li>千萬不要在路邊跟人換匯,違法且常被掉包假鈔。</li>
+          <li>👉 即時匯率可看「💱 換匯計算」分頁。</li>
         </ul>
-        <p class="src">💡 出發前先在台灣換 100–200 美金現金當應急用。</p>
       </div>
 
       <div class="card">
         <h4>🚇 交通卡 Istanbulkart</h4>
         <ul>
-          <li>機場 BİM / 7-Eleven / 紅色自動售票機可購買，押金約 70 TRY。</li>
-          <li><b>一張卡可多人共用</b>：刷一次後等 15 秒可再刷下一人。建議買 1 張即可。</li>
-          <li>可搭：地鐵、Tram、巴士、纜車、渡輪——觀光時最方便。</li>
+          <li>機場 BİM / 7-Eleven / 紅色自動售票機可購買,押金約 70 TRY。</li>
+          <li><b>一張卡可多人共用</b>:刷一次後等 15 秒可再刷下一人。建議買 1 張即可。</li>
+          <li>可搭:地鐵、Tram、巴士、纜車、渡輪——觀光時最方便。</li>
           <li>單程比現金便宜約 40%。</li>
-          <li>離開時卡內餘額無法退（金額小通常不退），留作紀念。</li>
+          <li>離開時卡內餘額無法退(金額小通常不退),留作紀念。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🚊 七丘之城零爬坡矩陣</h4>
+        <p class="src">伊斯坦堡是「七丘之城」,陡坡多。記住三大區的代步策略:</p>
+        <ul>
+          <li><b>Galata 加拉達塔區</b>:著名陡坡傷膝。善用 <b>Tünel</b>(世界第二古老地下纜車,1875 年)輕鬆登頂。</li>
+          <li><b>Old City 舊城區</b>:面積大、石板路。全程依賴 <b>T1 路面電車</b>(Kabataş ↔ Sultanahmet),低底盤對長輩極友善。</li>
+          <li><b>Bosphorus / 亞洲區</b>:陸路橋樑易塞車。捨棄擁擠巴士,搭 <b>Şehir Hatları 公營渡輪</b>,舒適入座飽覽美景。</li>
         </ul>
       </div>
 
       <div class="card">
         <h4>📱 網路 / SIM 卡</h4>
         <ul>
-          <li>推薦 <b>eSIM</b>（Airalo、Holafly），出發前先設定，落地即連線。</li>
-          <li>實體卡：機場 Turkcell / Vodafone，<b>15GB 約 25 USD</b>，需護照登記。</li>
-          <li><b>注意</b>：土耳其當地 SIM 卡在外國手機上只能用 120 天，之後手機 IMEI 會被封鎖（短期觀光不受影響）。</li>
-          <li>常用 App：Google Maps、Citymapper、BiTaksi（叫車）、Google 翻譯（離線土耳其文）。</li>
+          <li>推薦 <b>eSIM</b>(Airalo、Holafly),出發前先設定,落地即連線。</li>
+          <li>實體卡:機場 Turkcell / Vodafone,<b>15GB 約 25 USD</b>,需護照登記。</li>
+          <li><b>注意</b>:土耳其當地 SIM 卡在外國手機上只能用 120 天,之後手機 IMEI 會被封鎖(短期觀光不受影響)。</li>
+          <li>常用 App:Google Maps、Citymapper、BiTaksi(叫車)、Google 翻譯(離線土耳其文)。</li>
         </ul>
       </div>
 
       <div class="card">
         <h4>🚨 緊急聯絡</h4>
         <ul>
-          <li><b>112</b>：全國緊急（警、消、救護）</li>
-          <li><b>155</b>：警察 · <b>156</b>：憲兵 · <b>110</b>：消防 · <b>112</b>：醫療</li>
-          <li><b>駐土耳其代表處（安卡拉）</b>：+90-312-436-7255</li>
-          <li><b>急難救助專線（24h）</b>：+90-532-322-7162（僅限緊急）</li>
-          <li><b>外交部旅外國人急難救助專線</b>：+886-800-085-095（台灣撥打免費）</li>
-          <li>建議三人手機都儲存以上號碼，並把護照影本拍照存雲端。</li>
+          <li><b>112</b>:全國緊急(警、消、救護)</li>
+          <li><b>155</b>:警察 · <b>156</b>:憲兵 · <b>110</b>:消防 · <b>112</b>:醫療</li>
+          <li><b>駐土耳其代表處(安卡拉)</b>:+90-312-436-7255</li>
+          <li><b>急難救助專線(24h)</b>:+90-532-322-7162(僅限緊急)</li>
+          <li><b>外交部旅外國人急難救助專線</b>:+886-800-085-095(台灣撥打免費)</li>
+          <li>建議三人手機都儲存以上號碼,並把護照影本拍照存雲端。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🧳 行李物流(避免長輩搬重物)</h4>
+        <ul>
+          <li>連續換 3 天飯店(Delta → Gezi → DeCamondo)對長輩體力是負擔。</li>
+          <li><b>策略 A 專車無縫接送</b>:早上 10:30 飯店門口上車,連人帶行李點對點移動。</li>
+          <li><b>策略 B 化整為零輕裝術</b>:僅攜帶 2 日隨身輕巧包,大件行李由物流(飯店可代叫貨運/UPS)直送最終飯店 DeCamondo Galata。</li>
+          <li>三家飯店<b>請禮賓部彼此聯絡</b>,行李移送可省心。</li>
         </ul>
       </div>
     </div>
 
     <div class="scam">
-      <h4>🛡️ 伊斯坦堡常見詐騙手法（重點看完！）</h4>
+      <h4>🛡️ 伊斯坦堡常見詐騙手法(重點看完!)</h4>
       <ul>
-        <li><b>擦鞋詐騙</b>：擦鞋匠在你前方故意「掉刷子」，你撿給他後他堅持免費幫你擦鞋，最後收 500–1000 TRY。<b>對策：撿到刷子直接走人或忽略</b>。</li>
-        <li><b>友善搭訕去酒吧</b>：當地人主動「帶你去喝一杯」，結帳時送上天價帳單並有保鑣監視。<b>對策：陌生人邀去酒吧一律拒絕</b>。</li>
-        <li><b>餐廳菜單詐騙</b>：沒標價的小菜（meze）一上桌就算錢，最後帳單嚇人。<b>對策：點餐前明確問價，菜單外的小菜全部拒絕</b>。</li>
-        <li><b>計程車繞遠路 / 掉包鈔票</b>：司機聲稱你付的是 5 TRY（其實是 50），要你再給。<b>對策：付款前大聲說出金額、付完拍照存證</b>。</li>
-        <li><b>假警察查護照</b>：要求看護照、錢包檢查「假鈔」。<b>對策：真警察不會查觀光客錢包，要求看他證件並要求一起去派出所</b>。</li>
-        <li><b>大市集殺價陷阱</b>：先「免費」喝紅茶/咖啡，產生人情壓力後逼買高價地毯/燈具。<b>對策：謝絕茶水或不喝就不買</b>。</li>
-        <li><b>玫瑰花/手鍊強塞</b>：把花/手鍊塞給女性後跟你索錢。<b>對策：不接東西、雙手放口袋走過</b>。</li>
+        <li><b>擦鞋詐騙</b>:擦鞋匠在你前方故意「掉刷子」,你撿給他後他堅持免費幫你擦鞋,最後收 500–1000 TRY。<b>對策:撿到刷子直接走人或忽略</b>。</li>
+        <li><b>友善搭訕去酒吧</b>:當地人主動「帶你去喝一杯」,結帳時送上天價帳單並有保鑣監視。<b>對策:陌生人邀去酒吧一律拒絕</b>。</li>
+        <li><b>餐廳菜單詐騙</b>:沒標價的小菜(meze)一上桌就算錢,最後帳單嚇人。<b>對策:點餐前明確問價,菜單外的小菜全部拒絕</b>。</li>
+        <li><b>計程車繞遠路 / 掉包鈔票</b>:司機聲稱你付的是 5 TRY(其實是 50),要你再給。<b>對策:付款前大聲說出金額、付完拍照存證</b>。</li>
+        <li><b>假警察查護照</b>:要求看護照、錢包檢查「假鈔」。<b>對策:真警察不會查觀光客錢包,要求看他證件並要求一起去派出所</b>。</li>
+        <li><b>大市集殺價陷阱</b>:先「免費」喝紅茶/咖啡,產生人情壓力後逼買高價地毯/燈具。<b>對策:謝絕茶水或不喝就不買</b>。</li>
+        <li><b>玫瑰花/手鍊強塞</b>:把花/手鍊塞給女性後跟你索錢。<b>對策:不接東西、雙手放口袋走過</b>。</li>
       </ul>
     </div>
 
     <div class="senior">
-      <h4>👴👵 長輩專屬出行貼心提醒（兩位 70 歲長輩重要！）</h4>
+      <h4>👴👵 長輩專屬出行貼心提醒(兩位 70 歲長輩重要!)</h4>
       <ul>
-        <li><b>鵝卵石路面多</b>：Sultanahmet、Grand Bazaar、Galata 區皆為石板路，<b>務必穿好走的氣墊鞋</b>，避免高跟或硬底皮鞋。</li>
-        <li><b>清真寺禮儀</b>：進入前須脫鞋（自備塑膠袋裝鞋更衛生）、女士披頭巾（飯店或大教堂門口都有借）、不能露肩短褲。</li>
-        <li><b>樓梯多、坡道多</b>：金角灣、加拉達塔附近上坡較陡，<b>建議搭計程車到目的地門口</b>，回程再順著下坡散步。</li>
-        <li><b>每日步數控制在 7000–8000 步以內</b>，午後設定固定休息時間（如下午茶 1.5 小時），勿過勞。</li>
-        <li><b>慢性病藥品</b>：行李分裝（隨身一份、託運一份），把藥名英文+成分學名印一張紙隨身帶。</li>
-        <li><b>水分</b>：5 月底氣溫 17–25°C，午後可達 28°C，每人每天 1.5L 以上飲水，避免脫水。</li>
-        <li><b>廁所</b>：景點外公廁多需收費（5–10 TRY），記得備零錢與面紙。</li>
-        <li><b>無障礙</b>：IST 機場、地鐵主線、新博物館多有電梯；老城區（Sultanahmet）電梯較少，<b>提早預定景點門票避免排隊久站</b>。</li>
-        <li><b>保險</b>：務必投保涵蓋海外醫療轉送的旅平險，包含 70 歲以上的方案需事先確認。</li>
+        <li><b>鵝卵石路面多</b>:Sultanahmet、Grand Bazaar、Galata 區皆為石板路,<b>務必穿高抓地力防滑鞋</b>,避免高跟或硬底皮鞋。<b>雨後極滑</b>。</li>
+        <li><b>清真寺禮儀</b>:進入前須脫鞋(自備塑膠袋裝鞋更衛生)、女士披頭巾(飯店或大教堂門口都有借)、不能露肩短褲。</li>
+        <li><b>樓梯多、坡道多</b>:金角灣、加拉達塔附近上坡較陡,<b>建議搭計程車到目的地門口</b>,回程再順著下坡散步。</li>
+        <li><b>每日步數控制在 7000–8000 步以內</b>,午後設定固定休息時間(如下午茶 1.5 小時),勿過勞。</li>
+        <li><b>慢性病藥品</b>:行李分裝(隨身一份、託運一份),把藥名英文+成分學名印一張紙隨身帶。</li>
+        <li><b>水分</b>:5 月底氣溫 17–25°C,午後可達 28°C,每人每天 1.5L 以上飲水,避免脫水。</li>
+        <li><b>廁所</b>:景點外公廁多需收費(5–10 TRY),記得備零錢與面紙。</li>
+        <li><b>無障礙</b>:IST 機場、地鐵主線、新博物館多有電梯;老城區(Sultanahmet)電梯較少,<b>提早預定景點門票避免排隊久站</b>。</li>
+        <li><b>保險</b>:務必投保涵蓋海外醫療轉送的旅平險,包含 70 歲以上的方案需事先確認。</li>
+        <li><b>熱水</b>:土耳其餐廳多提供常溫水,可主動向飯店或餐廳索取熱水(Sıcak su)。建議帶保溫瓶。</li>
       </ul>
     </div>
 
@@ -265,10 +313,10 @@
       <div class="card">
         <h4>☀️ 5 月底氣候與穿搭</h4>
         <ul>
-          <li>日均溫 17–25°C，<b>早晚較涼（15°C）</b>。</li>
-          <li>洋蔥式穿法：薄長袖+薄外套（清真寺/海上風大需要）。</li>
-          <li>女士備披肩一條（清真寺必備）。</li>
-          <li>建議帶輕便雨具（5 月偶有陣雨）。</li>
+          <li>日均溫 17–25°C,<b>早晚較涼(15°C)</b>。</li>
+          <li>洋蔥式穿法:薄長袖+薄外套(清真寺/海上風大需要)。</li>
+          <li>女士備披肩一條(清真寺必備)。</li>
+          <li>建議帶輕便雨具(5 月偶有陣雨)。</li>
           <li>太陽眼鏡 + 防曬乳必備。</li>
         </ul>
       </div>
@@ -276,78 +324,361 @@
       <div class="card">
         <h4>🍽️ 必吃土耳其料理清單</h4>
         <ul>
-          <li><b>Köfte</b> 土耳其肉丸（牛肉）</li>
+          <li><b>Köfte</b> 土耳其肉丸(牛肉)</li>
           <li><b>Kebab</b> 各種烤肉串、İskender Kebab、Adana Kebab</li>
-          <li><b>Balık Ekmek</b> 烤鯖魚三明治（Eminönü 碼頭著名）</li>
+          <li><b>Balık Ekmek</b> 烤鯖魚三明治(Eminönü 碼頭著名)</li>
           <li><b>Pide / Lahmacun</b> 土耳其披薩</li>
-          <li><b>Mantı</b> 土耳其餃子（淋優格與紅油）</li>
-          <li><b>Yaprak Sarma</b> 葡萄葉包飯（5/29 晚餐必點）</li>
-          <li><b>Künefe</b> 起司絲甜點（熱）</li>
-          <li><b>Baklava</b> 千層酥（Karaköy Güllüoğlu 推薦）</li>
-          <li><b>Çay</b> 紅茶（每天無數杯）、<b>Türk Kahvesi</b> 土耳其咖啡</li>
+          <li><b>Mantı</b> 土耳其餃子(淋優格與紅油)</li>
+          <li><b>Yaprak Sarma</b> 葡萄葉包飯(5/29 晚餐必點)</li>
+          <li><b>Künefe</b> 起司絲甜點(熱)</li>
+          <li><b>Baklava</b> 千層酥(Karaköy Güllüoğlu 推薦)</li>
+          <li><b>Çay</b> 紅茶(每天無數杯)、<b>Türk Kahvesi</b> 土耳其咖啡</li>
         </ul>
       </div>
 
       <div class="card">
         <h4>🛒 伴手禮建議</h4>
         <ul>
-          <li><b>土耳其軟糖 Lokum</b>：選 Hafız Mustafa 或 Hacı Bekir 老店，避免市集散裝。</li>
-          <li><b>紅茶</b>：Çaykur 品牌、各種乾燥蘋果/石榴茶。</li>
-          <li><b>橄欖油皂</b>：Bursa 產手工皂。</li>
-          <li><b>邪眼 Nazar Boncuğu</b>：機場、市集都有，便宜實用。</li>
-          <li><b>香料</b>：番紅花（小心假貨，真的很貴）、漆樹粉 Sumac、紅椒粉 Pul Biber。</li>
-          <li><b>陶瓷 İznik</b>：Grand Bazaar 質量參差，建議到 Iznik Foundation 或老店。</li>
-          <li>避免：地毯（除非真的懂行，否則容易被坑）、皮件（同上）。</li>
+          <li><b>土耳其軟糖 Lokum</b>:選 Hafız Mustafa 或 Hacı Bekir 老店,避免市集散裝。</li>
+          <li><b>紅茶</b>:Çaykur 品牌、各種乾燥蘋果/石榴茶。</li>
+          <li><b>橄欖油皂</b>:Bursa 產手工皂。</li>
+          <li><b>邪眼 Nazar Boncuğu</b>:機場、市集都有,便宜實用。</li>
+          <li><b>香料</b>:番紅花(小心假貨,真的很貴)、漆樹粉 Sumac、紅椒粉 Pul Biber。</li>
+          <li><b>陶瓷 İznik</b>:Grand Bazaar 質量參差,建議到 Iznik Foundation 或老店。</li>
+          <li>避免:地毯(除非真的懂行,否則容易被坑)、皮件(同上)。</li>
         </ul>
       </div>
 
       <div class="card">
         <h4>🤲 文化與禮節</h4>
         <ul>
-          <li>清真寺週五午禱（12:00–13:30）通常不對遊客開放，避開這時段。</li>
-          <li>進入清真寺前洗手、脫鞋，不可大聲、不可由前方繞過正在禱告者。</li>
-          <li>拍照前先確認，<b>禁止對著禮拜者拍照</b>。</li>
-          <li>齋戒月（2026 年 2 月底結束）已過，不影響行程。</li>
-          <li>男女握手在保守地區較少，<b>對年長女性點頭即可</b>。</li>
-          <li>進清真寺、進房可說 "Merhaba"（你好）、"Teşekkür ederim"（謝謝）。</li>
+          <li>清真寺週五午禱(12:00–13:30)通常不對遊客開放,避開這時段。</li>
+          <li>進入清真寺前洗手、脫鞋,不可大聲、不可由前方繞過正在禱告者。</li>
+          <li>拍照前先確認,<b>禁止對著禮拜者拍照</b>。</li>
+          <li>齋戒月(2026 年 2 月底結束)已過,不影響行程。</li>
+          <li>男女握手在保守地區較少,<b>對年長女性點頭即可</b>。</li>
+          <li>進清真寺、進房可說 "Merhaba"(你好)、"Teşekkür ederim"(謝謝)。</li>
         </ul>
       </div>
     </div>
 
     <div class="check">
       <h4 style="margin-bottom:10px">✅ 出發前最後檢查清單</h4>
-      <label><input type="checkbox">護照（有效期 6 個月以上）+ 影本 2 份</label>
-      <label><input type="checkbox">e-Visa（台灣護照可線上申請）已列印</label>
+      <label><input type="checkbox">護照(有效期 6 個月以上)+ 影本 2 份</label>
+      <label><input type="checkbox">e-Visa(台灣護照可線上申請)已列印</label>
       <label><input type="checkbox">機票 / 飯店訂單列印或存手機</label>
-      <label><input type="checkbox">旅平險（含海外醫療轉送、70+ 適用）</label>
+      <label><input type="checkbox">旅平險(含海外醫療轉送、70+ 適用)</label>
       <label><input type="checkbox">慢性病藥品 + 藥名英文紙條</label>
-      <label><input type="checkbox">轉換插頭（Type C/F）、行動電源</label>
+      <label><input type="checkbox">轉換插頭(Type C/F)、行動電源</label>
       <label><input type="checkbox">eSIM 設定或實體 SIM 預約</label>
       <label><input type="checkbox">少量美金現金 100–200</label>
       <label><input type="checkbox">兩張不同銀行信用卡</label>
-      <label><input type="checkbox">薄長袖、披肩（清真寺用）、氣墊鞋</label>
-      <label><input type="checkbox">Neolokal（5/26）/ Mürver（5/25）預訂確認信</label>
+      <label><input type="checkbox">薄長袖、披肩(清真寺用)、防滑鞋</label>
+      <label><input type="checkbox">Bosphorus Cruise(5/25)/ Mürver(5/26)/ Neolokal(5/27)預訂確認信</label>
       <label><input type="checkbox">機場接送預訂確認</label>
+      <label><input type="checkbox">保溫瓶(可向餐廳要熱水 Sıcak su)</label>
     </div>
   </div>
 
-  <!-- ============ PANEL 1: DAY 5/24 ============ -->
+  <!-- ============ PANEL 1: TAIWAN-SPECIFIC ============ -->
+  <div class="panel">
+    <div class="daybanner" style="background:linear-gradient(120deg,#003478,#C8102E)">
+      <div>
+        <h2>🇹🇼 台灣護照專屬資訊</h2>
+        <div class="sub">從台灣出發、持台灣護照赴土耳其,以下是與台灣旅客特別相關的法規、e-Visa 申請、海關規定、駐館聯絡。</div>
+      </div>
+      <div class="emoji">🛂</div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h4>📋 護照 + e-Visa(必備!)</h4>
+        <p><span class="tag tag-warn">必看</span><span class="tag tag-info">2025 現行規定</span></p>
+        <ul>
+          <li><b>護照效期</b>:入境時須有 <b>6 個月以上效期</b> + 至少 1 頁空白簽證頁。</li>
+          <li><b>e-Visa 申請</b>:台灣護照需事先申請,<b>不能落地簽</b>。
+            <ul>
+              <li>官網:<b>www.evisa.gov.tr</b>(土耳其政府唯一官方網站)</li>
+              <li>費用約 <b>USD 60(單次入境)</b>,信用卡線上付款。</li>
+              <li>停留期 <b>最多 30 天</b>,90 天內有效。</li>
+              <li>申請後 e-mail 收到 PDF,<b>列印兩份</b>(隨身 + 託運行李各一)。</li>
+            </ul>
+          </li>
+          <li><b>避免</b>:Google 搜尋「Turkey e-visa」會出現非官方代辦網站,收 USD 100+ 手續費,<b>務必認明 evisa.gov.tr 結尾</b>。</li>
+          <li>建議出發前 <b>2 週</b>申請,通常 24 小時內核發。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🛃 海關規定(入境土耳其)</h4>
+        <p><span class="tag tag-warn">必看</span></p>
+        <ul>
+          <li><b>現金申報</b>:現金等值 <b>10,000 EUR 以上</b>須申報。</li>
+          <li><b>菸酒</b>:菸 <b>200 支</b>(或 50 支雪茄)、酒 <b>1 升烈酒 + 2 升葡萄酒</b>。</li>
+          <li><b>禁止帶入</b>:豬肉製品、新鮮蔬果、種子、活體動植物、麻醉藥品。</li>
+          <li><b>個人藥品</b>:處方藥<b>建議帶英文處方箋影本</b>,避免被質疑。</li>
+          <li><b>電子菸</b>:土耳其禁止販售電子菸,雖個人攜帶通常不查,但<b>不要大量帶</b>。</li>
+          <li><b>古董、文物</b>:出境時不可帶走土耳其文物(含古錢幣),違反者重罰。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🛂 海關規定(回台灣)</h4>
+        <ul>
+          <li><b>現金</b>:新台幣 10 萬以上、人民幣 2 萬以上、外幣等值 <b>USD 1 萬</b>以上須申報。</li>
+          <li><b>菸酒</b>:菸 1 條(200 支)、酒 1 公升;<b>2 公升以下要報關</b>;超過會被扣稅。</li>
+          <li><b>禁止帶回</b>:肉類(含真空包裝)、蛋類、活植物、未經處理的種子。
+            <ul><li>⚠️ <b>土耳其香料、軟糖、堅果、橄欖油可以帶</b>,但「肉乾、香腸」一律不行(防非洲豬瘟,可罰 20 萬)。</li></ul>
+          </li>
+          <li><b>食物總量</b>:乾貨食品總價低於 USD 1000 一般無問題。</li>
+          <li>iPad、相機等個人電子產品<b>使用過的</b>可免稅;<b>新品超過 NTD 2 萬</b>需申報。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🏛️ 駐土耳其代表處(緊急聯絡)</h4>
+        <p><span class="tag tag-danger">緊急時用</span></p>
+        <ul>
+          <li><b>駐土耳其代表處</b>(在<b>安卡拉</b>,伊斯坦堡無領事館)
+            <ul>
+              <li>地址:Resit Galip Cad. Rabat Sok. No. 16, G.O.P. 06700 Ankara</li>
+              <li>辦公電話:<b>+90-312-436-7255</b></li>
+              <li>傳真:+90-312-436-2906</li>
+              <li>e-mail:tro@mofa.gov.tw</li>
+              <li>辦公時間:週一至週五 09:00–18:00</li>
+            </ul>
+          </li>
+          <li><b>24h 急難救助專線</b>(僅限車禍、搶劫、傷亡等緊急情況):
+            <ul><li><b>+90-532-322-7162</b></li></ul>
+          </li>
+          <li><b>外交部旅外國人緊急聯絡中心</b>(台灣境內免費):
+            <ul><li><b>800-085-095</b>(台灣境內)</li>
+              <li>從海外撥:<b>+886-800-085-095</b></li></ul>
+          </li>
+          <li>搭機前可下載「<b>旅外救助指南</b>」App,登錄行程資訊。</li>
+          <li>出發前可於外交部領事局網站<b>登錄旅外動態</b>,有突發狀況可主動聯繫。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>✈️ 台灣 ↔ 伊斯坦堡 航線</h4>
+        <ul>
+          <li><b>目前無直飛</b>。常見轉機路線:
+            <ul>
+              <li>🇰🇷 <b>大韓航空 KE</b>(本次選擇):台北 → 首爾 → 伊斯坦堡,KE955 去 / <b>KE956</b> 回。</li>
+              <li>🇹🇷 <b>土耳其航空 TK</b>:台北無直飛,需先飛曼谷/香港轉機。</li>
+              <li>🇸🇬 新加坡航空 SQ:經樟宜轉機。</li>
+              <li>🇶🇦 卡達航空 QR:經杜哈轉機,班次密集。</li>
+            </ul>
+          </li>
+          <li>飛行總時數(含轉機)約 <b>17–22 小時</b>。</li>
+          <li>建議轉機時間 2–3 小時為佳(避免太短誤點、太長無聊)。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>💸 機場退稅(Tax Free)</h4>
+        <ul>
+          <li>觀光客單筆消費 <b>超過 830 TRY</b> 在同一店家可申請退稅(約 18%)。</li>
+          <li>結帳時請店家開立 <b>Tax Free Form</b>(Global Blue 或 Premier Tax Free)。</li>
+          <li><b>機場退稅流程</b>(離境當日):
+            <ol style="margin-left:18px;font-size:13.5px">
+              <li>先到航空公司報到櫃台,<b>說明要退稅</b>,行李暫不託運。</li>
+              <li>把 Tax Free Form + 護照 + 商品(未拆封)拿到<b>海關蓋章</b>。</li>
+              <li>回到報到櫃台託運行李。</li>
+              <li>到 Global Blue / Premier 櫃台領現金(TRY 或 EUR)或申請退到信用卡。</li>
+            </ol>
+          </li>
+          <li>離境機場流程<b>請預留 30–40 分鐘退稅時間</b>。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🚗 國際駕照</h4>
+        <ul>
+          <li>台灣監理所申請 IDP(國際駕照),土耳其承認。</li>
+          <li><b>但伊斯坦堡開車不建議</b>:塞車嚴重、路標混亂、停車困難、當地駕駛文化激烈。</li>
+          <li>本次行程<b>無自駕需求</b>,計程車與大眾運輸足夠。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>📞 國際電話撥打</h4>
+        <ul>
+          <li><b>從土耳其撥回台灣</b>:00 + 886 + 區碼(去 0)+ 電話。
+            <ul><li>例:打台北 02-1234-5678 → 00 886 2 1234 5678</li>
+              <li>打手機 0912-345-678 → 00 886 912 345 678</li></ul>
+          </li>
+          <li><b>從台灣撥到土耳其</b>:002 + 90 + 號碼(去 0)。
+            <ul><li>例:打駐土耳其代表處 → 002 90 312 436 7255</li></ul>
+          </li>
+          <li>用 WhatsApp、LINE 通話最方便(Wi-Fi 免費)。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🛡️ 治安與當地法規注意</h4>
+        <ul>
+          <li>伊斯坦堡<b>治安相對良好</b>,但觀光區扒手、詐騙多(見通用資訊頁)。</li>
+          <li>遠離<b>政治集會</b>:Taksim 廣場偶有抗議,看到群眾聚集立即離開。</li>
+          <li><b>不在街上拍攝軍警、軍事設施</b>,違者可能被扣留審問。</li>
+          <li>對 <b>Atatürk(土耳其國父)</b>不可有不敬言論(刑事罪)。</li>
+          <li>不可在<b>公共場合(街頭)</b>飲酒,餐廳/酒吧可以。</li>
+          <li>同性親密在公開場合<b>不被當地接受</b>,即使法律未禁。</li>
+          <li>女性遊客單獨夜行避開 Tarlabaşı、Karaköy 後街等區。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>🇹🇼 台灣旅客常忽略的細節</h4>
+        <ul>
+          <li><b>無法用台灣手機門號接觀光區免費 Wi-Fi 簡訊驗證</b>(土耳其多用簡訊驗證),用 e-mail 註冊備用。</li>
+          <li>悠遊卡<b>不能用</b>,需另買 Istanbulkart。</li>
+          <li>台灣信用卡海外手續費約 1.5%,<b>可考慮申辦海外消費高回饋卡</b>(如台新 FlyGo、永豐 DAWHO)。</li>
+          <li><b>Google Pay / Apple Pay 在土耳其使用率不高</b>,大店家可,小店家不行。</li>
+          <li>台灣旅遊不便險(如班機延誤、行李遺失)<b>記得保留收據與證明</b>回台理賠。</li>
+          <li>領事事務局網站 <b>登錄旅外動態</b>(免費,類似海外旅遊備案):www.boca.gov.tw</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="background:linear-gradient(135deg,#003478,#C8102E);color:#fff;padding:24px;border-radius:16px;text-align:center;margin-top:14px">
+      <div style="font-size:16px;font-weight:600;margin-bottom:8px">🚨 出發前務必做的三件事</div>
+      <div style="opacity:.92;font-size:14px">①  evisa.gov.tr 申請 e-Visa  ②  www.boca.gov.tw 登錄旅外動態  ③  存好駐館緊急電話 +90-532-322-7162</div>
+    </div>
+  </div>
+
+  <!-- ============ PANEL 2: CURRENCY CONVERTER ============ -->
+  <div class="panel">
+    <div class="daybanner" style="background:linear-gradient(120deg,#1B5E20,#43A047)">
+      <div>
+        <h2>💱 即時換匯計算機</h2>
+        <div class="sub">TRY、EUR、USD ↔ TWD 即時匯率與計算器。資料來源:Open Exchange Rate API(免費、無金鑰),每次開啟自動更新。</div>
+      </div>
+      <div class="emoji">💰</div>
+    </div>
+
+    <div class="fx-card">
+      <div class="head">
+        <div>
+          <h3>📊 今日匯率參考</h3>
+          <div class="updated">最後更新:<span id="fxTime">載入中...</span></div>
+        </div>
+        <button class="reload" onclick="loadRates()">🔄 重新整理</button>
+      </div>
+      <div class="fx-rates" id="fxRates">
+        <div class="fx-rate"><div class="pair">1 EUR = ? TWD</div><div class="val">載入中</div></div>
+        <div class="fx-rate"><div class="pair">1 USD = ? TWD</div><div class="val">載入中</div></div>
+        <div class="fx-rate"><div class="pair">1 TRY = ? TWD</div><div class="val">載入中</div></div>
+        <div class="fx-rate"><div class="pair">100 TWD = ? TRY</div><div class="val">載入中</div></div>
+      </div>
+    </div>
+
+    <div class="fx-calc">
+      <h4 style="margin-bottom:14px">🧮 換匯計算器</h4>
+      <div class="row">
+        <input type="number" id="amountFrom" value="1000" placeholder="輸入金額" oninput="convert()">
+        <select id="fromCurrency" onchange="convert()">
+          <option value="TRY">TRY 土耳其里拉</option>
+          <option value="EUR">EUR 歐元</option>
+          <option value="USD">USD 美金</option>
+          <option value="TWD">TWD 台幣</option>
+        </select>
+      </div>
+      <div class="arrow">↓</div>
+      <div class="row">
+        <div class="result" id="resultAmount">--</div>
+        <select id="toCurrency" onchange="convert()">
+          <option value="TWD">TWD 台幣</option>
+          <option value="TRY">TRY 土耳其里拉</option>
+          <option value="EUR">EUR 歐元</option>
+          <option value="USD">USD 美金</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="fx-table">
+      <table>
+        <thead>
+          <tr>
+            <th>場景</th>
+            <th>金額(原幣)</th>
+            <th>約等於台幣</th>
+          </tr>
+        </thead>
+        <tbody id="fxTable">
+          <tr><td>機場接送(預訂飯店車)</td><td class="amt">30 EUR</td><td id="r-30eur">--</td></tr>
+          <tr><td>Istanbulkart 押金</td><td class="amt">70 TRY</td><td id="r-70try">--</td></tr>
+          <tr><td>機場到市區計程車</td><td class="amt">800 TRY</td><td id="r-800try">--</td></tr>
+          <tr><td>地下水宮殿門票</td><td class="amt">900 TRY</td><td id="r-900try">--</td></tr>
+          <tr><td>聖索菲亞門票</td><td class="amt">25 EUR</td><td id="r-25eur">--</td></tr>
+          <tr><td>百年肉丸店 Sultanahmet Köftecisi</td><td class="amt">350 TRY</td><td id="r-350try">--</td></tr>
+          <tr><td>香料市集軟糖一盒</td><td class="amt">300 TRY</td><td id="r-300try">--</td></tr>
+          <tr><td>烤魚三明治 Balık Ekmek</td><td class="amt">150 TRY</td><td id="r-150try">--</td></tr>
+          <tr><td>渡輪到亞洲區(單程)</td><td class="amt">30 TRY</td><td id="r-30try">--</td></tr>
+          <tr><td>渡輪到王子島(來回)</td><td class="amt">100 TRY</td><td id="r-100try">--</td></tr>
+          <tr><td>Mürver 餐廳人均</td><td class="amt">2000 TRY</td><td id="r-2000try">--</td></tr>
+          <tr><td>Neolokal 米其林套餐人均</td><td class="amt">3000 TRY</td><td id="r-3000try">--</td></tr>
+          <tr><td>Pierre Loti 纜車單程</td><td class="amt">50 TRY</td><td id="r-50try">--</td></tr>
+          <tr><td>e-Visa 申請費</td><td class="amt">60 USD</td><td id="r-60usd">--</td></tr>
+          <tr><td>飯店一晚(中高級)</td><td class="amt">150 EUR</td><td id="r-150eur">--</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h4>💡 換匯實戰建議</h4>
+        <ul>
+          <li><b>不要在台灣換 TRY</b>:台灣銀行 TRY 匯率差(且很多銀行不換),建議帶 <b>USD 100–200 + 信用卡</b>到伊斯坦堡再換。</li>
+          <li><b>機場匯率比市區差 5–10%</b>,只換 50 USD 應急即可。</li>
+          <li>市區<b>Eminönü、Sultanahmet、Grand Bazaar</b> 附近有大量正規 Döviz(換匯所),比較三家再換。</li>
+          <li>大消費用<b>信用卡</b>(餐廳、飯店),小消費用<b>現金</b>(市集、計程車、廁所)。</li>
+          <li><b>不要在路邊跟人換匯</b>,違法且可能拿到假鈔。</li>
+          <li>剩餘 TRY 在<b>機場退稅後</b>,可在機場兌幣處換回 USD,但匯率不好,<b>建議用完</b>。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h4>💳 信用卡 vs 現金</h4>
+        <p><b>建議比例:現金 30% / 信用卡 70%</b></p>
+        <ul>
+          <li>✅ <b>用信用卡</b>:飯店、米其林餐廳、博物館門票、Splendid Palace Hotel、Mürver、Neolokal、機場接送。</li>
+          <li>💵 <b>用現金</b>:計程車(雖部分接受卡)、香料市集、街頭小吃、廁所、小費。</li>
+          <li>選<b>海外消費回饋高的信用卡</b>:海外刷卡會收 1.5% 手續費,有 2% 以上回饋才划算。</li>
+          <li>付款前確認<b>幣別是 TRY 不是 USD/EUR</b>(店家有時會問,選 TRY 比較划算,避免 DCC 動態貨幣轉換)。</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="energy">
+      <h4>📈 為何 TRY 匯率波動大?</h4>
+      <ul>
+        <li>土耳其里拉<b>近年通膨嚴重</b>,2021–2024 大幅貶值,2025 後相對穩定但仍有波動。</li>
+        <li><b>出發前一週</b>與<b>實際換匯當天</b>查匯率可能差 1–3%。</li>
+        <li>本頁匯率來源 <b>open.er-api.com</b> 為金融市場批發價,實際換匯會被加收手續費,通常拿到的<b>比顯示匯率少 1–2%</b>。</li>
+        <li>本表「約等於台幣」僅供心理價位參考,實際依當下匯率為準。</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ PANEL 3: DAY 1 = 5/24 ============ -->
   <div class="panel">
     <div class="daybanner">
       <div>
-        <h2>Day 1　·　5/24（星期日）抵達伊斯坦堡</h2>
-        <div class="sub">飛行後好好休息日。重點：機場購買 Istanbulkart、安全抵達 Dela Hotels、清淡晚餐、早睡。</div>
+        <h2>Day 1　·　5/24(星期日)抵達伊斯坦堡</h2>
+        <div class="sub">飛行後好好休息日。重點:機場購買 Istanbulkart、安全抵達 Delta Hotels Istanbul West、清淡晚餐、早睡。</div>
       </div>
       <div class="emoji">✈️</div>
     </div>
 
     <div class="timeline">
       <h3>📅 今日行程</h3>
-      <div class="tl-item"><div class="tl-time">19:40</div><div class="tl-icon">🛬</div><div class="tl-content"><strong>抵達 IST 伊斯坦堡新機場</strong><div class="desc">過海關、領行李、上廁所、整理一下，預計 20:30 出機場。</div></div></div>
-      <div class="tl-item"><div class="tl-time">20:30</div><div class="tl-icon">💳</div><div class="tl-content"><strong>購買 Istanbulkart（伊斯坦堡卡）</strong><div class="desc">機場入境大廳 BİM 或紅色自動售票機。買 1 張即可，3 人共用。同步換 50 美金當應急。</div></div></div>
-      <div class="tl-item"><div class="tl-time">21:00</div><div class="tl-icon">🚐</div><div class="tl-content"><strong>機場接送至 Dela Hotels</strong><div class="desc">建議事先預訂飯店接送（約 30–40 EUR）。車程 45–60 分鐘。</div></div></div>
-      <div class="tl-item"><div class="tl-time">22:00</div><div class="tl-icon">🍲</div><div class="tl-content"><strong>飯店附近隨便吃</strong><div class="desc">建議飯店餐廳或附近 24h 簡餐（Pide、湯類），不要重口味避免影響睡眠。</div></div></div>
-      <div class="tl-item"><div class="tl-time">23:00</div><div class="tl-icon">💤</div><div class="tl-content"><strong>休息</strong><div class="desc">明天才有體力，盡早入睡調時差。</div></div></div>
+      <div class="tl-item"><div class="tl-time">19:40</div><div class="tl-icon">🛬</div><div class="tl-content"><strong>KE955 抵達 IST 伊斯坦堡新機場</strong><div class="desc">過海關、領行李、上廁所、整理一下,預計 20:30 出機場。</div></div></div>
+      <div class="tl-item"><div class="tl-time">20:30</div><div class="tl-icon">💳</div><div class="tl-content"><strong>購買 Istanbulkart(伊斯坦堡卡)</strong><div class="desc">機場入境大廳 BİM 或紅色自動售票機。買 1 張即可,3 人共用。同步換 50 美金當應急。</div></div></div>
+      <div class="tl-item"><div class="tl-time">21:00</div><div class="tl-icon">🚐</div><div class="tl-content"><strong>VIP 機場專車送至 Delta Hotels Istanbul West</strong><div class="desc">建議事先預訂飯店接送(約 30–40 EUR),避免長途飛行後搬行李找路。車程 45–60 分鐘。</div></div></div>
+      <div class="tl-item"><div class="tl-time">22:00</div><div class="tl-icon">🍲</div><div class="tl-content"><strong>飯店附近隨便吃</strong><div class="desc">建議飯店餐廳或附近 24h 簡餐(Pide、湯類),不要重口味避免影響睡眠。</div></div></div>
+      <div class="tl-item"><div class="tl-time">23:00</div><div class="tl-icon">💤</div><div class="tl-content"><strong>休息</strong><div class="desc">明天才有體力,盡早入睡調時差。</div></div></div>
     </div>
 
     <div class="grid">
@@ -356,91 +687,107 @@
         <h4>📍 IST 伊斯坦堡新機場</h4>
         <p><span class="tag tag-info">Arnavutköy 區</span><span class="tag tag-info">距市區 50km</span></p>
         <ul>
-          <li>2018 年啟用，世界最大機場之一，<b>動線長</b>，從登機門走到入境約 15 分鐘。</li>
-          <li>無障礙：可申請 wheelchair 服務（事先 4 小時聯繫航空公司或現場詢問）。</li>
-          <li>免費 Wi-Fi：用護照號碼註冊。</li>
-          <li>入境注意：禁帶肉品、種子、新鮮蔬果。</li>
+          <li>2018 年啟用,世界最大機場之一,<b>動線長</b>,從登機門走到入境約 15 分鐘。</li>
+          <li>無障礙:可申請 wheelchair 服務(事先 4 小時聯繫航空公司或現場詢問)。</li>
+          <li>免費 Wi-Fi:用護照號碼註冊。</li>
+          <li>入境注意:禁帶肉品、種子、新鮮蔬果。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-3">🏨</div>
-        <h4>🏨 Dela Hotels（首晚住宿）</h4>
+        <h4>🏨 Delta Hotels Istanbul West(首晚)</h4>
         <ul>
-          <li>Check-in 時請<b>飯店人員幫忙標記 Gezi Hotel</b>（明天搬家方向），方便預先預訂 Uber/計程車。</li>
-          <li>跟櫃台拿名片（飯店地址土耳其文版），<b>外出時拍照存手機</b>，迷路時計程車司機可看。</li>
+          <li>Marriott 集團旗下,位於市區西邊,離機場較近,適合做為抵達首晚過渡。</li>
+          <li>Check-in 時請<b>飯店人員幫忙標記 Gezi Hotel</b>(明天搬家方向),方便預先預訂 Uber/計程車。</li>
+          <li>跟櫃台拿名片(飯店地址土耳其文版),<b>外出時拍照存手機</b>,迷路時計程車司機可看。</li>
           <li>確認 Wi-Fi 密碼、熱水時段、早餐供應時間。</li>
         </ul>
       </div>
     </div>
 
     <div class="route">
-      <h4>🚐 機場到飯店：3 種選擇比較</h4>
+      <h4>🚐 機場到飯店:3 種選擇比較</h4>
       <ul>
-        <li><b>飯店接送（推薦本日）</b>：約 30–40 EUR，安全、行李大、長輩省力。<b>務必事先預訂並留電話聯繫</b>。</li>
-        <li><b>Havaist 機場巴士</b>：HVIST-12 到 Sultanahmet 約 15 EUR/人，但深夜班次少、需轉乘、不適合帶大行李長輩。</li>
-        <li><b>BiTaksi / Uber</b>：跳表約 700–900 TRY（20–25 EUR），認明黃色或藍色計程車，<b>上車前確認跳表、講飯店土文地址</b>。</li>
+        <li><b>✅ 飯店 VIP 接送(本日強烈建議)</b>:約 30–40 EUR,安全、行李大、長輩省力。<b>務必事先預訂並留電話聯繫</b>。</li>
+        <li><b>Havaist 機場巴士</b>:HVIST-12 到 Sultanahmet 約 15 EUR/人,但深夜班次少、需轉乘、不適合帶大行李長輩。</li>
+        <li><b>BiTaksi / Uber</b>:跳表約 700–900 TRY(20–25 EUR),認明黃色或藍色計程車,<b>上車前確認跳表、講飯店土文地址</b>。</li>
       </ul>
     </div>
 
     <div class="senior">
       <h4>👵 今日長輩貼心提醒</h4>
       <ul>
-        <li>飛行 10+ 小時後，70 歲長輩可能會有腳腫、頭暈，<b>下飛機先走動 10 分鐘</b>再排隊過海關。</li>
-        <li>機場通關後第一站：先上廁所、補水、領行李分裝。</li>
-        <li>晚餐<b>不要吃辣、不要太鹹</b>，避免影響睡眠。</li>
-        <li>到飯店後，三人手機都<b>關閉時區自動更新確認時間正確</b>，設好明天的鬧鐘。</li>
-        <li>分裝慢性病藥物到床頭，避免半夜找藥。</li>
+        <li>飛行 17+ 小時後(含轉機),70 歲長輩可能會有腳腫、頭暈,<b>下飛機先走動 10 分鐘</b>再排隊過海關。</li>
+        <li>機場通關後第一站:先上廁所、補水、領行李分裝。</li>
+        <li>晚餐<b>不要吃辣、不要太鹹</b>,避免影響睡眠。</li>
+        <li>到飯店後,三人手機都<b>關閉時區自動更新確認時間正確</b>,設好明天的鬧鐘。</li>
+        <li>分裝慢性病藥物到床頭,避免半夜找藥。</li>
       </ul>
     </div>
 
     <div class="scam">
       <h4>🛡️ 抵達日特別注意</h4>
       <ul>
-        <li><b>機場攬客計程車</b>：穿西裝在大廳問「Taxi?」的多半是黑車，<b>請走外面正規計程車排班區</b>或用飯店接送。</li>
-        <li><b>假冒飯店接送</b>：接機牌請<b>確認姓名拼寫正確</b>，遇有疑問先打電話給飯店確認。</li>
-        <li><b>路邊兌幣</b>：機場外提供「好匯率」的人 100% 詐騙，無視即可。</li>
-        <li><b>行李推車</b>：機場推車免費，<b>不要讓陌生人「好心」幫推</b>，會強討小費（5–10 EUR）。</li>
+        <li><b>機場攬客計程車</b>:穿西裝在大廳問「Taxi?」的多半是黑車,<b>請走外面正規計程車排班區</b>或用飯店接送。</li>
+        <li><b>假冒飯店接送</b>:接機牌請<b>確認姓名拼寫正確</b>,遇有疑問先打電話給飯店確認。</li>
+        <li><b>路邊兌幣</b>:機場外提供「好匯率」的人 100% 詐騙,無視即可。</li>
+        <li><b>行李推車</b>:機場推車免費,<b>不要讓陌生人「好心」幫推</b>,會強討小費(5–10 EUR)。</li>
       </ul>
     </div>
 
     <div class="food">
       <h4>🍽️ 抵達日輕食建議</h4>
       <ul>
-        <li><b>飯店餐廳</b>：最安全省力，可點 Mercimek Çorbası（紅扁豆湯，土耳其國民湯）+ 麵包，溫潤好消化。</li>
-        <li><b>外送選擇</b>：Yemeksepeti、Getir 等 App（飯店 Wi-Fi 註冊即可）。</li>
-        <li><b>避免</b>：第一天就吃街邊烤肉、Döner（吃法不熟容易腸胃不適）。</li>
+        <li><b>飯店餐廳</b>:最安全省力,可點 Mercimek Çorbası(紅扁豆湯,土耳其國民湯)+ 麵包,溫潤好消化。</li>
+        <li><b>外送選擇</b>:Yemeksepeti、Getir 等 App(飯店 Wi-Fi 註冊即可)。</li>
+        <li><b>避免</b>:第一天就吃街邊烤肉、Döner(吃法不熟容易腸胃不適)。</li>
       </ul>
     </div>
   </div>
 
-  <!-- ============ PANEL 2: DAY 5/25 ============ -->
+  <!-- ============ PANEL 4: DAY 2 = 5/25 (Bosphorus Cruise) ============ -->
   <div class="panel">
     <div class="daybanner">
       <div>
-        <h2>Day 2　·　5/25（星期一）搬家 + Taksim 漫遊 + Mürver 晚宴</h2>
-        <div class="sub">輕鬆日。早上換到 Gezi Hotel，貓咪咖啡店吃午餐，下午充分休息，晚上享受 19:30 預訂的高級燒烤晚餐。</div>
+        <h2>Day 2　·　5/25(星期一)搬家 + 貓咖小憩 + 博斯普魯斯遊船晚宴</h2>
+        <div class="sub">輕鬆破冰日。早上換到 Gezi Hotel、貓咖午餐、下午充分休息,晚上 19:30 出發享受已預訂的博斯普魯斯遊船晚餐——長輩全程不需走路,坐擁歐亞兩洲璀璨夜景。</div>
       </div>
-      <div class="emoji">🐱</div>
+      <div class="emoji">🛥️</div>
     </div>
 
     <div class="timeline">
       <h3>📅 今日行程</h3>
-      <div class="tl-item"><div class="tl-time">09:00</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>飯店早餐 + Check-out</strong><div class="desc">慢慢吃，土式早餐豐盛：起司、橄欖、番茄、雞蛋、麵包、茶。記得多喝水。</div></div></div>
-      <div class="tl-item"><div class="tl-time">10:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>前往 Gezi Hotel 放行李</strong><div class="desc">叫 BiTaksi 或飯店幫忙叫車。Gezi Hotel 位於 Taksim 廣場旁。</div></div></div>
-      <div class="tl-item"><div class="tl-time">12:00</div><div class="tl-icon">🐈</div><div class="tl-content"><strong>貓咪咖啡店午餐</strong><div class="desc">推薦：Cihangir 區的 Şapka Cafe 或 Kedi Kahve。土耳其貓多，氣氛悠閒。</div></div></div>
-      <div class="tl-item"><div class="tl-time">14:00</div><div class="tl-icon">🛌</div><div class="tl-content"><strong>回飯店休息</strong><div class="desc">時差還沒完全調過來，2–3 小時午睡很重要。</div></div></div>
-      <div class="tl-item"><div class="tl-time">18:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>出發 Mürver Restaurant</strong><div class="desc">準時！高級餐廳對遲到敏感，提早 10 分鐘到。</div></div></div>
-      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🍷</div><div class="tl-content"><strong>Mürver Restaurant 晚餐（已預訂）</strong><div class="desc">柴火烤土耳其料理，看博斯普魯斯海景。</div></div></div>
+      <div class="tl-item"><div class="tl-time">09:00</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>飯店早餐 + Check-out</strong><div class="desc">慢慢吃,土式早餐豐盛:起司、橄欖、番茄、雞蛋、麵包、茶。記得多喝水。</div></div></div>
+      <div class="tl-item"><div class="tl-time">10:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>VIP 專車送至 Gezi Hotel Bosphorus</strong><div class="desc">行李物流移駕,人車一次到位,免去搬運辛苦。Gezi Hotel 位於 Taksim 廣場旁。</div></div></div>
+      <div class="tl-item"><div class="tl-time">12:00</div><div class="tl-icon">🐈</div><div class="tl-content"><strong>貓咪咖啡店午餐</strong><div class="desc">推薦:Cihangir 區的 Şapka Cafe 或 Kedi Kahve。土耳其貓多,氣氛悠閒。</div></div></div>
+      <div class="tl-item"><div class="tl-time">14:00</div><div class="tl-icon">🛌</div><div class="tl-content"><strong>回飯店休息(電池回充)</strong><div class="desc">時差還沒完全調過來,2–3 小時午睡很重要。</div></div></div>
+      <div class="tl-item"><div class="tl-time">18:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>計程車前往遊船碼頭</strong><div class="desc">通常從 Kabataş 或 Karaköy 碼頭出發,以預訂單為準。</div></div></div>
+      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🛥️</div><div class="tl-content"><strong>博斯普魯斯遊船晚宴(已完成預訂)</strong><div class="desc">3–4 小時的歐亞夜景遊船晚餐,含 4 道餐 + 飲料 + 蘇菲旋轉舞 + 肚皮舞表演。完美「破冰」行程。</div></div></div>
     </div>
 
     <div class="grid">
       <div class="card">
+        <div class="place-img img-6">🛥️</div>
+        <h4>🛥️ Bosphorus Dinner Cruise(已預訂)</h4>
+        <p><span class="tag tag-tip">已預訂</span><span class="tag tag-info">3–4 小時</span><span class="tag tag-info">19:30 出發</span></p>
+        <ul>
+          <li>橫渡<b>連接黑海與馬爾馬拉海的博斯普魯斯海峽</b>,看歐亞兩岸燈火夜景。</li>
+          <li>沿途景觀:<b>多瑪巴切宮</b>、<b>Çırağan Palace</b>、<b>Ortaköy 清真寺與七月十五烈士橋</b>、<b>Anadolu Hisarı 安納托利亞城堡</b>。</li>
+          <li>晚餐通常 4 道:湯/沙拉 → 開胃菜 → 主餐(雞/魚/素可選)→ 甜點。含水、軟性飲料,酒類另計。</li>
+          <li>表演:<b>蘇菲旋轉舞、肚皮舞、土耳其民俗舞蹈</b>。</li>
+          <li><b>長輩友善</b>:全程坐姿,有電梯到上層甲板,可隨時室內室外切換。</li>
+          <li><b>夜晚海上風大</b>:備外套、長褲、薄圍巾。</li>
+          <li>建議攜帶現金<b>小額 TRY 給表演者小費</b>(50–100 TRY 即可)。</li>
+        </ul>
+      </div>
+
+      <div class="card">
         <div class="place-img img-2">🏨</div>
-        <h4>🏨 Gezi Hotel Bosphorus（Taksim）</h4>
+        <h4>🏨 Gezi Hotel Bosphorus(Taksim)</h4>
         <p><span class="tag tag-info">Taksim 廣場旁</span><span class="tag tag-info">海景房</span></p>
         <ul>
-          <li>位於 Taksim 廣場北側，臨 Gezi Park，<b>地理位置一流</b>。</li>
+          <li>位於 Taksim 廣場北側,臨 Gezi Park,<b>地理位置一流</b>。</li>
           <li>步行 5 分鐘可到 Taksim 廣場、İstiklal Caddesi 步行街。</li>
           <li>頂樓酒吧可看博斯普魯斯日落。</li>
           <li>後續行程許多景點均可從這出發步行或一站地鐵。</li>
@@ -449,126 +796,118 @@
 
       <div class="card">
         <div class="place-img img-4">🐱</div>
-        <h4>🐈 推薦貓咪咖啡店（可選擇）</h4>
+        <h4>🐈 推薦貓咪咖啡店(可選擇)</h4>
         <ul>
-          <li><b>Kedi Cafe（Cihangir）</b>：4 隻常駐貓，下午茶與輕食。</li>
-          <li><b>Şapka Cafe & Patisserie</b>：氣氛文青，伊斯坦堡街貓會路過。</li>
-          <li><b>Café Privato</b>：早午餐豐盛，Cihangir 文青區。</li>
+          <li><b>Kedi Cafe(Cihangir)</b>:4 隻常駐貓,下午茶與輕食。</li>
+          <li><b>Şapka Cafe & Patisserie</b>:氣氛文青,伊斯坦堡街貓會路過。</li>
+          <li><b>Café Privato</b>:早午餐豐盛,Cihangir 文青區。</li>
           <li>從 Gezi Hotel 走路 10–15 分鐘可到 Cihangir 區。</li>
         </ul>
-        <p class="src">💡 伊斯坦堡街貓本來就多，幾乎所有戶外咖啡都會「自帶貓」。</p>
-      </div>
-
-      <div class="card">
-        <div class="place-img img-5">🔥</div>
-        <h4>🍖 Mürver Restaurant（19:30 預訂）</h4>
-        <p><span class="tag tag-info">高級餐廳</span><span class="tag tag-tip">已預訂</span></p>
-        <ul>
-          <li>位於 Karaköy 區 Novotel Bosphorus 頂樓（地址：Kemankeş Karamustafa Paşa, Mumhane Cd. No:36）。</li>
-          <li>主廚 Tarık Bayazıt，主打安納托利亞柴火料理。</li>
-          <li>必點：<b>柴火烤羊排、海鱸魚、安納托利亞蔬菜拼盤</b>。</li>
-          <li>有素食選項，可預訂時備註。</li>
-          <li>窗景：博斯普魯斯海峽 + 老城天際線。</li>
-          <li>客單價：人均 1500–2500 TRY（約 50–80 USD）。</li>
-          <li>Dress code：smart casual（不必西裝，但別穿運動服）。</li>
-        </ul>
+        <p class="src">💡 伊斯坦堡街貓本來就多,幾乎所有戶外咖啡都會「自帶貓」。</p>
       </div>
     </div>
 
     <div class="route">
       <h4>🗺️ 今日路線提示</h4>
       <ul>
-        <li><b>Dela Hotels → Gezi Hotel</b>：取決於 Dela 位置，若在老城區搭計程車約 20–30 分鐘。</li>
-        <li><b>Gezi Hotel → Cihangir 貓咖</b>：步行 12–15 分鐘下坡，回程上坡建議搭計程車（5–8 分鐘）。</li>
-        <li><b>Gezi Hotel → Mürver（Karaköy）</b>：計程車 15–20 分鐘（500–700 TRY）。或搭 F1 纜車到 Karaköy 再走 8 分鐘（長輩不建議）。</li>
+        <li><b>Delta Hotels Istanbul West → Gezi Hotel</b>:VIP 專車 30–40 分鐘。<b>由飯店禮賓部統一處理行李物流</b>。</li>
+        <li><b>Gezi Hotel → Cihangir 貓咖</b>:步行 12–15 分鐘下坡,回程上坡建議搭計程車(5–8 分鐘)。</li>
+        <li><b>Gezi Hotel → 遊船碼頭</b>:看船公司而定,常見從 Kabataş 出發,計程車 5–10 分鐘。<b>請確認預訂單上的碼頭名稱與報到時間</b>。</li>
+        <li>遊船結束約 22:30–23:00,船公司通常會送回市區或可直接叫計程車回飯店。</li>
       </ul>
     </div>
 
     <div class="senior">
       <h4>👵 今日長輩貼心提醒</h4>
       <ul>
-        <li>今天行程<b>非常輕鬆</b>，是給長輩調時差的好機會。中午吃完午餐務必回房午睡。</li>
-        <li>Cihangir 區<b>有不少下坡石板路</b>，要穿防滑鞋。</li>
-        <li>Mürver 餐廳<b>有電梯到頂樓</b>，無障礙友善。</li>
-        <li>晚餐紅酒適量，避免影響睡眠。</li>
-        <li>頂樓海風大，<b>長輩記得帶薄外套</b>。</li>
+        <li>今天行程<b>非常輕鬆</b>,是給長輩調時差的好機會。中午吃完午餐務必回房午睡。</li>
+        <li>Cihangir 區<b>有不少下坡石板路</b>,要穿防滑鞋。</li>
+        <li><b>遊船是破冰首選</b>:全程坐姿,長輩可享受美食、看夜景、聽音樂,不耗體力。</li>
+        <li>遊船海上風大且涼,<b>務必帶薄外套、長褲</b>。</li>
+        <li>船上廁所狹小,出門前先在飯店或碼頭咖啡店上完。</li>
+        <li>表演音樂較大聲,如不耐可選室內座位區。</li>
+        <li>避免空腹喝紅酒,長輩淺嚐即可。</li>
       </ul>
     </div>
 
     <div class="food">
-      <h4>🥐 周邊推薦美食（Taksim/Cihangir/Karaköy）</h4>
+      <h4>🥐 周邊推薦美食(Taksim/Cihangir)</h4>
       <ul>
-        <li><b>Karaköy Güllüoğlu</b>：伊斯坦堡最有名 Baklava 老店（1820 年），離 Mürver 步行 8 分鐘，午餐後可外帶。</li>
-        <li><b>Mandabatmaz</b>：1967 年的土耳其咖啡店（İstiklal 巷內），長輩想喝道地土咖啡可去。</li>
-        <li><b>Çukur Meyhane</b>：當地人愛的 meyhane（土式酒館），氣氛好但晚餐已有 Mürver，可改午餐或不去。</li>
-        <li><b>Hafız Mustafa</b>：百年甜點老店，伴手禮 Lokum 推薦這家。</li>
+        <li><b>Karaköy Güllüoğlu</b>:伊斯坦堡最有名 Baklava 老店(1820 年),離 Karaköy 步行 8 分鐘,午餐後可外帶。</li>
+        <li><b>Mandabatmaz</b>:1967 年的土耳其咖啡店(İstiklal 巷內),長輩想喝道地土咖啡可去。</li>
+        <li><b>Çukur Meyhane</b>:當地人愛的 meyhane(土式酒館),氣氛好但晚餐已有遊船,可改午餐或不去。</li>
+        <li><b>Hafız Mustafa</b>:百年甜點老店,伴手禮 Lokum 推薦這家。</li>
       </ul>
     </div>
 
     <div class="scam">
       <h4>🛡️ Taksim / İstiklal 區詐騙警告</h4>
       <ul>
-        <li><b>İstiklal Caddesi 是伊斯坦堡詐騙最密集區</b>，請特別小心：擦鞋、塞玫瑰、邀去酒吧。</li>
-        <li><b>扒手</b>：人潮擁擠時，後背包放胸前、護照放飯店保險箱。</li>
-        <li><b>「友善搭訕」</b>：突然加入你們、自稱大學生想練英文的，多半要帶你去他「叔叔的店」。</li>
-        <li>Taksim 廣場本身安全，但<b>避免午夜後在 İstiklal 主街以外的暗巷活動</b>。</li>
+        <li><b>İstiklal Caddesi 是伊斯坦堡詐騙最密集區</b>,請特別小心:擦鞋、塞玫瑰、邀去酒吧。</li>
+        <li><b>扒手</b>:人潮擁擠時,後背包放胸前、護照放飯店保險箱。</li>
+        <li><b>「友善搭訕」</b>:突然加入你們、自稱大學生想練英文的,多半要帶你去他「叔叔的店」。</li>
+        <li>Taksim 廣場本身安全,但<b>避免午夜後在 İstiklal 主街以外的暗巷活動</b>。</li>
+        <li><b>遊船碼頭周邊</b>:港邊偽稱「免費接駁巴士」的攬客,認明預訂船公司的工作人員與名牌。</li>
       </ul>
     </div>
   </div>
 
-  <!-- ============ PANEL 3: DAY 5/26 ============ -->
+  <!-- ============ PANEL 5: DAY 3 = 5/26 (Mürver) ============ -->
   <div class="panel">
     <div class="daybanner">
       <div>
-        <h2>Day 3　·　5/26（星期二）Galata 老區 + 香料市集 + Neolokal</h2>
-        <div class="sub">經典老城與市集日。Camondo Stairs 拍照、香料市集採買、登蘇萊曼清真寺，晚上享受米其林星級晚餐。</div>
+        <h2>Day 3　·　5/26(星期二)Galata 老區 + 香料市集 + Mürver 柴火晚宴</h2>
+        <div class="sub">經典老城與市集日。早上移轉至最終據點 DeCamondo Galata(後續連住免換房),Camondo 階梯拍照、香料市集採買、登蘇萊曼清真寺,晚上飯店走路 6 分鐘的柴火烤牛排晚宴 Mürver Restaurant 18:00–20:00。</div>
       </div>
       <div class="emoji">🌶️</div>
     </div>
 
     <div class="timeline">
       <h3>📅 今日行程</h3>
-      <div class="tl-item"><div class="tl-time">09:30</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>飯店早餐</strong></div></div>
-      <div class="tl-item"><div class="tl-time">10:30</div><div class="tl-icon">📸</div><div class="tl-content"><strong>前往 Camondo 階梯（Decamondo Galata）</strong><div class="desc">Bankalar Caddesi 上的著名 Art Nouveau 階梯，拍照打卡點。附近可順遊 Galata 塔。</div></div></div>
-      <div class="tl-item"><div class="tl-time">12:30</div><div class="tl-icon">🌶️</div><div class="tl-content"><strong>香料市集（Mısır Çarşısı）</strong><div class="desc">1660 年建造的 L 形市集，88 間店鋪，香料、軟糖、堅果、土耳其茶。</div></div></div>
-      <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-icon">🕌</div><div class="tl-content"><strong>蘇萊曼清真寺（Süleymaniye Camii）</strong><div class="desc">伊斯坦堡最大、視野最好的清真寺。下午光線最美。</div></div></div>
-      <div class="tl-item"><div class="tl-time">17:00</div><div class="tl-icon">☕</div><div class="tl-content"><strong>回飯店稍作休息 / 換衣服</strong></div></div>
-      <div class="tl-item"><div class="tl-time">18:00</div><div class="tl-icon">⭐</div><div class="tl-content"><strong>Neolokal 晚餐（米其林一星，已訂位 18:00–20:00）</strong><div class="desc">位於 SALT Galata 4 樓。建議搭計程車提早到。</div></div></div>
+      <div class="tl-item"><div class="tl-time">09:30</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>早餐 + Check-out</strong></div></div>
+      <div class="tl-item"><div class="tl-time">10:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>移轉至最終據點 DeCamondo Galata(後續連住免換房)</strong><div class="desc">VIP 專車人車到位,行李交給禮賓部後輕裝出遊。</div></div></div>
+      <div class="tl-item"><div class="tl-time">11:30</div><div class="tl-icon">📸</div><div class="tl-content"><strong>Camondo 階梯散步</strong><div class="desc">就在飯店附近的 Bankalar Caddesi 上,新藝術風格雙螺旋階梯。</div></div></div>
+      <div class="tl-item"><div class="tl-time">12:30</div><div class="tl-icon">🌶️</div><div class="tl-content"><strong>香料市集(Mısır Çarşısı)</strong><div class="desc">1660 年建造的 L 形市集,香料、軟糖、堅果、土耳其茶。</div></div></div>
+      <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-icon">🕌</div><div class="tl-content"><strong>蘇萊曼清真寺(Süleymaniye Camii)</strong><div class="desc">護膝戰術:從香料市集叫 BiTaksi 直達山頂入口,參觀完順坡慢行散步下山。</div></div></div>
+      <div class="tl-item"><div class="tl-time">17:00</div><div class="tl-icon">☕</div><div class="tl-content"><strong>回飯店稍作休息 / 換衣服</strong><div class="desc">飯店就在 Galata,走幾步就到。</div></div></div>
+      <div class="tl-item"><div class="tl-time">18:00</div><div class="tl-icon">🔥</div><div class="tl-content"><strong>Mürver Restaurant 晚宴(已訂位 18:00–20:00)</strong><div class="desc">從飯店步行 6 分鐘平緩道路,柴火烤牛排招牌料理。</div></div></div>
     </div>
 
     <div class="grid">
       <div class="card">
-        <div class="place-img img-3">🪜</div>
-        <h4>📍 Camondo 階梯（Camondo Stairs）</h4>
-        <p><span class="tag tag-info">Galata / Karaköy</span><span class="tag tag-info">免費</span></p>
+        <div class="place-img img-3">🏨</div>
+        <h4>🏨 DeCamondo Galata(後續連住 5 晚)</h4>
+        <p><span class="tag tag-tip">最終據點</span><span class="tag tag-info">免再換房</span></p>
         <ul>
-          <li>1870–1880 年間由 Camondo 家族（猶太銀行家）建造的雙螺旋階梯。</li>
-          <li>新藝術風格、雙曲線設計，<b>是伊斯坦堡最上鏡的階梯</b>。</li>
-          <li>Bankalar Caddesi 銀行街旁，附近有 Ottoman 銀行博物館。</li>
-          <li><b>長輩留意</b>：階梯陡且窄，拍照即可，不必一定要走上去。可從旁邊 Banker Sokak 走 SALT Galata。</li>
+          <li>位於 Galata 區 Bankalar Caddesi(銀行街),歷史建築改建精品飯店。</li>
+          <li>步行可達:Camondo 階梯(門口)、加拉達塔(8 分)、Karaköy 碼頭(10 分)、Mürver Restaurant(6 分)。</li>
+          <li><b>後續 5 晚都住這</b>,不再搬家,行李一次安頓。</li>
+          <li>有電梯,長輩進出便利。</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="place-img img-2">🏛️</div>
-        <h4>📍 Galata Tower（順遊）</h4>
+        <div class="place-img img-3">🪜</div>
+        <h4>📍 Camondo 階梯(Camondo Stairs)</h4>
+        <p><span class="tag tag-info">Galata / Karaköy</span><span class="tag tag-info">免費</span></p>
         <ul>
-          <li>14 世紀熱那亞人建的瞭望塔，<b>360° 老城景觀</b>。</li>
-          <li>門票約 800 TRY，<b>排隊很久</b>，建議線上買 GetYourGuide 預約時段票。</li>
-          <li>有電梯到 7 樓，最後 2 層樓梯。<b>長輩可選擇不上塔</b>，在塔下廣場喝咖啡也很愉快。</li>
+          <li>1870–1880 年間由 Camondo 家族(猶太銀行家)建造的雙螺旋階梯。</li>
+          <li>新藝術風格、雙曲線設計,<b>是伊斯坦堡最上鏡的階梯</b>。</li>
+          <li>Bankalar Caddesi 銀行街旁,DeCamondo 飯店就在這條街上。</li>
+          <li><b>長輩留意</b>:階梯陡且窄,拍照即可,不必一定要走上去。可從旁邊 Banker Sokak 走到 SALT Galata。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-4">🌶️</div>
-        <h4>🌶️ 香料市集 Mısır Çarşısı（埃及市集）</h4>
+        <h4>🌶️ 香料市集 Mısır Çarşısı(埃及市集)</h4>
         <p><span class="tag tag-info">Eminönü</span><span class="tag tag-info">免費</span></p>
         <ul>
-          <li>1660 年建，是伊斯坦堡最古老的市集之一（比大市集還老）。</li>
-          <li>L 字型 6 個入口，88 間店鋪。</li>
-          <li><b>必逛</b>：番紅花、漆樹粉、藍莓茶、Apple Tea、土耳其軟糖試吃。</li>
-          <li><b>採購技巧</b>：價格可砍 20–30%；軟糖按公斤算，<b>講清楚要幾「克」</b>避免被裝大盒。</li>
-          <li>大門口（往 Eminönü 渡輪方向）有 <b>Hafız Mustafa</b> 老店，品質保證但較貴。</li>
+          <li>1660 年建,是伊斯坦堡最古老的市集之一(比大市集還老)。</li>
+          <li>L 字型 6 個入口,88 間店鋪。</li>
+          <li><b>必逛</b>:番紅花、漆樹粉、藍莓茶、Apple Tea、土耳其軟糖試吃。</li>
+          <li><b>採購技巧</b>:價格可砍 20–30%;軟糖按公斤算,<b>講清楚要幾「克」</b>避免被裝大盒。</li>
+          <li>大門口(往 Eminönü 渡輪方向)有 <b>Hafız Mustafa</b> 老店,品質保證但較貴。</li>
         </ul>
       </div>
 
@@ -577,26 +916,28 @@
         <h4>🕌 蘇萊曼清真寺 Süleymaniye Camii</h4>
         <p><span class="tag tag-info">免費入內</span><span class="tag tag-warn">服裝規定</span></p>
         <ul>
-          <li>1557 年由建築大師 Mimar Sinan 為蘇丹蘇萊曼建造，是其代表作。</li>
-          <li>從庭院看金角灣全景<b>絕美</b>，免費。</li>
-          <li>進入需脫鞋、女性披頭巾（門口免費借）、男士不可穿短褲。</li>
-          <li><b>禮拜時段</b>避免進入（午禱 12:30 左右、下午禱 15:30 左右、傍晚禱 17:30 左右）。</li>
-          <li>後方花園有 Süleyman 和 Hürrem 蘇丹夫妻的陵墓，可入內參觀。</li>
+          <li>1557 年由建築大師 Mimar Sinan 為蘇丹蘇萊曼建造,是其代表作。</li>
+          <li>從庭院看金角灣全景<b>絕美</b>,免費。</li>
+          <li>進入需脫鞋、女性披頭巾(門口免費借)、男士不可穿短褲。</li>
+          <li><b>禮拜時段</b>避免進入(午禱 12:30 左右、下午禱 15:30 左右、傍晚禱 17:30 左右)。</li>
+          <li>後方花園有 Süleyman 和 Hürrem 蘇丹夫妻的陵墓,可入內參觀。</li>
+          <li><b>護膝戰術</b>:位於陡峭山丘,強烈建議「坐車上山,散步下山」。</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="place-img img-5">⭐</div>
-        <h4>⭐ Neolokal（米其林一星，18:00 已訂位）</h4>
-        <p><span class="tag tag-tip">已預訂</span><span class="tag tag-info">米其林</span></p>
+        <div class="place-img img-5">🔥</div>
+        <h4>🔥 Mürver Restaurant(18:00 已訂位)</h4>
+        <p><span class="tag tag-tip">已預訂</span><span class="tag tag-info">飯店步行 6 分</span></p>
         <ul>
-          <li>位於 SALT Galata（前 Ottoman 銀行總部）4 樓，地址：Bankalar Caddesi 11。</li>
-          <li>主廚 Maksut Aşkar，將土耳其傳統菜現代化呈現，獲米其林一星、Green Star（永續）。</li>
-          <li><b>必點推薦</b>：套餐 Tasting Menu（人均 2500–3500 TRY），含 7–9 道菜。</li>
-          <li>建議事先告知過敏 / 飲食限制（飯店或 hello@neolokal.com）。</li>
-          <li>Dress code：smart casual。</li>
-          <li>有電梯，<b>長輩無障礙友善</b>。</li>
-          <li>用餐時間約 2 小時，記得 20:00 結束後叫車回飯店。</li>
+          <li>位於 Karaköy 區 Novotel Bosphorus 頂樓,地址:Kemankeş Karamustafa Paşa, Mumhane Cd. No:36。</li>
+          <li>主廚 Tarık Bayazıt,主打<b>安納托利亞柴火料理</b>。</li>
+          <li><b>必點</b>:柴火烤牛排、海鱸魚、安納托利亞蔬菜拼盤。</li>
+          <li>有素食選項,可預訂時備註。</li>
+          <li>窗景:博斯普魯斯海峽 + 老城天際線。</li>
+          <li>客單價:人均 1500–2500 TRY(約 50–80 USD)。</li>
+          <li>Dress code:smart casual(不必西裝,但別穿運動服)。</li>
+          <li>有電梯,<b>長輩無障礙友善</b>。從 DeCamondo Galata 步行 6 分鐘平緩道路。</li>
         </ul>
       </div>
     </div>
@@ -604,42 +945,44 @@
     <div class="route">
       <h4>🗺️ 今日路線提示</h4>
       <ul>
-        <li><b>Gezi Hotel → Camondo 階梯</b>：計程車 15 分鐘，或搭 F1 纜車（Taksim → Kabataş）再走 10 分鐘。</li>
-        <li><b>Camondo → 香料市集</b>：步行 15 分鐘過加拉達橋，可邊走邊看金角灣。<b>長輩可叫計程車（5 分鐘）</b>。</li>
-        <li><b>香料市集 → 蘇萊曼清真寺</b>：步行 12 分鐘上坡，<b>強烈建議搭計程車</b>（700 TRY 內）。</li>
-        <li><b>蘇萊曼清真寺 → Gezi Hotel</b>：計程車 20 分鐘。</li>
-        <li><b>Gezi Hotel → Neolokal</b>：計程車 12 分鐘。Karaköy 區。</li>
+        <li><b>Gezi Hotel → DeCamondo Galata</b>:VIP 專車約 15 分鐘。</li>
+        <li><b>DeCamondo → Camondo 階梯</b>:步行 0 分鐘(就在飯店所在街上)。</li>
+        <li><b>Camondo → 香料市集</b>:步行 15 分鐘過加拉達橋,可邊走邊看金角灣。<b>長輩可叫計程車(5 分鐘)</b>。</li>
+        <li><b>香料市集 → 蘇萊曼清真寺</b>:步行 12 分鐘上坡,<b>強烈建議搭 BiTaksi 直達山頂入口</b>(700 TRY 內)。</li>
+        <li><b>蘇萊曼清真寺 → DeCamondo Galata</b>:計程車 15–20 分鐘。</li>
+        <li><b>DeCamondo → Mürver Restaurant</b>:步行 6 分鐘平緩道路。</li>
       </ul>
     </div>
 
     <div class="scam">
       <h4>🛡️ 香料市集 / Galata 區詐騙注意</h4>
       <ul>
-        <li><b>免費試吃陷阱</b>：店家熱情塞軟糖試吃後，「不買也沒關係」但秤了一大袋強塞給你。<b>對策：試吃前直接說 "Just looking" 並走遠</b>。</li>
-        <li><b>假番紅花</b>：真番紅花 1g 約 100–200 TRY，攤位賣「便宜番紅花」90% 是紅花染色玉米鬚，<b>對策：去 Hafız Mustafa、Eminönü Spice Bazaar 主廳大店買</b>。</li>
-        <li><b>大盒裝軟糖</b>：講「半公斤」可能秤一公斤多，<b>對策：先說 100 公克試味再加買</b>。</li>
-        <li><b>蘇萊曼清真寺周邊「導遊」</b>：自稱免費，最後要 1000+ TRY。<b>對策：拒絕陌生人解說</b>。</li>
+        <li><b>免費試吃陷阱</b>:店家熱情塞軟糖試吃後,「不買也沒關係」但秤了一大袋強塞給你。<b>對策:試吃前直接說 "Just looking" 並走遠</b>。</li>
+        <li><b>假番紅花</b>:真番紅花 1g 約 100–200 TRY,攤位賣「便宜番紅花」90% 是紅花染色玉米鬚,<b>對策:去 Hafız Mustafa、Eminönü Spice Bazaar 主廳大店買</b>。</li>
+        <li><b>大盒裝軟糖</b>:講「半公斤」可能秤一公斤多,<b>對策:先說 100 公克試味再加買</b>。</li>
+        <li><b>蘇萊曼清真寺周邊「導遊」</b>:自稱免費,最後要 1000+ TRY。<b>對策:拒絕陌生人解說</b>。</li>
       </ul>
     </div>
 
     <div class="senior">
       <h4>👵 今日長輩貼心提醒</h4>
       <ul>
-        <li>今天<b>步行較多</b>，務必穿氣墊鞋，走累就停下來坐。</li>
-        <li>Camondo 階梯<b>不必勉強上下走</b>，遠處拍照即可。</li>
-        <li>蘇萊曼清真寺<b>地板涼且滑</b>（脫鞋進入），長輩請慢走、扶柱。</li>
-        <li>香料市集<b>人潮密集</b>，三人保持目視距離，約定走散的集合點（如 Hafız Mustafa 老店門口）。</li>
-        <li>Neolokal 用餐 2 小時，<b>長輩不必每道都吃完</b>，剩下沒關係，享受品味。</li>
+        <li>今天<b>步行較多</b>,務必穿氣墊鞋,走累就停下來坐。</li>
+        <li>Camondo 階梯<b>不必勉強上下走</b>,遠處拍照即可。</li>
+        <li>蘇萊曼清真寺<b>地板涼且滑</b>(脫鞋進入),長輩請慢走、扶柱。</li>
+        <li>香料市集<b>人潮密集</b>,三人保持目視距離,約定走散的集合點(如 Hafız Mustafa 老店門口)。</li>
+        <li>Mürver 用餐 2 小時,<b>長輩不必每道都吃完</b>,剩下沒關係。</li>
+        <li>晚餐結束 20:00 後,從餐廳步行回飯店僅 6 分鐘,免找車,完美收尾。</li>
       </ul>
     </div>
   </div>
 
-  <!-- ============ PANEL 4: DAY 5/27 ============ -->
+  <!-- ============ PANEL 6: DAY 4 = 5/27 (Neolokal) ============ -->
   <div class="panel">
     <div class="daybanner">
       <div>
-        <h2>Day 4　·　5/27（星期三）Sultanahmet 歷史核心</h2>
-        <div class="sub">三大世界遺產一次看完：地下水宮殿、百年肉丸老店、聖索菲亞大教堂。記得用「快速通關票券」省下排隊時間。</div>
+        <h2>Day 4　·　5/27(星期三)Sultanahmet 歷史核心 + Neolokal 米其林晚宴</h2>
+        <div class="sub">三大世界遺產一次看完:地下水宮殿、百年肉丸老店、聖索菲亞大教堂。晚餐 Neolokal 米其林一星 18:00–20:00。<b>本日體力消耗最大,務必提前網購 VIP Skip-the-line 門票</b>。</div>
       </div>
       <div class="emoji">🏛️</div>
     </div>
@@ -647,11 +990,12 @@
     <div class="timeline">
       <h3>📅 今日行程</h3>
       <div class="tl-item"><div class="tl-time">09:00</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>早餐</strong></div></div>
-      <div class="tl-item"><div class="tl-time">10:00</div><div class="tl-icon">💧</div><div class="tl-content"><strong>地下水宮殿 Yerebatan Sarnıcı</strong><div class="desc">6 世紀拜占庭時期蓄水池，著名美杜莎柱頭。涼爽夢幻，是熱天好選擇。</div></div></div>
-      <div class="tl-item"><div class="tl-time">12:30</div><div class="tl-icon">🥩</div><div class="tl-content"><strong>Sultanahmet Köftecisi Istanbul 百年老店午餐</strong><div class="desc">純牛肉丸，無羊肉，1920 年創立的 Selim Usta。</div></div></div>
-      <div class="tl-item"><div class="tl-time">14:30</div><div class="tl-icon">🕌</div><div class="tl-content"><strong>聖索菲亞大教堂 Hagia Sophia</strong><div class="desc">建築奇蹟、世界遺產。已改為清真寺，遊客可從二樓畫廊參觀（門票分二樓專屬）。</div></div></div>
-      <div class="tl-item"><div class="tl-time">17:00</div><div class="tl-icon">☕</div><div class="tl-content"><strong>休息一下（Sultanahmet 公園長椅 / 飯店）</strong></div></div>
-      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🥪</div><div class="tl-content"><strong>小店：炸牛肉三明治晚餐</strong><div class="desc">行程備註提到的小店，可考慮 Tarihi Karaköy Balıkçısı 旁的牛肉三明治攤或 Aslan Lokantası。</div></div></div>
+      <div class="tl-item"><div class="tl-time">10:00</div><div class="tl-icon">🚊</div><div class="tl-content"><strong>搭 T1 路面電車到 Sultanahmet</strong><div class="desc">從 Karaköy 站上車,直達 Sultanahmet 站,低底盤對長輩友善。</div></div></div>
+      <div class="tl-item"><div class="tl-time">10:30</div><div class="tl-icon">💧</div><div class="tl-content"><strong>地下水宮殿 Yerebatan Sarnıcı</strong><div class="desc">6 世紀拜占庭時期蓄水池,著名美杜莎柱頭。涼爽夢幻、平緩好走,能量綠燈。</div></div></div>
+      <div class="tl-item"><div class="tl-time">12:30</div><div class="tl-icon">🥩</div><div class="tl-content"><strong>Sultanahmet Köftecisi Istanbul 百年老店午餐</strong><div class="desc">純牛肉丸無羊肉,1920 年創立。百年肉丸店<b>恰好位於地下水宮殿與聖索菲亞中間</b>,免額外步行。</div></div></div>
+      <div class="tl-item"><div class="tl-time">14:30</div><div class="tl-icon">🕌</div><div class="tl-content"><strong>聖索菲亞大教堂 Hagia Sophia(二樓畫廊區 €25)</strong><div class="desc">建築奇蹟、世界遺產。需站立較久,且為石板路面——能量黃燈。</div></div></div>
+      <div class="tl-item"><div class="tl-time">16:30</div><div class="tl-icon">🚊</div><div class="tl-content"><strong>T1 電車回飯店休息(電池回充)</strong></div></div>
+      <div class="tl-item"><div class="tl-time">18:00</div><div class="tl-icon">⭐</div><div class="tl-content"><strong>Neolokal 米其林一星晚宴(已訂位 18:00–20:00)</strong><div class="desc">從 DeCamondo Galata 步行 5 分鐘即達(在 SALT Galata 4 樓)。</div></div></div>
     </div>
 
     <div class="grid">
@@ -660,130 +1004,146 @@
         <h4>💧 地下水宮殿 Basilica Cistern</h4>
         <p><span class="tag tag-info">門票約 900 TRY</span><span class="tag tag-tip">建議線上預約</span></p>
         <ul>
-          <li>建於 6 世紀（拜占庭查士丁尼一世），<b>336 根柱子組成的地下蓄水池</b>。</li>
-          <li>燈光氛圍夢幻，2022 重新整修後加入聲光裝置藝術。</li>
-          <li>必看：<b>美杜莎柱頭</b>（兩根倒立、側放的柱頭）。</li>
-          <li>溫度涼爽（約 15°C），<b>長輩進去先穿薄外套</b>。</li>
-          <li>動線有走道與燈光，但仍有少量階梯，<b>不適合輪椅</b>。</li>
-          <li>建議線上買 Skip-the-line 票，否則排隊 30–60 分鐘。</li>
+          <li>建於 6 世紀(拜占庭查士丁尼一世),<b>336 根柱子組成的地下蓄水池</b>。</li>
+          <li>燈光氛圍夢幻,2022 重新整修後加入聲光裝置藝術。</li>
+          <li>必看:<b>美杜莎柱頭</b>(兩根倒立、側放的柱頭)。</li>
+          <li>溫度涼爽(約 15°C),<b>長輩進去先穿薄外套</b>。</li>
+          <li>動線有走道與燈光,但仍有少量階梯,<b>不適合輪椅</b>。</li>
+          <li>建議線上買 Skip-the-line 票,否則排隊 30–60 分鐘。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-2">🥩</div>
-        <h4>🥩 Sultanahmet Köftecisi（Selim Usta）</h4>
+        <h4>🥩 Sultanahmet Köftecisi(Selim Usta)</h4>
         <p><span class="tag tag-info">百年老店</span><span class="tag tag-tip">中午高峰排隊</span></p>
         <ul>
-          <li>1920 年創立，<b>5 代家族經營</b>，伊斯坦堡最有名的肉丸店。</li>
-          <li>地址：Divanyolu Cd. No:12（地下水宮殿步行 3 分鐘）。</li>
-          <li>菜單超簡單：<b>Köfte 肉丸 + Piyaz 白豆沙拉 + Ayran 鹹優格 + 麵包</b>。</li>
+          <li>1920 年創立,<b>5 代家族經營</b>,伊斯坦堡最有名的肉丸店。</li>
+          <li>地址:Divanyolu Cd. No:12(地下水宮殿步行 3 分鐘、聖索菲亞步行 5 分鐘)。</li>
+          <li>菜單超簡單:<b>Köfte 肉丸 + Piyaz 白豆沙拉 + Ayran 鹹優格 + 麵包</b>。</li>
           <li>純牛肉、無羊肉。人均 250–400 TRY。</li>
-          <li><b>注意有同名仿冒店</b>，認明 "Tarihi Sultanahmet Köftecisi Selim Usta" 招牌、地址 Divanyolu。</li>
-          <li>建議 12:30 前到避開排隊，<b>店面小不接訂位</b>。</li>
+          <li><b>注意有同名仿冒店</b>,認明 "Tarihi Sultanahmet Köftecisi Selim Usta" 招牌、地址 Divanyolu。</li>
+          <li>建議 12:30 前到避開排隊,<b>店面小不接訂位</b>。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-1">🕌</div>
         <h4>🕌 聖索菲亞大教堂 Hagia Sophia</h4>
-        <p><span class="tag tag-info">門票約 25 EUR</span><span class="tag tag-warn">禱告時段關閉</span></p>
+        <p><span class="tag tag-info">二樓畫廊 €25</span><span class="tag tag-warn">禱告時段關閉</span></p>
         <ul>
-          <li>537 年建，原為東正教大教堂，1453 年改清真寺，1934 博物館，2020 又恢復清真寺。</li>
-          <li>外國遊客 2024 起<b>需從二樓 Upper Gallery</b> 專屬入口（門票分開）。</li>
-          <li>建築巨大壯麗，<b>馬賽克拜占庭壁畫</b>是亮點（部分覆蓋）。</li>
-          <li><b>禱告時段不對遊客開放</b>：12:30–13:45（午禱）、其他 5 次禱告時段各 30 分鐘。</li>
-          <li>進入規定：脫鞋（自備塑膠袋）、女性披肩、男士長褲。</li>
-          <li>建議線上買官方票（hagiasophiaexperience.com）或 GetYourGuide 預約時段。</li>
+          <li>537 年建,原為東正教大教堂,1453 年改清真寺,1934 博物館,2020 又恢復清真寺。</li>
+          <li>外國遊客 2024 起<b>需從二樓 Upper Gallery</b> 專屬入口(門票分開)。</li>
+          <li>建築巨大壯麗,<b>馬賽克拜占庭壁畫</b>是亮點(部分覆蓋)。</li>
+          <li><b>禱告時段不對遊客開放</b>:12:30–13:45(午禱)、其他 5 次禱告時段各 30 分鐘。</li>
+          <li>進入規定:脫鞋(自備塑膠袋)、女性披肩、男士長褲。</li>
+          <li>建議線上買官方票(hagiasophiaexperience.com)或 GetYourGuide 預約時段。</li>
         </ul>
       </div>
 
       <div class="card">
-        <div class="place-img img-3">🏛️</div>
-        <h4>🌹 順遊推薦：藍色清真寺 Sultan Ahmed Camii</h4>
+        <div class="place-img img-5">⭐</div>
+        <h4>⭐ Neolokal(米其林一星,18:00 已訂位)</h4>
+        <p><span class="tag tag-tip">已預訂</span><span class="tag tag-info">米其林</span><span class="tag tag-info">飯店步行 5 分</span></p>
         <ul>
-          <li>就在聖索菲亞對面廣場，<b>免費入內</b>。</li>
-          <li>6 座宣禮塔（罕見），21043 片藍色 İznik 磁磚。</li>
-          <li>2018 起整修，目前部分區域可參觀。</li>
+          <li>位於 SALT Galata(前 Ottoman 銀行總部)4 樓,地址:Bankalar Caddesi 11。</li>
+          <li><b>距離 DeCamondo Galata 飯店僅 5 分鐘步行,飽餐後可從容回房</b>。</li>
+          <li>主廚 Maksut Aşkar,將土耳其傳統菜現代化呈現,獲米其林一星、Green Star(永續)。</li>
+          <li><b>必點推薦</b>:套餐 Tasting Menu(人均 2500–3500 TRY),含 7–9 道菜。</li>
+          <li>米其林等級的細膩處理,份量精緻且口感平衡,<b>不會造成長輩過度飽足的負擔</b>。</li>
+          <li>建議事先告知過敏 / 飲食限制(飯店或 hello@neolokal.com)。</li>
+          <li>Dress code:smart casual。</li>
+          <li>有電梯,<b>長輩無障礙友善</b>。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="place-img img-3">🌹</div>
+        <h4>🌹 順遊推薦:藍色清真寺 Sultan Ahmed Camii</h4>
+        <ul>
+          <li>就在聖索菲亞對面廣場,<b>免費入內</b>。</li>
+          <li>6 座宣禮塔(罕見),21043 片藍色 İznik 磁磚。</li>
+          <li>2018 起整修,目前部分區域可參觀。</li>
           <li>禱告時段不開放遊客。</li>
-          <li>從聖索菲亞步行 3 分鐘穿過 Hippodrome（古羅馬競技場）。</li>
-        </ul>
-      </div>
-
-      <div class="card">
-        <div class="place-img img-4">🏰</div>
-        <h4>🏰 體力允許可加：Topkapı 皇宮</h4>
-        <ul>
-          <li>Ottoman 帝國皇室宮殿（1465–1856 使用 400 年）。</li>
-          <li>四個庭院 + 後宮（Harem 另購票）。</li>
-          <li><b>佔地廣，走完約 3 小時</b>，長輩請評估體力。</li>
-          <li>必看：寶物館（穆罕默德祖母綠匕首、87 克拉鑽石）、後宮、Iftariye 涼亭看博斯普魯斯。</li>
-          <li>本日若體力不夠可<b>跳過</b>，反正後面 5/30 還有柯拉教堂等行程。</li>
+          <li>從聖索菲亞步行 3 分鐘穿過 Hippodrome(古羅馬競技場)。</li>
         </ul>
       </div>
     </div>
 
-    <div class="route">
-      <h4>🗺️ 今日路線（Sultanahmet 區內步行最方便）</h4>
+    <div class="energy">
+      <h4>🔋 本日體力紅綠燈矩陣</h4>
       <ul>
-        <li><b>Gezi Hotel → 地下水宮殿</b>：搭 T1 Tram（Kabataş 上車 → Sultanahmet 站下）20 分鐘 / 計程車 20 分鐘。</li>
+        <li>🟢 <b>地下水宮殿</b>:環境清涼平緩,體力消耗低。</li>
+        <li>🟡 <b>聖索菲亞大教堂</b>:需站立較久,且為石板路面,體力消耗中。</li>
+        <li><b>必備武器</b>:這是全程體力消耗最大的一天。務必提前網購 VIP Skip-the-line 門票,免除動輒 1 小時的排隊罰站。</li>
+        <li><b>動線無縫</b>:百年肉丸店恰好位於兩大古蹟正中間,免除額外步行;米其林晚餐距飯店也僅需步行 5 分鐘。</li>
+      </ul>
+    </div>
+
+    <div class="route">
+      <h4>🗺️ 今日路線(Sultanahmet 區內步行最方便)</h4>
+      <ul>
+        <li><b>DeCamondo Galata → Sultanahmet</b>:步行到 Karaköy T1 站(5 分鐘)→ T1 電車(15 分鐘)→ Sultanahmet 站。</li>
         <li>Sultanahmet 區三大景點互相步行 3–5 分鐘可達。</li>
         <li><b>聖索菲亞 → 藍色清真寺 → 地下水宮殿 → Köftecisi 餐廳</b>形成方圓 500m 三角形。</li>
-        <li><b>晚餐三明治店</b>：可在 Sultanahmet 吃完再回飯店，或搭 Tram 回 Karaköy 找。</li>
+        <li><b>回程</b>:Sultanahmet 站 → T1 → Karaköy 站,步行 5 分鐘回 DeCamondo。</li>
+        <li><b>Neolokal</b>:就在 DeCamondo 同一條街(Bankalar Caddesi),步行 5 分鐘。</li>
       </ul>
     </div>
 
     <div class="senior">
       <h4>👵 今日長輩貼心提醒</h4>
       <ul>
-        <li><b>關鍵：使用「快速通關票券」</b>（行程表底部那條藍字！），避免排隊久站。提早 1 週線上訂購。</li>
-        <li>聖索菲亞二樓上去有<b>長坡道（無階梯）</b>，慢走可上。</li>
-        <li>地下水宮殿走道為金屬橋面，<b>有點濕滑</b>，扶把手慢行。</li>
-        <li>三景點之間距離近，<b>不要趕</b>，每點之間找長椅坐 10 分鐘。</li>
-        <li>Sultanahmet 廣場有大量公共長椅與廁所（5–10 TRY/次）。</li>
-        <li>5 月午後溫度可達 28°C，<b>多喝水</b>。</li>
+        <li><b>關鍵:使用「快速通關票券」</b>(行程表底部那條藍字!),避免排隊久站。提早 1 週線上訂購。</li>
+        <li>聖索菲亞二樓上去有<b>長坡道(無階梯)</b>,慢走可上。</li>
+        <li>地下水宮殿走道為金屬橋面,<b>有點濕滑</b>,扶把手慢行。</li>
+        <li>三景點之間距離近,<b>不要趕</b>,每點之間找長椅坐 10 分鐘。</li>
+        <li>Sultanahmet 廣場有大量公共長椅與廁所(5–10 TRY/次)。</li>
+        <li>5 月午後溫度可達 28°C,<b>多喝水</b>。</li>
+        <li>Neolokal 用餐 2 小時,飽餐後步行 5 分鐘<b>從容回 DeCamondo 房間</b>,免叫車。</li>
       </ul>
     </div>
 
     <div class="scam">
-      <h4>🛡️ Sultanahmet 區詐騙警告（最密集區域）</h4>
+      <h4>🛡️ Sultanahmet 區詐騙警告(最密集區域)</h4>
       <ul>
-        <li><b>「免費」導遊</b>：在景點門口自稱專業導遊，逛完強要 100 EUR。<b>對策：只跟官方授權的 Turkish Tourist Board 導遊</b>。</li>
-        <li><b>擦鞋詐騙</b>（前面提過）：Sultanahmet 是發源地之一，<b>男士小心</b>。</li>
-        <li><b>計程車路線詐騙</b>：聲稱景點「關門」要載你去別處（叔叔的店）。<b>對策：景點開放資訊出發前查好，堅持原目的地</b>。</li>
-        <li><b>仿冒老店</b>：Sultanahmet Köftecisi 周邊有多家同名仿冒，<b>認明「Tarihi Sultanahmet Köftecisi Selim Usta」全名與門口家族照片</b>。</li>
-        <li><b>「拜占庭學者」</b>：自稱大學教授帶你看「特別的馬賽克」，引去地下空間勒索。<b>對策：景點內部不跟陌生人離開人群</b>。</li>
+        <li><b>「免費」導遊</b>:在景點門口自稱專業導遊,逛完強要 100 EUR。<b>對策:只跟官方授權的 Turkish Tourist Board 導遊</b>。</li>
+        <li><b>擦鞋詐騙</b>(前面提過):Sultanahmet 是發源地之一,<b>男士小心</b>。</li>
+        <li><b>計程車路線詐騙</b>:聲稱景點「關門」要載你去別處(叔叔的店)。<b>對策:景點開放資訊出發前查好,堅持原目的地</b>。</li>
+        <li><b>仿冒老店</b>:Sultanahmet Köftecisi 周邊有多家同名仿冒,<b>認明「Tarihi Sultanahmet Köftecisi Selim Usta」全名與門口家族照片</b>。</li>
+        <li><b>「拜占庭學者」</b>:自稱大學教授帶你看「特別的馬賽克」,引去地下空間勒索。<b>對策:景點內部不跟陌生人離開人群</b>。</li>
       </ul>
     </div>
 
     <div class="food">
       <h4>🍽️ Sultanahmet 區美食補充</h4>
       <ul>
-        <li><b>Hafız Mustafa</b>（聖索菲亞旁）：百年甜點老店，Baklava、土耳其軟糖、Künefe 都好吃。</li>
-        <li><b>Aslan Hazır Yemek</b>：當地人吃的家常菜 Lokanta，便宜實惠（人均 200 TRY）。</li>
-        <li><b>Çiya Sofrası</b>（亞洲區 Kadıköy，明天去）：被譽為土耳其最棒的 Lokanta。</li>
+        <li><b>Hafız Mustafa</b>(聖索菲亞旁):百年甜點老店,Baklava、土耳其軟糖、Künefe 都好吃。</li>
+        <li><b>Aslan Hazır Yemek</b>:當地人吃的家常菜 Lokanta,便宜實惠(人均 200 TRY)。</li>
+        <li><b>Çiya Sofrası</b>(亞洲區 Kadıköy,明天去):被譽為土耳其最棒的 Lokanta。</li>
       </ul>
     </div>
   </div>
 
-  <!-- ============ PANEL 5: DAY 5/28 ============ -->
+  <!-- ============ PANEL 7: DAY 5 = 5/28 ============ -->
   <div class="panel">
     <div class="daybanner">
       <div>
-        <h2>Day 5　·　5/28（星期四）亞洲區 Kadıköy + Moda 海岸公園</h2>
-        <div class="sub">輕鬆休閒日。早上洗衣服、吃烤鯖魚三明治，午後搭船跨越博斯普魯斯到亞洲區，逛 Kadıköy 市場與 Moda 海岸。</div>
+        <h2>Day 5　·　5/28(星期四)亞洲區 Kadıköy + Moda 海岸公園</h2>
+        <div class="sub">輕鬆休閒日。早上洗衣服、吃烤鯖魚三明治,午後搭船跨越博斯普魯斯到亞洲區,逛 Kadıköy 市場與 Moda 海岸。</div>
       </div>
       <div class="emoji">🐟</div>
     </div>
 
     <div class="timeline">
       <h3>📅 今日行程</h3>
-      <div class="tl-item"><div class="tl-time">09:00</div><div class="tl-icon">🧺</div><div class="tl-content"><strong>洗衣服</strong><div class="desc">飯店送洗或附近自助洗衣店。送洗 24 小時取回，建議今天交。</div></div></div>
-      <div class="tl-item"><div class="tl-time">11:30</div><div class="tl-icon">🐟</div><div class="tl-content"><strong>Eminönü 烤鯖魚捲（Balık Ekmek）</strong><div class="desc">伊斯坦堡街頭代表性平民美食。橋下的烤魚船最有特色。</div></div></div>
-      <div class="tl-item"><div class="tl-time">13:00</div><div class="tl-icon">⛴️</div><div class="tl-content"><strong>搭渡輪到亞洲區（Kadıköy）</strong><div class="desc">Eminönü → Kadıköy 渡輪 20 分鐘，海上看老城天際線最美。</div></div></div>
-      <div class="tl-item"><div class="tl-time">13:45</div><div class="tl-icon">🛍️</div><div class="tl-content"><strong>Kadıköy 市場（Salı Pazarı 區）</strong><div class="desc">當地人生活的市場，水果、起司、橄欖、咖啡。</div></div></div>
-      <div class="tl-item"><div class="tl-time">15:30</div><div class="tl-icon">🌊</div><div class="tl-content"><strong>Moda 海岸公園</strong><div class="desc">從 Kadıköy 步行 15 分鐘到 Moda Sahili，海邊散步、坐草地。</div></div></div>
-      <div class="tl-item"><div class="tl-time">17:30</div><div class="tl-icon">⛴️</div><div class="tl-content"><strong>渡輪返回</strong><div class="desc">回 Karaköy 或 Eminönü，看日落餘暉。</div></div></div>
-      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🥪</div><div class="tl-content"><strong>小店：炸牛肉三明治晚餐</strong><div class="desc">飯店附近輕食。</div></div></div>
+      <div class="tl-item"><div class="tl-time">09:00</div><div class="tl-icon">🧺</div><div class="tl-content"><strong>洗衣服</strong><div class="desc">飯店送洗或附近自助洗衣店。送洗 24 小時取回,建議今天交。</div></div></div>
+      <div class="tl-item"><div class="tl-time">11:30</div><div class="tl-icon">🐟</div><div class="tl-content"><strong>Eminönü 烤鯖魚捲(Balık Ekmek)</strong><div class="desc">伊斯坦堡街頭代表性平民美食。橋下的烤魚船最有特色。</div></div></div>
+      <div class="tl-item"><div class="tl-time">13:00</div><div class="tl-icon">⛴️</div><div class="tl-content"><strong>搭公營渡輪到亞洲區(Kadıköy)</strong><div class="desc">Şehir Hatları 公營渡輪約 20 分鐘,海上看老城天際線最美——靜態休息的最佳時光。</div></div></div>
+      <div class="tl-item"><div class="tl-time">13:45</div><div class="tl-icon">🛍️</div><div class="tl-content"><strong>Kadıköy 市場</strong><div class="desc">當地人生活的市場,水果、起司、橄欖、咖啡。</div></div></div>
+      <div class="tl-item"><div class="tl-time">15:30</div><div class="tl-icon">🚋</div><div class="tl-content"><strong>T3 復古路面電車到 Moda 海岸</strong><div class="desc">從碼頭前往 Moda 公園有微上坡,直接搭懷舊電車繞行一圈,體驗復古風情又不費腿力。</div></div></div>
+      <div class="tl-item"><div class="tl-time">16:30</div><div class="tl-icon">⛴️</div><div class="tl-content"><strong>渡輪返回</strong><div class="desc">回 Karaköy,步行回 DeCamondo,看日落餘暉。</div></div></div>
+      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🥪</div><div class="tl-content"><strong>小店:炸牛肉三明治晚餐</strong><div class="desc">飯店附近輕食。Karaköy 區有許多 Ciğer Sandviç(炸牛肝/牛肉)三明治小店。</div></div></div>
     </div>
 
     <div class="grid">
@@ -792,24 +1152,36 @@
         <h4>🐟 Balık Ekmek 烤鯖魚三明治</h4>
         <p><span class="tag tag-info">Eminönü 碼頭</span><span class="tag tag-tip">人均 120–180 TRY</span></p>
         <ul>
-          <li>伊斯坦堡街頭代表平民美食，<b>新鮮現烤鯖魚夾麵包</b>，加洋蔥、生菜、檸檬。</li>
-          <li>最有名：<b>加拉達橋下的烤魚船</b>（華麗 Ottoman 風格）。</li>
-          <li>推薦：<b>Tarihi Eminönü Balık Ekmek</b>（橋下排隊店家）。</li>
-          <li>長輩注意：站著吃或外帶到附近長椅，碼頭海鷗多會搶食。</li>
-          <li>搭配 Şalgam（醃蘿蔔汁，酸鹹）很道地，但長輩可選 Ayran（鹹優格）。</li>
+          <li>伊斯坦堡街頭代表平民美食,<b>新鮮現烤鯖魚夾麵包</b>,加洋蔥、生菜、檸檬。</li>
+          <li>最有名:<b>加拉達橋下的烤魚船</b>(華麗 Ottoman 風格)。</li>
+          <li>推薦:<b>Tarihi Eminönü Balık Ekmek</b>(橋下排隊店家)。</li>
+          <li>長輩注意:站著吃或外帶到附近長椅,碼頭海鷗多會搶食。</li>
+          <li>搭配 Şalgam(醃蘿蔔汁,酸鹹)很道地,但長輩可選 Ayran(鹹優格)。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-6">⛴️</div>
-        <h4>⛴️ 渡輪：Eminönü → Kadıköy</h4>
-        <p><span class="tag tag-info">Şehir Hatları 城市渡輪</span><span class="tag tag-info">Istanbulkart 可用</span></p>
+        <h4>⛴️ 公營渡輪 Şehir Hatları</h4>
+        <p><span class="tag tag-info">城市渡輪</span><span class="tag tag-info">Istanbulkart 可用</span></p>
         <ul>
-          <li>單程約 20 分鐘，每 15–20 分一班。</li>
-          <li>票價約 30 TRY（Istanbulkart 約 18 TRY）。</li>
+          <li>Eminönü → Kadıköy 單程約 20 分鐘,每 15–20 分一班。</li>
+          <li>票價約 30 TRY(Istanbulkart 約 18 TRY)。</li>
           <li>有室內座位 + 戶外甲板。<b>長輩坐室內舒適</b>。</li>
-          <li>船上有人賣茶（Çay 15 TRY）和 Simit（芝麻圈麵包），可邊喝邊看博斯普魯斯。</li>
-          <li><b>絕佳拍照角度</b>：船上回望 Galata Tower、Topkapı 皇宮、聖索菲亞、藍色清真寺。</li>
+          <li>船上有人賣茶(Çay 15 TRY)和 Simit(芝麻圈麵包),可邊喝邊看博斯普魯斯。</li>
+          <li><b>絕佳拍照角度</b>:船上回望 Galata Tower、Topkapı 皇宮、聖索菲亞、藍色清真寺。</li>
+          <li><b>渡輪是最佳的靜態休息</b>,安穩入座享受海風。</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <div class="place-img img-3">🚋</div>
+        <h4>🚋 T3 復古路面電車(Moda Tram)</h4>
+        <ul>
+          <li><b>1928 年的懷舊紅色路面電車</b>,Kadıköy 區唯一在運行。</li>
+          <li>環狀路線:Kadıköy 碼頭 → Bahariye Caddesi(主街)→ Moda → 回 Kadıköy,全程 30 分鐘。</li>
+          <li>票價 15 TRY,Istanbulkart 可用。</li>
+          <li><b>長輩友善</b>:從碼頭往 Moda 有微上坡,直接搭電車繞行一圈,體驗復古風情又不費腿力。</li>
         </ul>
       </div>
 
@@ -817,10 +1189,10 @@
         <div class="place-img img-4">🛍️</div>
         <h4>🛍️ Kadıköy 市場</h4>
         <ul>
-          <li>亞洲區精華區，<b>沒有歐洲區那麼觀光</b>，當地人生活感濃厚。</li>
-          <li>必逛：<b>Yeldeğirmeni</b>（小文青街區）、<b>Kadife Sokak 酒吧街</b>、<b>Tarihi Çarşı 老市場</b>。</li>
-          <li>必嚐：<b>Beyaz Fırın</b>（咖啡與糕點）、<b>Çiya Sofrası</b>（米其林推薦土耳其家常菜）、<b>Baylan</b>（1923 老冰淇淋店）。</li>
-          <li>市場氣氛溫和、空間寬敞，比香料市集更舒服。</li>
+          <li>亞洲區精華區,<b>沒有歐洲區那麼觀光</b>,當地人生活感濃厚。</li>
+          <li>必逛:<b>Yeldeğirmeni</b>(小文青街區)、<b>Kadife Sokak 酒吧街</b>、<b>Tarihi Çarşı 老市場</b>。</li>
+          <li>必嚐:<b>Beyaz Fırın</b>(咖啡與糕點)、<b>Çiya Sofrası</b>(米其林推薦土耳其家常菜)、<b>Baylan</b>(1923 老冰淇淋店)。</li>
+          <li>市場氣氛溫和、空間寬敞,比香料市集更舒服。</li>
         </ul>
       </div>
 
@@ -828,11 +1200,11 @@
         <div class="place-img img-5">🌊</div>
         <h4>🌊 Moda 海岸公園 Moda Sahili</h4>
         <ul>
-          <li>從 Kadıköy 步行 15 分鐘到，海岸線約 2 公里。</li>
-          <li>當地人野餐、騎腳踏車、看海，<b>悠閒度爆表</b>。</li>
-          <li>有不少海邊咖啡：<b>Moda Sahil Kafeterya</b>、<b>Mehtap Bar</b>。</li>
-          <li>長輩可坐長椅吹海風，看 Marmara 海與遠處的 Princes' Islands（明天目的地）。</li>
-          <li>沒有刺眼陽光時段（午後 16:00 後最佳），<b>5 月底天黑約 20:30</b>。</li>
+          <li>從 Kadıköy 步行 15 分鐘或搭 T3 電車到,海岸線約 2 公里。</li>
+          <li>當地人野餐、騎腳踏車、看海,<b>悠閒度爆表</b>。</li>
+          <li>有不少海邊咖啡:<b>Moda Sahil Kafeterya</b>、<b>Mehtap Bar</b>。</li>
+          <li>長輩可坐長椅吹海風,看 Marmara 海與遠處的 Princes' Islands(明天目的地)。</li>
+          <li>沒有刺眼陽光時段(午後 16:00 後最佳),<b>5 月底天黑約 20:30</b>。</li>
         </ul>
       </div>
     </div>
@@ -840,67 +1212,68 @@
     <div class="route">
       <h4>🗺️ 今日路線</h4>
       <ul>
-        <li><b>Gezi Hotel → Eminönü</b>：搭 T1 Tram（Kabataş → Eminönü）15 分鐘，或計程車 12 分鐘。</li>
-        <li><b>Eminönü 渡輪碼頭</b>：橋下的紅色渡輪站，<b>找 "Kadıköy" 月台</b>（碼頭很多月台）。</li>
-        <li><b>Kadıköy 渡輪站 → 市場</b>：出渡輪步行 5 分鐘。</li>
-        <li><b>市場 → Moda 海岸</b>：步行 15 分鐘下坡，或計程車 5 分鐘。</li>
-        <li><b>返程</b>：可選 Kadıköy → Karaköy 渡輪（離 Gezi Hotel 較近），步行回飯店或搭計程車。</li>
+        <li><b>DeCamondo → Eminönü</b>:步行 10 分鐘過加拉達橋(看海景),或搭 T1 Tram 一站。</li>
+        <li><b>Eminönü 渡輪碼頭</b>:橋下的紅色渡輪站,<b>找 "Kadıköy" 月台</b>(碼頭很多月台)。</li>
+        <li><b>Kadıköy 渡輪站 → 市場</b>:出渡輪步行 5 分鐘。</li>
+        <li><b>市場 → Moda 海岸</b>:搭 T3 復古電車繞行(推薦)或步行 15 分鐘下坡。</li>
+        <li><b>返程</b>:Kadıköy → Karaköy 渡輪(離 DeCamondo 較近),步行 5 分鐘回飯店。</li>
       </ul>
     </div>
 
     <div class="senior">
       <h4>👵 今日長輩貼心提醒</h4>
       <ul>
-        <li>今天<b>步行較多（市場 + Moda 海岸）</b>，氣墊鞋必備。</li>
-        <li>渡輪上有電梯（少數）和階梯，<b>登船時注意縫隙</b>（船與碼頭之間）。</li>
-        <li>Eminönü 碼頭風大，<b>長輩先穿外套</b>再上船甲板。</li>
-        <li>烤魚三明治<b>站著吃容易掉</b>，可外帶到旁邊椅子。</li>
-        <li>Kadıköy 市場<b>不會像香料市集那麼擠</b>，較輕鬆。</li>
-        <li>洗衣服務：飯店送洗最方便（24 小時取回），自助洗衣需 1.5 小時，<b>請飯店推薦</b>。</li>
+        <li>今天<b>步行較多(市場 + Moda 海岸)</b>,氣墊鞋必備。</li>
+        <li>渡輪上有電梯(少數)和階梯,<b>登船時注意縫隙</b>(船與碼頭之間)。</li>
+        <li>Eminönü 碼頭風大,<b>長輩先穿外套</b>再上船甲板。</li>
+        <li>烤魚三明治<b>站著吃容易掉</b>,可外帶到旁邊椅子。</li>
+        <li>Kadıköy 市場<b>不會像香料市集那麼擠</b>,較輕鬆。</li>
+        <li><b>T3 復古電車是長輩亮點</b>:坐下繞一圈 30 分鐘,既懷舊又省力。</li>
+        <li>洗衣服務:飯店送洗最方便(24 小時取回),自助洗衣需 1.5 小時,<b>請飯店推薦</b>。</li>
       </ul>
     </div>
 
     <div class="food">
       <h4>🍽️ Kadıköy 推薦美食</h4>
       <ul>
-        <li><b>Çiya Sofrası</b>（地址：Caferağa Mahallesi, Güneşli Bahçe Sk. No:43）：土耳其各地家常菜，米其林推薦。中午去最熱鬧。</li>
-        <li><b>Tarihi Moda Çay Bahçesi</b>：Moda 海岸的茶花園，望海喝紅茶經典畫面。</li>
-        <li><b>Baylan</b>：1923 年的冰淇淋老店，必點 <b>Kup Griye</b>（焦糖香蕉聖代）。</li>
-        <li><b>Çukur Meyhane</b>：當地人愛的小酒館（Meyhane）。</li>
-        <li><b>Yanyalı Fehmi Lokantası</b>：100 年老 Lokanta，伊斯坦堡最老餐廳之一。</li>
+        <li><b>Çiya Sofrası</b>(地址:Caferağa Mahallesi, Güneşli Bahçe Sk. No:43):土耳其各地家常菜,米其林推薦。中午去最熱鬧。</li>
+        <li><b>Tarihi Moda Çay Bahçesi</b>:Moda 海岸的茶花園,望海喝紅茶經典畫面。</li>
+        <li><b>Baylan</b>:1923 年的冰淇淋老店,必點 <b>Kup Griye</b>(焦糖香蕉聖代)。</li>
+        <li><b>Çukur Meyhane</b>:當地人愛的小酒館(Meyhane)。</li>
+        <li><b>Yanyalı Fehmi Lokantası</b>:100 年老 Lokanta,伊斯坦堡最老餐廳之一。</li>
       </ul>
     </div>
 
     <div class="scam">
-      <h4>🛡️ Kadıköy 區詐騙警告（相對少）</h4>
+      <h4>🛡️ Kadıköy 區詐騙警告(相對少)</h4>
       <ul>
-        <li>Kadıköy<b>主要是當地人區，詐騙較少</b>，但仍要注意：</li>
-        <li><b>烤魚三明治攤位</b>：碼頭旁有小攤要 50 TRY「服務費」搬桌椅給你坐，<b>請站著吃或自己找位</b>。</li>
-        <li><b>渡輪賣茶小哥</b>：是正常船上服務，每杯 15 TRY，沒問題但<b>事先準備零錢</b>。</li>
-        <li><b>市場一般信用卡安全</b>，但小攤建議現金。</li>
+        <li>Kadıköy<b>主要是當地人區,詐騙較少</b>,但仍要注意:</li>
+        <li><b>烤魚三明治攤位</b>:碼頭旁有小攤要 50 TRY「服務費」搬桌椅給你坐,<b>請站著吃或自己找位</b>。</li>
+        <li><b>渡輪賣茶小哥</b>:是正常船上服務,每杯 15 TRY,沒問題但<b>事先準備零錢</b>。</li>
+        <li><b>市場一般信用卡安全</b>,但小攤建議現金。</li>
       </ul>
     </div>
   </div>
 
-  <!-- ============ PANEL 6: DAY 5/29 ============ -->
+  <!-- ============ PANEL 8: DAY 6 = 5/29 ============ -->
   <div class="panel">
     <div class="daybanner">
       <div>
-        <h2>Day 6　·　5/29（星期五）王子島 Büyükada 一日遊</h2>
-        <div class="sub">逃離城市！搭船到地中海風格小島，島上禁止汽車。Splendid Palace Hotel 百年木造飯店午餐，晚上 Galata Kitchen 必吃葡萄葉包飯。</div>
+        <h2>Day 6　·　5/29(星期五)王子島 Büyükada 一日遊</h2>
+        <div class="sub">逃離城市!搭船到地中海風格小島,島上禁止汽車。Splendid Palace Hotel 百年木造飯店午餐,晚上 Galata Kitchen 必吃葡萄葉包飯。</div>
       </div>
       <div class="emoji">🏝️</div>
     </div>
 
     <div class="timeline">
       <h3>📅 今日行程</h3>
-      <div class="tl-item"><div class="tl-time">08:30</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>早早早餐 + 出發</strong><div class="desc">早出發避開週末渡輪人潮（雖然週五但仍要早）。</div></div></div>
-      <div class="tl-item"><div class="tl-time">09:30</div><div class="tl-icon">⛴️</div><div class="tl-content"><strong>從 Kabataş 搭渡輪到 Büyükada</strong><div class="desc">城市渡輪約 1 小時 30 分，途中經過 Kınalıada、Burgazada、Heybeliada 三個小島。</div></div></div>
-      <div class="tl-item"><div class="tl-time">11:00</div><div class="tl-icon">🌴</div><div class="tl-content"><strong>抵達 Büyükada 王子島</strong><div class="desc">島上禁止汽車，靠電動車、馬車、腳踏車或步行。</div></div></div>
-      <div class="tl-item"><div class="tl-time">12:30</div><div class="tl-icon">🏛️</div><div class="tl-content"><strong>Splendid Palace Hotel 午餐</strong><div class="desc">1908 年的百年木造飯店，新藝術風格。</div></div></div>
-      <div class="tl-item"><div class="tl-time">14:30</div><div class="tl-icon">🐎</div><div class="tl-content"><strong>島上漫遊（電動車 / 腳踏車 / 散步）</strong><div class="desc">可繞島看別墅、海岸、Aya Yorgi 山頂教堂（體力允許）。</div></div></div>
+      <div class="tl-item"><div class="tl-time">08:30</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>早早早餐 + 出發</strong><div class="desc">早出發避開週末渡輪人潮(雖然週五但仍要早)。</div></div></div>
+      <div class="tl-item"><div class="tl-time">09:30</div><div class="tl-icon">⛴️</div><div class="tl-content"><strong>從 Kabataş 搭渡輪到 Büyükada</strong><div class="desc">城市渡輪約 1 小時 30 分,途中經過 Kınalıada、Burgazada、Heybeliada 三個小島。</div></div></div>
+      <div class="tl-item"><div class="tl-time">11:00</div><div class="tl-icon">🌴</div><div class="tl-content"><strong>抵達 Büyükada 王子島</strong><div class="desc">島上禁止汽車,<b>立刻租電動接駁車</b>(舒適穿梭於松樹林與木造別墅間,長輩零負擔)。</div></div></div>
+      <div class="tl-item"><div class="tl-time">12:30</div><div class="tl-icon">🏛️</div><div class="tl-content"><strong>Splendid Palace Hotel 午餐</strong><div class="desc">1908 年的百年木造飯店,新藝術風格。</div></div></div>
+      <div class="tl-item"><div class="tl-time">14:30</div><div class="tl-icon">🚙</div><div class="tl-content"><strong>島上電動車繞島</strong><div class="desc">電動接駁車繞島約 1 小時,看別墅、海岸。</div></div></div>
       <div class="tl-item"><div class="tl-time">17:00</div><div class="tl-icon">⛴️</div><div class="tl-content"><strong>渡輪返回 Kabataş</strong></div></div>
-      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🌿</div><div class="tl-content"><strong>Galata Kitchen 晚餐</strong><div class="desc">家庭式蔬食，必點 Yaprak Sarma 葡萄葉包飯。</div></div></div>
+      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🌿</div><div class="tl-content"><strong>Galata Kitchen 晚餐</strong><div class="desc">家庭式蔬食(護胃晚餐),必點 Yaprak Sarma 葡萄葉包飯。</div></div></div>
     </div>
 
     <div class="grid">
@@ -909,11 +1282,11 @@
         <h4>⛴️ 渡輪到王子島 Büyükada</h4>
         <p><span class="tag tag-info">城市渡輪 90 分</span><span class="tag tag-tip">建議線上預訂</span></p>
         <ul>
-          <li>主要兩種船：<b>Şehir Hatları 城市渡輪</b>（90 分鐘、便宜）和 <b>Mavi Marmara / DENTUR 私營快船</b>（45 分鐘、貴一些）。</li>
-          <li>從 Kabataş 碼頭（離 Gezi Hotel 最近）出發，建議搭<b>城市渡輪</b>體驗悠閒感。</li>
-          <li>票價：城市渡輪約 50 TRY、私營快船 200–300 TRY。</li>
-          <li>建議線上預訂（şehirhatları.com.tr 或 navigato.com.tr），<b>週末很滿</b>。</li>
-          <li><b>長輩注意</b>：去程 90 分鐘船上喝茶看風景悠哉，但<b>船上廁所有限</b>，上船前先去。</li>
+          <li>主要兩種船:<b>Şehir Hatları 城市渡輪</b>(90 分鐘、便宜)和 <b>Mavi Marmara / DENTUR 私營快船</b>(45 分鐘、貴一些)。</li>
+          <li>從 Kabataş 碼頭(離 DeCamondo 較近)出發,建議搭<b>城市渡輪</b>體驗悠閒感。</li>
+          <li>票價:城市渡輪約 50 TRY、私營快船 200–300 TRY。</li>
+          <li>建議線上預訂(şehirhatları.com.tr 或 navigato.com.tr),<b>週末很滿</b>。</li>
+          <li><b>長輩注意</b>:去程 90 分鐘船上喝茶看風景悠哉,但<b>船上廁所有限</b>,上船前先去。</li>
         </ul>
       </div>
 
@@ -922,40 +1295,40 @@
         <h4>🌴 Büyükada 王子島</h4>
         <p><span class="tag tag-info">禁汽車</span><span class="tag tag-info">小島步調慢</span></p>
         <ul>
-          <li>面積 5.4 km²，王子群島中最大島。</li>
-          <li>歷史：拜占庭時期流放王子之地，19 世紀變成富商別墅區，<b>美麗木造別墅</b>是看點。</li>
-          <li>島上禁汽車（2020 起），交通工具：<b>電動車（出租）、腳踏車、馬車（部分恢復）、步行</b>。</li>
-          <li>遊客中心可租電動高爾夫球車繞島（約 1 小時 1500 TRY）。</li>
-          <li><b>長輩首選：電動車繞島</b>（不必走山路）。</li>
-          <li>頂點：<b>Aya Yorgi 教堂</b>（山頂、需走上坡 30 分鐘），長輩可從半山腰騎驢上去（傳統做法）或不上去。</li>
+          <li>面積 5.4 km²,王子群島中最大島。</li>
+          <li>歷史:拜占庭時期流放王子之地,19 世紀變成富商別墅區,<b>美麗木造別墅</b>是看點。</li>
+          <li>島上禁汽車(2020 起),交通工具:<b>電動接駁車(Electric Buggies)、步行</b>。</li>
+          <li><b>❌ 租單車環島對長輩負荷過大,不建議</b>。</li>
+          <li><b>✅ 電動接駁車是長輩首選</b>:遊客中心可租電動高爾夫球車繞島(約 1 小時 1500 TRY)。</li>
+          <li>頂點:<b>Aya Yorgi 教堂</b>(山頂、需走上坡 30 分鐘),長輩可不上去。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-3">🏛️</div>
-        <h4>🏛️ Splendid Palace Hotel（午餐）</h4>
+        <h4>🏛️ Splendid Palace Hotel(午餐)</h4>
         <p><span class="tag tag-info">百年木造飯店</span><span class="tag tag-info">新藝術風格</span></p>
         <ul>
-          <li>1908 年建造，<b>Büyükada 上最有名的歷史飯店</b>。</li>
-          <li>白色木造、紅瓦圓頂，新藝術風格，靈感來自 Pera Palace。</li>
-          <li>地址：23 Nisan Cd. No:71（碼頭步行 10 分鐘）。</li>
+          <li>1908 年建造,<b>Büyükada 上最有名的歷史飯店</b>。</li>
+          <li>白色木造、紅瓦圓頂,新藝術風格,靈感來自 Pera Palace。</li>
+          <li>地址:23 Nisan Cd. No:71(碼頭步行 10 分鐘)。</li>
           <li>戶外露台可眺 Marmara 海。</li>
-          <li>菜單以地中海與土耳其料理為主，魚類料理新鮮。</li>
-          <li>建議事先電話訂位：+90 216 382 6950，<b>請註明窗邊或露台位</b>。</li>
-          <li>長輩友善：有電梯、有戶外與室內座位。</li>
+          <li>菜單以地中海與土耳其料理為主,魚類料理新鮮。</li>
+          <li>建議事先電話訂位:+90 216 382 6950,<b>請註明窗邊或露台位</b>。</li>
+          <li>長輩友善:有電梯、有戶外與室內座位。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-1">🌿</div>
-        <h4>🌿 Galata Kitchen（晚餐）</h4>
+        <h4>🌿 Galata Kitchen(晚餐 · 清淡護胃)</h4>
         <p><span class="tag tag-info">家庭式蔬食</span><span class="tag tag-tip">必點 Yaprak Sarma</span></p>
         <ul>
-          <li>位於 Galata 區，主打<b>家庭風格土耳其菜，蔬食友善</b>。</li>
-          <li><b>必點：Yaprak Sarma 葡萄葉包飯</b>—— 葡萄葉裹米、松子、葡萄乾、香料，冷盤享用，搭優格。</li>
-          <li>其他推薦：<b>Mezze 拼盤</b>（Hummus、Babaganush、Cacık）、<b>Manti 土耳其餃</b>、<b>Mücver 蔬菜煎餅</b>。</li>
-          <li>建議訂位：+90 212 245 4500。</li>
-          <li>人均 600–1000 TRY，<b>不算太貴</b>。</li>
+          <li>位於 Galata 區,主打<b>家庭風格土耳其菜,蔬食友善,清爽護胃,極適合長輩</b>。</li>
+          <li><b>必點:Yaprak Sarma 葡萄葉包飯</b>—— 葡萄葉裹米、松子、葡萄乾、香料,冷盤享用,搭優格。</li>
+          <li>其他推薦:<b>Mezze 拼盤</b>(Hummus、Babaganush、Cacık)、<b>Manti 土耳其餃</b>、<b>Mücver 蔬菜煎餅</b>。</li>
+          <li>建議訂位:+90 212 245 4500。</li>
+          <li>人均 600–1000 TRY,<b>不算太貴</b>。</li>
         </ul>
       </div>
     </div>
@@ -963,53 +1336,53 @@
     <div class="route">
       <h4>🗺️ 今日路線</h4>
       <ul>
-        <li><b>Gezi Hotel → Kabataş 渡輪碼頭</b>：搭 F1 纜車（Taksim → Kabataş）3 分鐘，或計程車 5 分鐘。</li>
-        <li><b>Kabataş → Büyükada</b>：城市渡輪 90 分。記得確認時刻表（每 1–2 小時一班）。</li>
-        <li><b>Büyükada 碼頭 → Splendid Palace Hotel</b>：步行 10 分鐘平緩道路，或叫電動車（島上有計程車服務）。</li>
-        <li><b>Büyükada → Kabataş 返程</b>：建議下午 16:30 或 17:30 班次，避開晚餐高峰。</li>
-        <li><b>Kabataş → Galata Kitchen</b>：計程車 10 分鐘。</li>
+        <li><b>DeCamondo Galata → Kabataş 渡輪碼頭</b>:計程車 8 分鐘,或搭 T1 Tram。</li>
+        <li><b>Kabataş → Büyükada</b>:城市渡輪 90 分。記得確認時刻表(每 1–2 小時一班)。</li>
+        <li><b>Büyükada 碼頭 → Splendid Palace Hotel</b>:步行 10 分鐘平緩道路,或叫電動車。</li>
+        <li><b>Büyükada → Kabataş 返程</b>:建議下午 16:30 或 17:30 班次,避開晚餐高峰。</li>
+        <li><b>Kabataş → Galata Kitchen</b>:計程車 10 分鐘。</li>
       </ul>
     </div>
 
     <div class="senior">
       <h4>👵 今日長輩貼心提醒</h4>
       <ul>
-        <li>渡輪 90 分鐘<b>是今日最舒服的時間</b>，喝茶、看海、休息。</li>
-        <li>Büyükada 沒汽車後，<b>強烈建議租電動車繞島</b>，三人坐一台環島約 1 小時。</li>
-        <li>島上山路陡，<b>不必勉強去 Aya Yorgi 教堂</b>，海邊木造別墅區散步已經很美。</li>
-        <li>島上廁所有限，先在 Splendid Palace 餐前後使用。</li>
-        <li>島上 5 月底有花粉，<b>過敏體質帶口罩或藥</b>。</li>
-        <li>船上 + 島上日照強，<b>戴帽子、塗防曬</b>。</li>
-        <li>晚餐 Galata Kitchen 屬輕鬆家常餐廳，不必盛裝，吃完早回飯店休息。</li>
+        <li>渡輪 90 分鐘<b>是今日最舒服的時間</b>,喝茶、看海、休息。</li>
+        <li>Büyükada 沒汽車後,<b>強烈建議租電動車繞島</b>,三人坐一台環島約 1 小時。</li>
+        <li>島上山路陡,<b>不必勉強去 Aya Yorgi 教堂</b>,海邊木造別墅區散步已經很美。</li>
+        <li>島上廁所有限,先在 Splendid Palace 餐前後使用。</li>
+        <li>島上 5 月底有花粉,<b>過敏體質帶口罩或藥</b>。</li>
+        <li>船上 + 島上日照強,<b>戴帽子、塗防曬</b>。</li>
+        <li>晚餐 Galata Kitchen 屬輕鬆家常餐廳,不必盛裝,吃完早回飯店休息。</li>
       </ul>
     </div>
 
     <div class="scam">
       <h4>🛡️ 王子島 + Galata 區詐騙</h4>
       <ul>
-        <li><b>島上「電動車計程車」喊高價</b>：上車前確認價格（短程約 200–400 TRY）。</li>
-        <li><b>馬車服務</b>：2020 起多數已停（保護動物），<b>如有人推銷可能違規</b>。</li>
-        <li><b>島上紀念品店比市區貴</b>，伴手禮在大市集或 Karaköy 買就好。</li>
-        <li><b>Galata 區夜間</b>：燈光不錯但<b>巷弄複雜</b>，迷路時用 Google Maps 別亂問人。</li>
+        <li><b>島上「電動車計程車」喊高價</b>:上車前確認價格(短程約 200–400 TRY)。</li>
+        <li><b>馬車服務</b>:2020 起多數已停(保護動物),<b>如有人推銷可能違規</b>。</li>
+        <li><b>島上紀念品店比市區貴</b>,伴手禮在大市集或 Karaköy 買就好。</li>
+        <li><b>Galata 區夜間</b>:燈光不錯但<b>巷弄複雜</b>,迷路時用 Google Maps 別亂問人。</li>
       </ul>
     </div>
 
     <div class="food">
       <h4>🍽️ Büyükada 島上小吃補充</h4>
       <ul>
-        <li><b>Milano Pastanesi</b>：1932 年老糕餅店，必嚐 <b>Çikolata Çıtırı</b>（巧克力脆片）。</li>
-        <li><b>Birtat Restaurant</b>：海邊魚料理。</li>
-        <li><b>島冰淇淋（Dondurma）</b>：碼頭附近 Akdoğdu Dondurma 老店。</li>
+        <li><b>Milano Pastanesi</b>:1932 年老糕餅店,必嚐 <b>Çikolata Çıtırı</b>(巧克力脆片)。</li>
+        <li><b>Birtat Restaurant</b>:海邊魚料理。</li>
+        <li><b>島冰淇淋(Dondurma)</b>:碼頭附近 Akdoğdu Dondurma 老店。</li>
       </ul>
     </div>
   </div>
 
-  <!-- ============ PANEL 7: DAY 5/30 ============ -->
+  <!-- ============ PANEL 9: DAY 7 = 5/30 ============ -->
   <div class="panel">
     <div class="daybanner">
       <div>
-        <h2>Day 7　·　5/30（星期六）柯拉教堂 + 鋼鐵教堂 + 飯店頂樓晚餐</h2>
-        <div class="sub">隱藏景點日。柯拉教堂拜占庭馬賽克世界第一，鋼鐵教堂全鋼鐵打造世界唯一。晚上飯店頂樓 Moise Karaköy 完美收尾。</div>
+        <h2>Day 7　·　5/30(星期六)柯拉藝術教堂 + 鋼鐵教堂 + 飯店頂樓晚餐</h2>
+        <div class="sub">隱藏景點日。柯拉教堂拜占庭馬賽克世界第一,鋼鐵教堂全鋼鐵打造世界唯一。晚上飯店頂樓 Moise Karaköy 完美收尾(一鍵回房免叫車)。</div>
       </div>
       <div class="emoji">🎨</div>
     </div>
@@ -1017,12 +1390,12 @@
     <div class="timeline">
       <h3>📅 今日行程</h3>
       <div class="tl-item"><div class="tl-time">09:30</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>早餐</strong></div></div>
-      <div class="tl-item"><div class="tl-time">10:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>計程車前往柯拉教堂（Chora / Kariye Camii）</strong><div class="desc">距 Gezi Hotel 約 25 分鐘，城牆外的西北區。</div></div></div>
-      <div class="tl-item"><div class="tl-time">11:00</div><div class="tl-icon">🎨</div><div class="tl-content"><strong>柯拉教堂參觀</strong><div class="desc">拜占庭馬賽克和壁畫保存最完整，但 2024 後改回清真寺，部分被覆蓋。</div></div></div>
-      <div class="tl-item"><div class="tl-time">13:00</div><div class="tl-icon">🍽️</div><div class="tl-content"><strong>往下走 13 分鐘到餐廳午餐</strong><div class="desc">附近的 Asitane Restaurant（重現 Ottoman 宮廷菜）值得考慮。</div></div></div>
-      <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-icon">⛓️</div><div class="tl-content"><strong>鋼鐵教堂 St. Stephen Bulgarian Church</strong><div class="desc">金角灣畔，<b>世界唯一全鋼鐵教堂</b>。</div></div></div>
-      <div class="tl-item"><div class="tl-time">17:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>回飯店休息</strong></div></div>
-      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🌃</div><div class="tl-content"><strong>飯店頂樓 Moise Karaköy 晚餐（已預訂）</strong><div class="desc">告別晚餐，看博斯普魯斯夜景。</div></div></div>
+      <div class="tl-item"><div class="tl-time">10:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>包車前往柯拉藝術教堂(Chora / Kariye Camii)</strong><div class="desc">距 DeCamondo 約 20 分鐘,城牆外的西北區。</div></div></div>
+      <div class="tl-item"><div class="tl-time">11:00</div><div class="tl-icon">🎨</div><div class="tl-content"><strong>柯拉教堂參觀</strong><div class="desc">拜占庭馬賽克和壁畫保存最完整,但 2024 後改回清真寺,部分被覆蓋。</div></div></div>
+      <div class="tl-item"><div class="tl-time">13:00</div><div class="tl-icon">🍽️</div><div class="tl-content"><strong>步行前往附近餐廳午餐</strong><div class="desc">附近的 Asitane Restaurant(重現 Ottoman 宮廷菜)值得考慮,僅步行 3 分鐘。</div></div></div>
+      <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-icon">⛓️</div><div class="tl-content"><strong>鋼鐵教堂 St. Stephen Bulgarian Church</strong><div class="desc">金角灣畔,<b>世界唯一全鋼鐵教堂</b>。靜態文化參觀。</div></div></div>
+      <div class="tl-item"><div class="tl-time">17:30</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>回飯店休息(電池回充)</strong></div></div>
+      <div class="tl-item"><div class="tl-time">19:30</div><div class="tl-icon">🌃</div><div class="tl-content"><strong>飯店頂樓 Moise Karaköy 晚餐(已預訂)</strong><div class="desc">告別晚餐,飽餐後只需搭電梯回房,完美結束疲憊。</div></div></div>
     </div>
 
     <div class="grid">
@@ -1031,14 +1404,14 @@
         <h4>🎨 柯拉教堂 Chora / Kariye Camii</h4>
         <p><span class="tag tag-info">門票約 20 EUR</span><span class="tag tag-warn">2024 後改清真寺</span></p>
         <ul>
-          <li>11–14 世紀拜占庭教堂，<b>保存最完整的拜占庭馬賽克與壁畫</b>。</li>
-          <li>分三部分：narthex（前廊）、naos（主廳）、parecclesion（側殿）。</li>
-          <li>內部馬賽克描繪基督、聖母生平，<b>藝術價值極高</b>。</li>
-          <li>2020 起改回清真寺，主廳禮拜時段（5 次/日各 30 分）不對遊客開放。</li>
-          <li>2024 起主廳內基督教馬賽克部分有覆蓋，<b>但 narthex 和 parecclesion 仍可見</b>。</li>
-          <li>地址：Kariye Camii Sk. No:8（Edirnekapı 區，城牆內側）。</li>
+          <li>11–14 世紀拜占庭教堂,<b>保存最完整的拜占庭馬賽克與壁畫</b>。</li>
+          <li>分三部分:narthex(前廊)、naos(主廳)、parecclesion(側殿)。</li>
+          <li>內部馬賽克描繪基督、聖母生平,<b>藝術價值極高</b>。</li>
+          <li>2020 起改回清真寺,主廳禮拜時段(5 次/日各 30 分)不對遊客開放。</li>
+          <li>2024 起主廳內基督教馬賽克部分有覆蓋,<b>但 narthex 和 parecclesion 仍可見</b>。</li>
+          <li>地址:Kariye Camii Sk. No:8(Edirnekapı 區,城牆內側)。</li>
           <li>進入需脫鞋、女士披肩。</li>
-          <li><b>線上預約建議</b>：muze.gov.tr 或 GetYourGuide。</li>
+          <li><b>線上預約建議</b>:muze.gov.tr 或 GetYourGuide。</li>
         </ul>
       </div>
 
@@ -1047,39 +1420,40 @@
         <h4>⛓️ 鋼鐵教堂 Sveti Stefan Kilisesi</h4>
         <p><span class="tag tag-info">免費</span><span class="tag tag-info">金角灣畔</span></p>
         <ul>
-          <li>全名：保加利亞聖斯德望教堂（St. Stephen Bulgarian Orthodox Church）。</li>
-          <li>1898 年建，<b>世界唯一全鋼鐵打造的東正教教堂</b>（鑄鐵預製，從維也納船運到伊斯坦堡組裝）。</li>
-          <li>地址：Mürselpaşa Cd. No:85（Fener 區，金角灣畔）。</li>
-          <li>白色塔尖、金色細節，<b>建築外觀超有特色</b>。</li>
+          <li>全名:保加利亞聖斯德望教堂(St. Stephen Bulgarian Orthodox Church)。</li>
+          <li>1898 年建,<b>世界唯一全鋼鐵打造的東正教教堂</b>(鑄鐵預製,從維也納船運到伊斯坦堡組裝)。</li>
+          <li>地址:Mürselpaşa Cd. No:85(Fener 區,金角灣畔)。</li>
+          <li>白色塔尖、金色細節,<b>建築外觀超有特色</b>。</li>
           <li>內部祭壇、壁畫、彩繪玻璃保存完好。</li>
-          <li><b>免費入內</b>，捐獻箱可隨喜。</li>
+          <li><b>免費入內</b>,捐獻箱可隨喜。</li>
           <li>從柯拉教堂搭計程車約 10 分鐘下坡到金角灣。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-2">🌃</div>
-        <h4>🌃 Moise Karaköy（飯店頂樓晚餐）</h4>
-        <p><span class="tag tag-tip">已預訂</span><span class="tag tag-info">頂樓夜景</span></p>
+        <h4>🌃 Moise Karaköy(飯店頂樓晚餐)</h4>
+        <p><span class="tag tag-tip">已預訂</span><span class="tag tag-info">頂樓夜景</span><span class="tag tag-info">一鍵回房</span></p>
         <ul>
-          <li>位於 Karaköy 區精品飯店頂樓，<b>360° 博斯普魯斯與老城天際線</b>。</li>
+          <li>位於 Karaköy 區精品飯店頂樓,<b>360° 博斯普魯斯與老城天際線</b>。</li>
           <li>地中海與土耳其融合料理。</li>
           <li>適合做為旅程<b>告別晚餐</b>。</li>
+          <li><b>「一鍵回房」</b>:晚餐直接安排在住宿處頂樓的景觀餐廳,飽餐後只需搭電梯即可回房,完美結束疲憊。</li>
           <li>建議穿 smart casual。</li>
-          <li><b>提早 10 分鐘到</b>看夕陽（5 月底約 20:15 日落）。</li>
+          <li><b>提早 10 分鐘到</b>看夕陽(5 月底約 20:15 日落)。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-4">🍽️</div>
-        <h4>🍽️ 午餐推薦：Asitane Restaurant</h4>
+        <h4>🍽️ 午餐推薦:Asitane Restaurant</h4>
         <ul>
-          <li>地址：Kariye Otel, Kariye Camii Sk. No:18（柯拉教堂步行 3 分鐘）。</li>
-          <li><b>重現 Ottoman 宮廷菜</b>，主廚研究 16 世紀皇室菜單。</li>
-          <li>必點：<b>Mahmudiye</b>（杏仁雞肉燉飯）、<b>Cevizli Yaprak Sarma</b>（核桃葡萄葉包飯）。</li>
+          <li>地址:Kariye Otel, Kariye Camii Sk. No:18(柯拉教堂步行 3 分鐘)。</li>
+          <li><b>重現 Ottoman 宮廷菜</b>,主廚研究 16 世紀皇室菜單。</li>
+          <li>必點:<b>Mahmudiye</b>(杏仁雞肉燉飯)、<b>Cevizli Yaprak Sarma</b>(核桃葡萄葉包飯)。</li>
           <li>人均 1000–1800 TRY。</li>
-          <li>建議訂位：+90 212 635 7997。</li>
-          <li>戶外花園座位優美，長輩友善。</li>
+          <li>建議訂位:+90 212 635 7997。</li>
+          <li>戶外花園座位優美,長輩友善。</li>
         </ul>
       </div>
     </div>
@@ -1087,49 +1461,49 @@
     <div class="route">
       <h4>🗺️ 今日路線</h4>
       <ul>
-        <li><b>Gezi Hotel → 柯拉教堂</b>：計程車 25–30 分鐘（700–1000 TRY），<b>強烈建議計程車</b>，公共交通需轉乘 1.5 小時。</li>
-        <li><b>柯拉教堂 → Asitane Restaurant</b>：步行 3 分鐘。</li>
-        <li><b>Asitane → 鋼鐵教堂</b>：計程車 10 分鐘下坡到金角灣畔（400 TRY）。</li>
-        <li><b>鋼鐵教堂 → Gezi Hotel</b>：計程車 15–20 分鐘（600 TRY）。</li>
-        <li><b>Gezi Hotel → Moise Karaköy</b>：計程車 10–12 分鐘。</li>
+        <li><b>DeCamondo Galata → 柯拉教堂</b>:包車 / 計程車 20–25 分鐘(600–800 TRY),<b>強烈建議計程車</b>,公共交通需轉乘 1.5 小時。</li>
+        <li><b>柯拉教堂 → Asitane Restaurant</b>:步行 3 分鐘。</li>
+        <li><b>Asitane → 鋼鐵教堂</b>:計程車 10 分鐘下坡到金角灣畔(400 TRY)。</li>
+        <li><b>鋼鐵教堂 → DeCamondo Galata</b>:計程車 12 分鐘(500 TRY)。</li>
+        <li><b>晚餐 Moise Karaköy</b>:就在飯店頂樓,搭電梯即達。</li>
       </ul>
     </div>
 
     <div class="senior">
       <h4>👵 今日長輩貼心提醒</h4>
       <ul>
-        <li>柯拉教堂內部<b>仰頭看天花板馬賽克</b>較久，可帶<b>輕便望遠鏡或單筒</b>看細節。</li>
-        <li>柯拉教堂周邊<b>路較不平</b>，計程車到門口最方便。</li>
-        <li>鋼鐵教堂<b>金角灣岸邊風大</b>，帶薄外套。</li>
-        <li>頂樓 Moise Karaköy 風大，請務必帶外套（特別是夕陽後氣溫驟降）。</li>
-        <li><b>今天是告別晚餐</b>，留下美好回憶，餐後可在 Karaköy 散步看博斯普魯斯。</li>
+        <li>柯拉教堂內部<b>仰頭看天花板馬賽克</b>較久,可帶<b>輕便望遠鏡或單筒</b>看細節。</li>
+        <li>柯拉教堂周邊<b>路較不平</b>,計程車到門口最方便。</li>
+        <li>鋼鐵教堂<b>金角灣岸邊風大</b>,帶薄外套。</li>
+        <li>頂樓 Moise Karaköy 風大,請務必帶外套(特別是夕陽後氣溫驟降)。</li>
+        <li><b>今天是告別晚餐</b>,留下美好回憶,餐後直接電梯回房,完美收場。</li>
       </ul>
     </div>
 
     <div class="scam">
       <h4>🛡️ 柯拉教堂 / Fener 區詐騙</h4>
       <ul>
-        <li><b>柯拉教堂門口「私人導遊」</b>：自稱專家、要收高價。<b>對策：用線上 audioguide 或自行查資料</b>。</li>
-        <li><b>計程車繞遠</b>：城牆外區較少人，<b>務必用 BiTaksi App 跳表叫車</b>。</li>
-        <li><b>Fener / Balat 街頭兒童</b>：有時會跟著要錢或合照後索費。<b>對策：禮貌拒絕、不要從錢包拿錢</b>。</li>
+        <li><b>柯拉教堂門口「私人導遊」</b>:自稱專家、要收高價。<b>對策:用線上 audioguide 或自行查資料</b>。</li>
+        <li><b>計程車繞遠</b>:城牆外區較少人,<b>務必用 BiTaksi App 跳表叫車</b>。</li>
+        <li><b>Fener / Balat 街頭兒童</b>:有時會跟著要錢或合照後索費。<b>對策:禮貌拒絕、不要從錢包拿錢</b>。</li>
       </ul>
     </div>
 
     <div class="food">
       <h4>🍽️ 周邊推薦補充</h4>
       <ul>
-        <li><b>Balat 區</b>（鋼鐵教堂上方）：彩色房子 IG 打卡熱點，可順道散步 15 分鐘，途經 <b>Forno Balat</b>（窯烤披薩）、<b>Cooklife</b>（早午餐）。</li>
-        <li><b>Fener 老城門</b>：拜占庭時期城牆，可拍照。</li>
+        <li><b>Balat 區</b>(鋼鐵教堂上方):彩色房子 IG 打卡熱點,可順道散步 15 分鐘,途經 <b>Forno Balat</b>(窯烤披薩)、<b>Cooklife</b>(早午餐)。</li>
+        <li><b>Fener 老城門</b>:拜占庭時期城牆,可拍照。</li>
       </ul>
     </div>
   </div>
 
-  <!-- ============ PANEL 8: DAY 5/31 ============ -->
+  <!-- ============ PANEL 10: DAY 8 = 5/31 ============ -->
   <div class="panel">
     <div class="daybanner">
       <div>
-        <h2>Day 8　·　5/31（星期日）金角灣 + 回程</h2>
-        <div class="sub">最後一天輕鬆收尾。搭 Bosphorus 觀光車或計程車到金角灣 Pierre Loti 山丘看全景，15:00 退房，搭機場接送，21:20 KE956 回家。</div>
+        <h2>Day 8　·　5/31(星期日)金角灣 + 回程</h2>
+        <div class="sub">最後一天輕鬆收尾。搭公車或計程車到金角灣 Pierre Loti 山丘看全景,<b>15:00 延遲退房</b>,搭機場接送,21:20 KE956 回家。</div>
       </div>
       <div class="emoji">✈️</div>
     </div>
@@ -1137,27 +1511,28 @@
     <div class="timeline">
       <h3>📅 今日行程</h3>
       <div class="tl-item"><div class="tl-time">09:00</div><div class="tl-icon">🥐</div><div class="tl-content"><strong>悠閒早餐</strong></div></div>
-      <div class="tl-item"><div class="tl-time">10:00</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>出發金角灣（Pierre Loti Hill）</strong><div class="desc">Bosphorus 觀光車或包車。Pierre Loti Hill 在金角灣最深處 Eyüp 區。</div></div></div>
-      <div class="tl-item"><div class="tl-time">10:45</div><div class="tl-icon">🚡</div><div class="tl-content"><strong>搭 Eyüp 纜車上山</strong><div class="desc">3 分鐘到 Pierre Loti Café，金角灣鳥瞰絕美。</div></div></div>
-      <div class="tl-item"><div class="tl-time">12:00</div><div class="tl-icon">🕌</div><div class="tl-content"><strong>下山順遊 Eyüp Sultan 清真寺</strong><div class="desc">伊斯坦堡最神聖清真寺之一，穆罕默德旗手 Eyüp 之墓。</div></div></div>
-      <div class="tl-item"><div class="tl-time">13:30</div><div class="tl-icon">🍲</div><div class="tl-content"><strong>輕鬆午餐</strong><div class="desc">飯店附近或 Eyüp 區，避免太重口味。</div></div></div>
-      <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-icon">🏨</div><div class="tl-content"><strong>飯店延後退房（已預約）</strong><div class="desc">整理行李、最後盥洗。</div></div></div>
-      <div class="tl-item"><div class="tl-time">16:30</div><div class="tl-icon">🚐</div><div class="tl-content"><strong>機場接送出發</strong><div class="desc">預留 4.5 小時：路程 1 小時 + 機場流程 3 小時。</div></div></div>
-      <div class="tl-item"><div class="tl-time">18:00</div><div class="tl-icon">✈️</div><div class="tl-content"><strong>抵達 IST 機場 → 報到</strong><div class="desc">KE956 起飛 21:20，建議 18:30 前完成報到。</div></div></div>
-      <div class="tl-item"><div class="tl-time">21:20</div><div class="tl-icon">🛫</div><div class="tl-content"><strong>KE956 大韓航空起飛</strong><div class="desc">經首爾轉機回台北。一路平安！</div></div></div>
+      <div class="tl-item"><div class="tl-time">10:00</div><div class="tl-icon">🚖</div><div class="tl-content"><strong>出發金角灣(Pierre Loti Hill)</strong><div class="desc">公車或包車。Pierre Loti Hill 在金角灣最深處 Eyüp 區。</div></div></div>
+      <div class="tl-item"><div class="tl-time">10:45</div><div class="tl-icon">🚡</div><div class="tl-content"><strong>搭 Eyüp 纜車上山</strong><div class="desc">3 分鐘到 Pierre Loti Café,免爬山即可登頂俯瞰金角灣。</div></div></div>
+      <div class="tl-item"><div class="tl-time">11:30</div><div class="tl-icon">☕</div><div class="tl-content"><strong>Pierre Loti 山頂茶館</strong><div class="desc">喝杯土耳其紅茶,看金角灣全景,文人 Pierre Loti 曾常來寫作。</div></div></div>
+      <div class="tl-item"><div class="tl-time">12:30</div><div class="tl-icon">🕌</div><div class="tl-content"><strong>下山順遊 Eyüp Sultan 清真寺</strong><div class="desc">伊斯坦堡最神聖清真寺之一,穆罕默德旗手 Eyüp 之墓。</div></div></div>
+      <div class="tl-item"><div class="tl-time">13:30</div><div class="tl-icon">🍲</div><div class="tl-content"><strong>輕鬆午餐</strong><div class="desc">飯店附近或 Eyüp 區,避免太重口味。</div></div></div>
+      <div class="tl-item"><div class="tl-time">15:00</div><div class="tl-icon">🏨</div><div class="tl-content"><strong>延遲退房(已預約)</strong><div class="desc">長輩吃完午餐還能回房午睡、梳洗,再從容搭專車前往機場。</div></div></div>
+      <div class="tl-item"><div class="tl-time">16:30</div><div class="tl-icon">🚐</div><div class="tl-content"><strong>VIP 專車接送至 IST 機場</strong><div class="desc">預留 4.5 小時:路程 1 小時 + 機場流程 3 小時。</div></div></div>
+      <div class="tl-item"><div class="tl-time">18:00</div><div class="tl-icon">✈️</div><div class="tl-content"><strong>抵達 IST 機場 → 報到</strong><div class="desc">KE956 起飛 21:20,建議 18:30 前完成報到。</div></div></div>
+      <div class="tl-item"><div class="tl-time">21:20</div><div class="tl-icon">🛫</div><div class="tl-content"><strong>KE956 大韓航空起飛</strong><div class="desc">經首爾轉機回台北。一路平安!</div></div></div>
     </div>
 
     <div class="grid">
       <div class="card">
         <div class="place-img img-6">🚡</div>
-        <h4>🚡 Pierre Loti Hill（金角山）</h4>
+        <h4>🚡 Pierre Loti Hill(金角山)</h4>
         <p><span class="tag tag-info">Eyüp 區</span><span class="tag tag-info">纜車 3 分</span></p>
         <ul>
-          <li>位於 Eyüp 區山頂，<b>俯瞰金角灣全景</b>。</li>
-          <li>命名來自法國作家 Pierre Loti（1850–1923），曾常來此寫作。</li>
-          <li><b>Eyüp Teleferik 纜車</b>：山下 Eyüp Sultan 廣場 → 山頂，3 分鐘 / 約 50 TRY 單程。</li>
+          <li>位於 Eyüp 區山頂,<b>俯瞰金角灣全景</b>。</li>
+          <li>命名來自法國作家 Pierre Loti(1850–1923),曾常來此寫作。</li>
+          <li><b>Eyüp Teleferik 纜車</b>:山下 Eyüp Sultan 廣場 → 山頂,3 分鐘 / 約 50 TRY 單程。</li>
           <li>Pierre Loti Café 喝 Türk Kahvesi 看全景<b>必做</b>。</li>
-          <li><b>長輩友善</b>：纜車省力，山頂平坦。</li>
+          <li><b>長輩友善</b>:纜車省力,山頂平坦。</li>
         </ul>
       </div>
 
@@ -1166,23 +1541,23 @@
         <h4>🕌 Eyüp Sultan 清真寺</h4>
         <p><span class="tag tag-info">免費</span><span class="tag tag-warn">服裝嚴格</span></p>
         <ul>
-          <li>1458 年建（Ottoman 征服君士坦丁堡後第一座清真寺）。</li>
-          <li>埋葬<b>穆罕默德旗手 Abu Ayyub al-Ansari (Eyüp Sultan)</b>，伊斯坦堡最神聖地點之一。</li>
-          <li>當地穆斯林朝聖地，<b>服裝規定特別嚴格</b>。</li>
-          <li>進入需脫鞋、女士全身遮蓋（門口免費借）。</li>
+          <li>1458 年建(Ottoman 征服君士坦丁堡後第一座清真寺)。</li>
+          <li>埋葬<b>穆罕默德旗手 Abu Ayyub al-Ansari (Eyüp Sultan)</b>,伊斯坦堡最神聖地點之一。</li>
+          <li>當地穆斯林朝聖地,<b>服裝規定特別嚴格</b>。</li>
+          <li>進入需脫鞋、女士全身遮蓋(門口免費借)。</li>
           <li>從 Pierre Loti 纜車下山即達。</li>
         </ul>
       </div>
 
       <div class="card">
         <div class="place-img img-3">🚐</div>
-        <h4>🚐 機場接送（回程）</h4>
+        <h4>🚐 機場接送(回程)</h4>
         <ul>
-          <li><b>預訂飯店接送</b>：30–40 EUR，省心安全。</li>
-          <li><b>路程</b>：Karaköy → IST 機場約 45–60 分鐘，<b>週日傍晚塞車</b>，預留 1 小時。</li>
-          <li><b>抵達 IST 機場後</b>：找 KE 大韓航空櫃台（Terminal 1），建議報到時間 3 小時前。</li>
-          <li>退稅（Tax Free）：購物超過 1000 TRY 可退稅，<b>櫃台在報到後安全檢查前</b>，先排退稅再進安檢。</li>
-          <li>剩餘 Istanbulkart 卡：無法退錢，留作紀念。</li>
+          <li><b>預訂飯店 VIP 接送</b>:30–40 EUR,省心安全。</li>
+          <li><b>路程</b>:Karaköy → IST 機場約 45–60 分鐘,<b>週日傍晚塞車</b>,預留 1 小時。</li>
+          <li><b>抵達 IST 機場後</b>:找 KE 大韓航空櫃台(Terminal 1),建議報到時間 3 小時前。</li>
+          <li><b>退稅(Tax Free)</b>:購物超過 830 TRY 可退稅,<b>櫃台在報到後安全檢查前</b>,先排退稅再進安檢。</li>
+          <li>剩餘 Istanbulkart 卡:無法退錢,留作紀念。</li>
         </ul>
       </div>
 
@@ -1191,10 +1566,10 @@
         <h4>✈️ KE956 大韓航空</h4>
         <ul>
           <li><b>21:20 IST 起飛 → 仁川 ICN 中轉</b>。</li>
-          <li>飛行時間：IST → ICN 約 10 小時。</li>
-          <li><b>確認轉機行李是否直掛台北</b>，報到時請地勤打印兩段登機證。</li>
-          <li>機上溫度低，<b>長輩請準備披肩 / 厚襪</b>。</li>
-          <li>建議在機上多走動，避免深層靜脈栓塞。</li>
+          <li>飛行時間:IST → ICN 約 10 小時。</li>
+          <li><b>確認轉機行李是否直掛台北</b>,報到時請地勤打印兩段登機證。</li>
+          <li>機上溫度低,<b>長輩請準備披肩 / 厚襪</b>。</li>
+          <li>建議在機上多走動,避免深層靜脈栓塞。</li>
         </ul>
       </div>
     </div>
@@ -1202,50 +1577,49 @@
     <div class="route">
       <h4>🗺️ 今日路線</h4>
       <ul>
-        <li><b>Gezi Hotel → Eyüp Sultan 廣場</b>：計程車 25 分鐘（700 TRY），或搭 T5 Tram（Eminönü → Eyüp）30 分鐘。</li>
-        <li><b>Bosphorus 觀光巴士</b>：Big Bus Tours 等有金角灣路線，<b>但長輩可能覺得繞太久</b>，直接計程車比較省力。</li>
-        <li><b>Eyüp → 回飯店</b>：計程車 25 分鐘。</li>
-        <li><b>Gezi Hotel → IST 機場</b>：飯店接送 45–60 分鐘。</li>
+        <li><b>DeCamondo Galata → Eyüp Sultan 廣場</b>:計程車 20 分鐘(600 TRY),或搭 T5 Tram(Eminönü → Eyüp)30 分鐘。</li>
+        <li><b>Eyüp → 回飯店</b>:計程車 20 分鐘。</li>
+        <li><b>DeCamondo Galata → IST 機場</b>:VIP 接送 45–60 分鐘。</li>
       </ul>
     </div>
 
     <div class="senior">
-      <h4>👵 今日長輩貼心提醒（最後一天輕鬆為主）</h4>
+      <h4>👵 今日長輩貼心提醒(最後一天輕鬆為主)</h4>
       <ul>
-        <li>今天<b>不要塞太多行程</b>，金角灣景點搞定就回飯店打包。</li>
-        <li>Pierre Loti 山頂有風，<b>備外套</b>。</li>
-        <li>Eyüp 清真寺<b>觀光客少、當地朝聖者多</b>，舉止低調尊重。</li>
-        <li><b>退房前再次盤點</b>：護照、機票、信用卡、藥品。</li>
-        <li>機場接送出發前<b>上廁所、補水</b>，老人家飛機上少喝水容易脫水。</li>
-        <li>機場優先排隊（Priority Lane）：KE 商務艙或某些信用卡可用，<b>長輩建議使用</b>。</li>
+        <li>今天<b>不要塞太多行程</b>,金角灣景點搞定就回飯店打包。</li>
+        <li>Pierre Loti 山頂有風,<b>備外套</b>。</li>
+        <li>Eyüp 清真寺<b>觀光客少、當地朝聖者多</b>,舉止低調尊重。</li>
+        <li><b>延遲退房至 15:00 是絕佳安排</b>:長輩吃完午餐還能回房午睡、梳洗,再從容搭專車前往機場。</li>
+        <li>機場接送出發前<b>上廁所、補水</b>,老人家飛機上少喝水容易脫水。</li>
+        <li>機場優先排隊(Priority Lane):KE 商務艙或某些信用卡可用,<b>長輩建議使用</b>。</li>
       </ul>
     </div>
 
     <div class="scam">
       <h4>🛡️ 最後一天注意</h4>
       <ul>
-        <li><b>機場退稅櫃台</b>：認明官方 Tax Free（Global Blue 或 Premier Tax Free 標誌），<b>不要找路邊「協助退稅」攤位</b>。</li>
-        <li><b>機場兌幣</b>：剩餘里拉建議在市區換回美金 / 台幣，機場匯率差。</li>
-        <li><b>機場購物</b>：免稅店價格與市區比較，<b>軟糖 / 茶等可在 BİM / 大市集買比較便宜</b>。</li>
-        <li><b>提防最後一刻計程車</b>：機場接送已預訂則不必再找。</li>
+        <li><b>機場退稅櫃台</b>:認明官方 Tax Free(Global Blue 或 Premier Tax Free 標誌),<b>不要找路邊「協助退稅」攤位</b>。</li>
+        <li><b>機場兌幣</b>:剩餘里拉建議在市區換回美金 / 台幣,機場匯率差。</li>
+        <li><b>機場購物</b>:免稅店價格與市區比較,<b>軟糖 / 茶等可在 BİM / 大市集買比較便宜</b>。</li>
+        <li><b>提防最後一刻計程車</b>:機場接送已預訂則不必再找。</li>
       </ul>
     </div>
 
     <div class="food">
       <h4>🍽️ 最後午餐輕鬆選</h4>
       <ul>
-        <li><b>Pidem</b>（Karaköy 區）：土耳其披薩 Pide 連鎖，便宜實惠。</li>
-        <li><b>飯店午餐</b>：最省力，方便打包行李。</li>
-        <li><b>Eyüp 區 Pierre Loti Café</b>：可在此吃簡餐看景。</li>
+        <li><b>Pidem</b>(Karaköy 區):土耳其披薩 Pide 連鎖,便宜實惠。</li>
+        <li><b>飯店午餐</b>:最省力,方便打包行李。</li>
+        <li><b>Eyüp 區 Pierre Loti Café</b>:可在此吃簡餐看景。</li>
       </ul>
     </div>
 
     <div class="check" style="margin-top:14px">
-      <h4 style="margin-bottom:10px">🧳 出發前最後檢查（離開飯店前）</h4>
+      <h4 style="margin-bottom:10px">🧳 出發前最後檢查(離開飯店前)</h4>
       <label><input type="checkbox">護照 + 登機證</label>
-      <label><input type="checkbox">行李：託運 + 隨身</label>
+      <label><input type="checkbox">行李:託運 + 隨身</label>
       <label><input type="checkbox">手機 / 行動電源 / 充電器</label>
-      <label><input type="checkbox">隨身藥品（高血壓 / 心臟 / 維他命）</label>
+      <label><input type="checkbox">隨身藥品(高血壓 / 心臟 / 維他命)</label>
       <label><input type="checkbox">保險卡、信用卡、剩餘現金</label>
       <label><input type="checkbox">伴手禮已打包好</label>
       <label><input type="checkbox">床下、保險箱、抽屜、浴室再檢查一次</label>
@@ -1255,12 +1629,12 @@
 
     <div style="background:linear-gradient(135deg,#8B0000,#D4A24C);color:#fff;border-radius:18px;padding:28px;margin-top:18px;text-align:center">
       <div style="font-size:32px;margin-bottom:8px">🎉 İyi yolculuklar!</div>
-      <div style="opacity:.9">祝旅途愉快，平安回家</div>
+      <div style="opacity:.9">祝旅途愉快,平安回家</div>
     </div>
   </div>
 
   <div class="footer">
-    伊斯坦堡 8 天行程 · 製作於 2026-05-12 · 為 3 人（40 + 70 + 70）量身規劃
+    伊斯坦堡 8 天行程 · 製作於 2026-05-12 · 為 3 人(40 + 70 + 70)量身規劃 · 整合 Ottoman Concierge 黃金歲月深度建議
   </div>
 </div>
 
@@ -1281,11 +1655,11 @@
 
   // Day countdown + auto-highlight today
   const departure = new Date('2026-05-24T00:00:00');
-  const dates = [
-    null,
-    '2026-05-24','2026-05-25','2026-05-26','2026-05-27',
-    '2026-05-28','2026-05-29','2026-05-30','2026-05-31'
-  ];
+  // index = dates array offset relative to tabs[3..10] for Day 1..8
+  const dayTabIndex = {
+    '2026-05-24': 3, '2026-05-25': 4, '2026-05-26': 5, '2026-05-27': 6,
+    '2026-05-28': 7, '2026-05-29': 8, '2026-05-30': 9, '2026-05-31': 10
+  };
   const now = new Date();
   const diff = Math.ceil((departure - now) / (1000*60*60*24));
   const elDay = document.getElementById('dayLeft');
@@ -1295,15 +1669,13 @@
     elDay.textContent = '今天';
     elDay.style.fontSize = '32px';
   } else if (diff >= -7) {
-    // During trip
     const today = now.toISOString().slice(0,10);
-    const idx = dates.findIndex(d => d === today);
-    if (idx > 0) {
-      elDay.textContent = 'Day ' + idx;
+    const idx = dayTabIndex[today];
+    if (idx) {
+      const dayNum = idx - 2; // Day 1 .. 8
+      elDay.textContent = 'Day ' + dayNum;
       elDay.style.fontSize = '32px';
-      // Highlight today's tab
       tabs[idx].classList.add('today');
-      // Auto switch to today
       tabs[idx].click();
     } else {
       elDay.textContent = '旅程中';
@@ -1313,6 +1685,172 @@
     elDay.textContent = '已結束';
     elDay.style.fontSize = '28px';
   }
+
+  // ============ Currency Exchange Rate Module ============
+  let currentRates = null; // rates with USD as base
+  let rateSource = ''; // which source the rates came from
+
+  // Multiple fallback APIs (try in order). All CORS-friendly.
+  const FX_SOURCES = [
+    {
+      name: 'jsDelivr CDN',
+      url: 'https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json',
+      parse: (data) => {
+        // {date: "2024-xx-xx", usd: {eur: 0.92, twd: 31.5, try: 30.2, ...}}
+        const r = data.usd;
+        return {
+          USD: 1,
+          EUR: r.eur,
+          TRY: r.try,
+          TWD: r.twd,
+          date: data.date
+        };
+      }
+    },
+    {
+      name: 'Cloudflare Pages mirror',
+      url: 'https://latest.currency-api.pages.dev/v1/currencies/usd.json',
+      parse: (data) => {
+        const r = data.usd;
+        return {
+          USD: 1,
+          EUR: r.eur,
+          TRY: r.try,
+          TWD: r.twd,
+          date: data.date
+        };
+      }
+    },
+    {
+      name: 'open.er-api.com',
+      url: 'https://open.er-api.com/v6/latest/USD',
+      parse: (data) => {
+        if (data.result !== 'success') throw new Error('API returned error');
+        return {
+          USD: 1,
+          EUR: data.rates.EUR,
+          TRY: data.rates.TRY,
+          TWD: data.rates.TWD,
+          date: data.time_last_update_utc
+        };
+      }
+    }
+  ];
+
+  async function tryFetch(source) {
+    const res = await fetch(source.url, {cache: 'no-store'});
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    return source.parse(data);
+  }
+
+  async function loadRates() {
+    const fxRatesEl = document.getElementById('fxRates');
+    const fxTimeEl = document.getElementById('fxTime');
+    fxTimeEl.textContent = '更新中...';
+
+    let lastError = null;
+    for (const source of FX_SOURCES) {
+      try {
+        const r = await tryFetch(source);
+        currentRates = { USD: r.USD, EUR: r.EUR, TRY: r.TRY, TWD: r.TWD };
+        rateSource = source.name;
+
+        const eurToTwd = (r.TWD / r.EUR).toFixed(2);
+        const usdToTwd = r.TWD.toFixed(2);
+        const tryToTwd = (r.TWD / r.TRY).toFixed(3);
+        const twd100ToTry = (100 * r.TRY / r.TWD).toFixed(2);
+
+        fxRatesEl.innerHTML = `
+          <div class="fx-rate"><div class="pair">1 EUR =</div><div class="val">${eurToTwd} TWD</div></div>
+          <div class="fx-rate"><div class="pair">1 USD =</div><div class="val">${usdToTwd} TWD</div></div>
+          <div class="fx-rate"><div class="pair">1 TRY =</div><div class="val">${tryToTwd} TWD</div></div>
+          <div class="fx-rate"><div class="pair">100 TWD =</div><div class="val">${twd100ToTry} TRY</div></div>
+        `;
+
+        let dateStr = r.date;
+        try {
+          const t = new Date(r.date);
+          if (!isNaN(t)) dateStr = t.toLocaleString('zh-TW', {timeZone:'Asia/Taipei'});
+        } catch(e){}
+        fxTimeEl.textContent = dateStr + ' · 來源:' + source.name;
+
+        updateExamples();
+        convert();
+        return; // success — stop trying
+      } catch (e) {
+        lastError = e;
+        console.warn('FX source failed:', source.name, e);
+        continue;
+      }
+    }
+
+    // All sources failed → use fallback rates
+    currentRates = { USD: 1, EUR: 0.92, TRY: 38, TWD: 31 };
+    rateSource = '離線備用';
+    const eurToTwd = (31 / 0.92).toFixed(2);
+    fxRatesEl.innerHTML = `
+      <div class="fx-rate"><div class="pair">1 EUR ≈</div><div class="val">${eurToTwd} TWD</div></div>
+      <div class="fx-rate"><div class="pair">1 USD ≈</div><div class="val">31.00 TWD</div></div>
+      <div class="fx-rate"><div class="pair">1 TRY ≈</div><div class="val">${(31/38).toFixed(3)} TWD</div></div>
+      <div class="fx-rate"><div class="pair">100 TWD ≈</div><div class="val">${(100*38/31).toFixed(2)} TRY</div></div>
+    `;
+    fxTimeEl.innerHTML = '⚠️ 無法連線即時匯率 API,使用 2026 年 5 月估算值<br><small style="opacity:.8">原因:' + (lastError?.message || '未知') + '。若用本地檔案開啟,部分瀏覽器會阻擋外部 API,請改用 Chrome / Edge 開啟,或部署到網頁伺服器。</small>';
+    updateExamples();
+    convert();
+  }
+
+  function convertAmount(amount, from, to) {
+    if (!currentRates) return null;
+    // All rates are X per 1 USD
+    // amount in 'from' → amount in USD = amount / rates[from]
+    // → amount in 'to' = (amount / rates[from]) * rates[to]
+    const usdAmount = amount / currentRates[from];
+    return usdAmount * currentRates[to];
+  }
+
+  function convert() {
+    const amount = parseFloat(document.getElementById('amountFrom').value) || 0;
+    const from = document.getElementById('fromCurrency').value;
+    const to = document.getElementById('toCurrency').value;
+    const result = convertAmount(amount, from, to);
+    const el = document.getElementById('resultAmount');
+    if (result === null) {
+      el.textContent = '--';
+    } else {
+      el.textContent = result.toLocaleString('zh-TW', {maximumFractionDigits:2}) + ' ' + to;
+    }
+  }
+
+  function updateExamples() {
+    const items = [
+      ['r-30eur', 30, 'EUR'],
+      ['r-70try', 70, 'TRY'],
+      ['r-800try', 800, 'TRY'],
+      ['r-900try', 900, 'TRY'],
+      ['r-25eur', 25, 'EUR'],
+      ['r-350try', 350, 'TRY'],
+      ['r-300try', 300, 'TRY'],
+      ['r-150try', 150, 'TRY'],
+      ['r-30try', 30, 'TRY'],
+      ['r-100try', 100, 'TRY'],
+      ['r-2000try', 2000, 'TRY'],
+      ['r-3000try', 3000, 'TRY'],
+      ['r-50try', 50, 'TRY'],
+      ['r-60usd', 60, 'USD'],
+      ['r-150eur', 150, 'EUR']
+    ];
+    items.forEach(([id, amt, cur]) => {
+      const r = convertAmount(amt, cur, 'TWD');
+      const el = document.getElementById(id);
+      if (el && r !== null) {
+        el.innerHTML = '<b>NT$ ' + Math.round(r).toLocaleString() + '</b>';
+      }
+    });
+  }
+
+  // Auto-load rates on page open
+  loadRates();
 </script>
 </body>
 </html>
